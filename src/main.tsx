@@ -29,8 +29,8 @@ createRoot(document.getElementById("root")!).render(
     config={{
       appearance: {
         theme: 'dark',
-        accentColor: '#10b981',
-        logo: '/favicon.ico',
+        accentColor: '#ffffff',
+        logo: '/layR logo.png',
         // Hide external wallet options by providing empty wallet list
         walletList: [],
       },

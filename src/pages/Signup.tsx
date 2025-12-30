@@ -1,8 +1,6 @@
 import { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Layout } from "@/components/layout";
-import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
+import { HomepageNavbar } from "@/components/homepage";
 import { ArrowRight, Loader2, Check } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 
@@ -30,94 +28,98 @@ const Signup = () => {
   // Show loading state while Privy initializes
   if (!ready) {
     return (
-      <Layout showFooter={false}>
+      <div className="min-h-screen bg-black">
+        <HomepageNavbar />
         <div className="min-h-[calc(100vh-4rem)] flex items-center justify-center px-4 py-12">
-          <div className="fixed inset-0 bg-hero-gradient -z-10" />
-          <div className="flex items-center gap-2 text-muted-foreground">
+          <div className="flex items-center gap-2 text-neutral-400">
             <Loader2 className="w-5 h-5 animate-spin" />
             <span>Loading...</span>
           </div>
         </div>
-      </Layout>
+      </div>
     );
   }
 
   return (
-    <Layout showFooter={false}>
-      <div className="min-h-[calc(100vh-4rem)] flex items-center justify-center px-4 py-12">
-        {/* Background Effects */}
-        <div className="fixed inset-0 bg-hero-gradient -z-10" />
-        <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-glow-gradient opacity-20 -z-10" />
-
-        <div className="w-full max-w-4xl grid md:grid-cols-2 gap-8 items-center">
+    <div className="min-h-screen bg-black">
+      <HomepageNavbar />
+      
+      <div className="min-h-[calc(100vh-4rem)] flex items-center justify-center px-4 py-12 sm:py-16 md:py-20">
+        <div className="w-full max-w-5xl grid md:grid-cols-2 gap-8 md:gap-12 items-center">
           {/* Benefits */}
           <div className="hidden md:block">
-            <h2 className="text-3xl font-bold text-foreground mb-4">
+            <h2 className="font-heading text-3xl lg:text-4xl font-bold text-white mb-4">
               Start sharing your code today
             </h2>
-            <p className="text-muted-foreground mb-8">
+            <p className="text-neutral-400 text-lg mb-8">
               Join thousands of developers who are already showcasing their work
-              on RepoMarket.
+              on layR.
             </p>
             <ul className="space-y-4">
               {benefits.map((benefit) => (
                 <li key={benefit} className="flex items-center gap-3">
-                  <div className="w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center">
-                    <Check className="w-4 h-4 text-primary" />
+                  <div className="w-6 h-6 rounded-full bg-white/10 flex items-center justify-center flex-shrink-0">
+                    <Check className="w-4 h-4 text-white" />
                   </div>
-                  <span className="text-foreground">{benefit}</span>
+                  <span className="text-neutral-300">{benefit}</span>
                 </li>
               ))}
             </ul>
           </div>
 
-          {/* Signup Card */}
-          <Card variant="glass" className="p-8">
-            <div className="text-center mb-8">
-              <Link to="/" className="inline-flex items-center gap-2 mb-6">
-                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-[hsl(180_70%_45%)] flex items-center justify-center shadow-glow">
-                  <span className="text-primary-foreground font-bold">R</span>
-                </div>
-              </Link>
-              <h1 className="text-2xl font-bold text-foreground mb-2">
-                Create your account
-              </h1>
-              <p className="text-muted-foreground">
-                Get started for free, no credit card required
+          {/* Signup Card - Glass/Fluid Style */}
+          <div className="relative bg-neutral-900/50 backdrop-blur-sm border border-neutral-800 rounded-sm p-6 sm:p-8">
+            {/* Glass effect overlay */}
+            <div className="absolute inset-0 bg-gradient-to-br from-white/[0.03] to-transparent rounded-sm pointer-events-none" />
+            
+            {/* Content */}
+            <div className="relative">
+              <div className="text-center mb-8">
+                <Link to="/" className="inline-block mb-6">
+                  <img 
+                    src="/layR logo.png" 
+                    alt="layR" 
+                    className="h-8 w-auto mx-auto"
+                  />
+                </Link>
+                <h1 className="font-heading text-2xl sm:text-3xl font-bold text-white mb-2">
+                  Create your account
+                </h1>
+                <p className="text-neutral-400 text-sm sm:text-base">
+                  Get started for free, no credit card required
+                </p>
+              </div>
+
+              <button
+                type="button"
+                className="w-full px-6 py-3 bg-white text-black font-medium rounded-sm hover:bg-neutral-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                disabled={isLoading}
+                onClick={handleSignup}
+              >
+                {isLoading ? (
+                  <>
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                    Creating account...
+                  </>
+                ) : (
+                  <>
+                    Create Account
+                    <ArrowRight className="w-4 h-4" />
+                  </>
+                )}
+              </button>
+
+              <p className="text-center text-sm text-neutral-400 mt-6">
+                Already have an account?{" "}
+                <Link to="/login" className="text-white hover:underline font-medium">
+                  Sign in
+                </Link>
               </p>
             </div>
-
-            <Button
-              type="button"
-              variant="hero"
-              className="w-full"
-              size="lg"
-              disabled={isLoading}
-              onClick={handleSignup}
-            >
-              {isLoading ? (
-                <>
-                  <Loader2 className="w-4 h-4 animate-spin" />
-                  Creating account...
-                </>
-              ) : (
-                <>
-                  Create Account
-                  <ArrowRight className="w-4 h-4" />
-                </>
-              )}
-            </Button>
-
-            <p className="text-center text-sm text-muted-foreground mt-6">
-              Already have an account?{" "}
-              <Link to="/login" className="text-primary hover:underline font-medium">
-                Sign in
-              </Link>
-            </p>
-          </Card>
+          </div>
         </div>
       </div>
-    </Layout>
+    </div>
   );
 };
 
