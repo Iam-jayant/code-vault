@@ -1,7 +1,4 @@
 import { Link } from "react-router-dom";
-import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import { Star, GitFork, ExternalLink, Phone, Download } from "lucide-react";
 
 export interface Repository {
@@ -30,7 +27,10 @@ interface RepositoryCardProps {
 
 export function RepositoryCard({ repository }: RepositoryCardProps) {
   return (
-    <Card variant="interactive" className="overflow-hidden group">
+    <div className="relative bg-neutral-900/50 backdrop-blur-sm border border-neutral-800 rounded-sm overflow-hidden group hover:border-neutral-700 transition-all duration-300">
+      {/* Glass effect overlay */}
+      <div className="absolute inset-0 bg-gradient-to-br from-white/[0.03] to-transparent rounded-sm pointer-events-none" />
+      
       {/* Preview Image */}
       <div className="relative aspect-video overflow-hidden">
         <img
@@ -38,45 +38,48 @@ export function RepositoryCard({ repository }: RepositoryCardProps) {
           alt={repository.name}
           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-card via-transparent to-transparent opacity-60" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
         
         {repository.featured && (
           <div className="absolute top-3 left-3">
-            <Badge variant="tech" className="shadow-lg">
+            <span className="px-2 py-1 bg-white/10 backdrop-blur-sm border border-white/20 text-white text-xs font-medium rounded-sm">
               Featured
-            </Badge>
+            </span>
           </div>
         )}
 
         {/* Quick Actions Overlay */}
-        <div className="absolute inset-0 flex items-center justify-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-background/60 backdrop-blur-sm">
+        <div className="absolute inset-0 flex items-center justify-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-black/60 backdrop-blur-sm">
           {repository.demoUrl && (
-            <Button variant="hero" size="sm" asChild>
-              <a href={repository.demoUrl} target="_blank" rel="noopener noreferrer">
-                <ExternalLink className="w-4 h-4" />
-                Live Demo
-              </a>
-            </Button>
+            <a 
+              href={repository.demoUrl} 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="px-4 py-2 bg-white text-black text-sm font-medium rounded-sm hover:bg-neutral-200 transition-colors flex items-center gap-2"
+            >
+              <ExternalLink className="w-4 h-4" />
+              Live Demo
+            </a>
           )}
-          <Button variant="glass" size="sm">
+          <button className="px-4 py-2 border border-white text-white text-sm font-medium rounded-sm hover:bg-white hover:text-black transition-colors flex items-center gap-2">
             <Phone className="w-4 h-4" />
             Book Call
-          </Button>
+          </button>
         </div>
       </div>
 
       {/* Content */}
-      <div className="p-5">
+      <div className="relative p-5">
         {/* Author */}
         <div className="flex items-center gap-2 mb-3">
           <img
             src={repository.author.avatar}
             alt={repository.author.name}
-            className="w-6 h-6 rounded-full border border-border"
+            className="w-6 h-6 rounded-full border border-neutral-700"
           />
           <Link
             to={`/profile/${repository.author.username}`}
-            className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+            className="text-sm text-neutral-400 hover:text-white transition-colors"
           >
             {repository.author.name}
           </Link>
@@ -84,48 +87,48 @@ export function RepositoryCard({ repository }: RepositoryCardProps) {
 
         {/* Title */}
         <Link to={`/repository/${repository.slug}`}>
-          <h3 className="font-semibold text-lg text-foreground mb-2 group-hover:text-primary transition-colors line-clamp-1">
+          <h3 className="font-heading font-semibold text-lg text-white mb-2 hover:text-neutral-300 transition-colors line-clamp-1">
             {repository.name}
           </h3>
         </Link>
 
         {/* Description */}
-        <p className="text-sm text-muted-foreground mb-4 line-clamp-2">
+        <p className="text-sm text-neutral-400 mb-4 line-clamp-2">
           {repository.shortDescription}
         </p>
 
         {/* Tech Stack */}
         <div className="flex flex-wrap gap-1.5 mb-4">
           {repository.techStack.slice(0, 4).map((tech) => (
-            <Badge key={tech} variant="secondary" className="text-xs">
+            <span key={tech} className="px-2 py-1 bg-neutral-800 text-neutral-300 text-xs rounded-sm">
               {tech}
-            </Badge>
+            </span>
           ))}
           {repository.techStack.length > 4 && (
-            <Badge variant="outline" className="text-xs">
+            <span className="px-2 py-1 border border-neutral-700 text-neutral-400 text-xs rounded-sm">
               +{repository.techStack.length - 4}
-            </Badge>
+            </span>
           )}
         </div>
 
         {/* Stats */}
-        <div className="flex items-center justify-between pt-4 border-t border-border/50">
+        <div className="flex items-center justify-between pt-4 border-t border-neutral-800">
           <div className="flex items-center gap-4">
-            <button className="flex items-center gap-1.5 text-sm text-muted-foreground hover:text-primary transition-colors">
+            <button className="flex items-center gap-1.5 text-sm text-neutral-400 hover:text-white transition-colors">
               <Star className="w-4 h-4" />
               <span>{repository.stars.toLocaleString()}</span>
             </button>
-            <button className="flex items-center gap-1.5 text-sm text-muted-foreground hover:text-primary transition-colors">
+            <button className="flex items-center gap-1.5 text-sm text-neutral-400 hover:text-white transition-colors">
               <GitFork className="w-4 h-4" />
               <span>{repository.forks.toLocaleString()}</span>
             </button>
-            <span className="flex items-center gap-1.5 text-sm text-muted-foreground">
+            <span className="flex items-center gap-1.5 text-sm text-neutral-400">
               <Download className="w-4 h-4" />
               <span>{repository.downloads.toLocaleString()}</span>
             </span>
           </div>
         </div>
       </div>
-    </Card>
+    </div>
   );
 }

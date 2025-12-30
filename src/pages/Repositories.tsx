@@ -1,8 +1,5 @@
 import { useState } from "react";
-import { Layout } from "@/components/layout";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Badge } from "@/components/ui/badge";
+import { HomepageNavbar } from "@/components/homepage";
 import { RepositoryCard, mockRepositories, categories, techStackFilters } from "@/components/repository";
 import { Search, Filter, Grid, List, SlidersHorizontal } from "lucide-react";
 
@@ -36,93 +33,106 @@ const Repositories = () => {
   };
 
   return (
-    <Layout>
-      <div className="container mx-auto px-4 py-8">
+    <div className="min-h-screen bg-black">
+      <HomepageNavbar />
+      
+      <div className="container mx-auto px-4 py-8 sm:py-12 md:py-16">
         {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-2">
-            Explore Repositories
+        <div className="mb-8 sm:mb-10 md:mb-12">
+          <h1 className="font-heading text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-3">
+            Explore Projects
           </h1>
-          <p className="text-muted-foreground">
-            Discover {mockRepositories.length}+ curated repositories from top developers
+          <p className="text-neutral-400 text-base sm:text-lg">
+            Discover {mockRepositories.length}+ curated projects from top developers
           </p>
         </div>
 
         {/* Search and Filters */}
         <div className="space-y-4 mb-8">
           {/* Search Bar */}
-          <div className="flex gap-4">
+          <div className="flex gap-3 sm:gap-4">
             <div className="relative flex-1">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
-              <Input
-                placeholder="Search repositories..."
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-neutral-500" />
+              <input
+                type="text"
+                placeholder="Search projects..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-12 h-12"
+                className="w-full pl-12 pr-4 py-3 sm:py-3.5 bg-neutral-900 border border-neutral-800 text-white placeholder:text-neutral-500 text-sm sm:text-base focus:outline-none focus:border-neutral-600 rounded-sm"
               />
             </div>
-            <Button variant="outline" size="icon-lg" className="shrink-0">
+            <button className="shrink-0 p-3 sm:p-3.5 bg-neutral-900 border border-neutral-800 text-neutral-300 hover:text-white hover:border-neutral-600 transition-colors rounded-sm">
               <SlidersHorizontal className="w-5 h-5" />
-            </Button>
-            <div className="flex border border-border rounded-lg overflow-hidden">
-              <Button
-                variant={viewMode === "grid" ? "secondary" : "ghost"}
-                size="icon-lg"
+            </button>
+            <div className="hidden sm:flex border border-neutral-800 rounded-sm overflow-hidden">
+              <button
                 onClick={() => setViewMode("grid")}
-                className="rounded-none"
+                className={`p-3.5 transition-colors ${
+                  viewMode === "grid" 
+                    ? "bg-neutral-800 text-white" 
+                    : "bg-neutral-900 text-neutral-400 hover:text-white"
+                }`}
               >
                 <Grid className="w-5 h-5" />
-              </Button>
-              <Button
-                variant={viewMode === "list" ? "secondary" : "ghost"}
-                size="icon-lg"
+              </button>
+              <button
                 onClick={() => setViewMode("list")}
-                className="rounded-none"
+                className={`p-3.5 transition-colors ${
+                  viewMode === "list" 
+                    ? "bg-neutral-800 text-white" 
+                    : "bg-neutral-900 text-neutral-400 hover:text-white"
+                }`}
               >
                 <List className="w-5 h-5" />
-              </Button>
+              </button>
             </div>
           </div>
 
           {/* Category Filters */}
           <div className="flex flex-wrap gap-2">
             {categories.map((category) => (
-              <Button
+              <button
                 key={category}
-                variant={selectedCategory === category ? "default" : "outline"}
-                size="sm"
                 onClick={() => setSelectedCategory(category)}
+                className={`px-4 py-2 text-sm font-medium rounded-sm transition-colors ${
+                  selectedCategory === category
+                    ? "bg-white text-black"
+                    : "bg-neutral-900 text-neutral-300 border border-neutral-800 hover:border-neutral-600 hover:text-white"
+                }`}
               >
                 {category}
-              </Button>
+              </button>
             ))}
           </div>
 
           {/* Tech Stack Filters */}
-          <div className="flex flex-wrap gap-2">
-            <span className="flex items-center text-sm text-muted-foreground mr-2">
+          <div className="flex flex-wrap gap-2 items-center">
+            <span className="flex items-center text-sm text-neutral-500 mr-2">
               <Filter className="w-4 h-4 mr-1" />
               Tech:
             </span>
             {techStackFilters.map((tech) => (
-              <Badge
+              <button
                 key={tech}
-                variant={selectedTech.includes(tech) ? "tech" : "outline"}
-                className="cursor-pointer hover:bg-primary/10 transition-colors"
                 onClick={() => toggleTech(tech)}
+                className={`px-3 py-1.5 text-xs font-medium rounded-sm transition-colors ${
+                  selectedTech.includes(tech)
+                    ? "bg-neutral-700 text-white border border-neutral-600"
+                    : "bg-neutral-900 text-neutral-400 border border-neutral-800 hover:border-neutral-600 hover:text-white"
+                }`}
               >
                 {tech}
-              </Badge>
+              </button>
             ))}
           </div>
         </div>
 
-        {/* Results Count */}
-        <div className="flex items-center justify-between mb-6">
-          <p className="text-sm text-muted-foreground">
-            Showing {filteredRepos.length} repositories
+        {/* Results Count and Sort */}
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+          <p className="text-sm text-neutral-400">
+            Showing {filteredRepos.length} projects
           </p>
-          <select className="bg-secondary border border-border rounded-lg px-3 py-2 text-sm text-foreground">
+          <select className="bg-neutral-900 border border-neutral-800 rounded-sm px-4 py-2 text-sm text-white focus:outline-none focus:border-neutral-600">
             <option>Most Popular</option>
             <option>Recently Added</option>
             <option>Most Stars</option>
@@ -130,11 +140,11 @@ const Repositories = () => {
           </select>
         </div>
 
-        {/* Repository Grid */}
+        {/* Project Grid */}
         {filteredRepos.length > 0 ? (
           <div className={`grid gap-6 ${
             viewMode === "grid" 
-              ? "md:grid-cols-2 lg:grid-cols-3" 
+              ? "grid-cols-1 md:grid-cols-2 lg:grid-cols-3" 
               : "grid-cols-1"
           }`}>
             {filteredRepos.map((repo) => (
@@ -143,29 +153,29 @@ const Repositories = () => {
           </div>
         ) : (
           <div className="text-center py-20">
-            <div className="w-16 h-16 rounded-full bg-muted flex items-center justify-center mx-auto mb-4">
-              <Search className="w-8 h-8 text-muted-foreground" />
+            <div className="w-16 h-16 rounded-full bg-neutral-900 border border-neutral-800 flex items-center justify-center mx-auto mb-4">
+              <Search className="w-8 h-8 text-neutral-500" />
             </div>
-            <h3 className="text-xl font-semibold text-foreground mb-2">
-              No repositories found
+            <h3 className="font-heading text-xl font-semibold text-white mb-2">
+              No projects found
             </h3>
-            <p className="text-muted-foreground mb-6">
+            <p className="text-neutral-400 mb-6">
               Try adjusting your search or filter criteria
             </p>
-            <Button
-              variant="outline"
+            <button
               onClick={() => {
                 setSearchQuery("");
                 setSelectedCategory("All");
                 setSelectedTech([]);
               }}
+              className="px-6 py-2.5 border border-white text-white font-medium rounded-sm hover:bg-white hover:text-black transition-colors"
             >
               Clear Filters
-            </Button>
+            </button>
           </div>
         )}
       </div>
-    </Layout>
+    </div>
   );
 };
 
