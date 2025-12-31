@@ -28,3 +28,4 @@ dist-ssr
 .gitignore
 
 src/.env
+src/vite-env.d.ts
