@@ -101,7 +101,7 @@ const AddRepository = () => {
     setIsSubmitting(true);
     await new Promise((resolve) => setTimeout(resolve, 1500));
     setIsSubmitting(false);
-    navigate("/dashboard");
+    navigate("/profile/me");
   };
 
   return (

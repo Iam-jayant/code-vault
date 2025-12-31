@@ -13,6 +13,10 @@ import {
   Wallet,
   ChevronDown,
   ChevronUp,
+  Eye,
+  Star,
+  MessageSquare,
+  TrendingUp,
 } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { useWallet } from "@/hooks/useWallet";
@@ -46,6 +50,25 @@ const Profile = () => {
   );
 
   const truncateAddress = (addr: string) => `${addr.slice(0, 6)}...${addr.slice(-4)}`;
+
+  // Check if viewing own profile
+  const isOwnProfile = isAuthenticated && (!username || username === "me" || username === "alexchen");
+
+  // Stats for dashboard-style cards (only shown on own profile)
+  const dashboardStats = [
+    { label: "Total Views", value: "12,432", change: "+12%", icon: Eye },
+    { label: "Total Stars", value: "847", change: "+8%", icon: Star },
+    { label: "Fork Requests", value: "23", change: "+5%", icon: GitFork },
+    { label: "Messages", value: "12", change: "+3", icon: MessageSquare },
+  ];
+
+  // Recent activity (only shown on own profile)
+  const recentActivity = [
+    { type: "star", user: "johndoe", repo: "Next.js SaaS Starter Kit", time: "2 hours ago" },
+    { type: "fork", user: "sarahm", repo: "React Dashboard Pro", time: "5 hours ago" },
+    { type: "message", user: "mikeb", repo: "E-Commerce Platform", time: "1 day ago" },
+    { type: "star", user: "lisaa", repo: "AI Chatbot Template", time: "2 days ago" },
+  ];
 
   return (
     <Layout>
@@ -93,7 +116,7 @@ const Profile = () => {
                   </div>
 
                   {/* Wallet Button - Only for authenticated user */}
-                  {isAuthenticated && (!username || username === "me" || username === "alexchen") && address && (
+                  {isOwnProfile && address && (
                     <button
                       onClick={() => setShowWallet(!showWallet)}
                       className="w-full flex items-center justify-between p-3 mb-6 bg-neutral-800/50 border border-neutral-700 hover:border-neutral-600 transition-colors rounded-sm"
@@ -175,8 +198,70 @@ const Profile = () => {
             {/* Main Content */}
             <div className="lg:col-span-3 space-y-8">
               {/* Wallet Section - Expandable */}
-              {showWallet && isAuthenticated && (!username || username === "me" || username === "alexchen") && (
+              {showWallet && isOwnProfile && (
                 <WalletProfileSection />
+              )}
+
+              {/* Stats Grid - Only for own profile */}
+              {isOwnProfile && (
+                <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+                  {dashboardStats.map((stat) => (
+                    <div key={stat.label} className="relative bg-neutral-900/50 backdrop-blur-sm border border-neutral-800 rounded-sm p-4">
+                      {/* Glass effect overlay */}
+                      <div className="absolute inset-0 bg-gradient-to-br from-white/[0.03] to-transparent rounded-sm pointer-events-none" />
+                      
+                      <div className="relative">
+                        <div className="flex items-center justify-between mb-3">
+                          <div className="w-8 h-8 rounded-sm bg-white/10 flex items-center justify-center">
+                            <stat.icon className="w-4 h-4 text-white" />
+                          </div>
+                          <span className="px-2 py-0.5 bg-white/10 text-white text-xs font-medium rounded-sm flex items-center gap-1">
+                            <TrendingUp className="w-3 h-3" />
+                            {stat.change}
+                          </span>
+                        </div>
+                        <p className="text-xl font-bold text-white mb-0.5">{stat.value}</p>
+                        <p className="text-xs text-neutral-400">{stat.label}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              {/* Recent Activity - Only for own profile */}
+              {isOwnProfile && (
+                <div className="relative bg-neutral-900/50 backdrop-blur-sm border border-neutral-800 rounded-sm p-4">
+                  {/* Glass effect overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-white/[0.03] to-transparent rounded-sm pointer-events-none" />
+                  
+                  <div className="relative">
+                    <h3 className="font-heading text-lg font-semibold text-white mb-4">Recent Activity</h3>
+                    <div className="space-y-4">
+                      {recentActivity.map((activity, index) => (
+                        <div
+                          key={index}
+                          className="flex items-start gap-3 pb-4 border-b border-neutral-800 last:border-0 last:pb-0"
+                        >
+                          <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center flex-shrink-0">
+                            {activity.type === "star" && <Star className="w-4 h-4 text-white" />}
+                            {activity.type === "fork" && <GitFork className="w-4 h-4 text-white" />}
+                            {activity.type === "message" && <MessageSquare className="w-4 h-4 text-white" />}
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <p className="text-sm text-neutral-300">
+                              <span className="font-medium text-white">{activity.user}</span>
+                              {activity.type === "star" && " starred "}
+                              {activity.type === "fork" && " requested fork for "}
+                              {activity.type === "message" && " sent a message about "}
+                              <span className="text-white">{activity.repo}</span>
+                            </p>
+                            <p className="text-xs text-neutral-500 mt-1">{activity.time}</p>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
               )}
 
               {/* Tabs */}

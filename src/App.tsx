@@ -9,7 +9,6 @@ import Repositories from "./pages/Repositories";
 import RepositoryDetail from "./pages/RepositoryDetail";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
-import Dashboard from "./pages/Dashboard";
 import Profile from "./pages/Profile";
 import AddRepository from "./pages/AddRepository";
 import Admin from "./pages/Admin";
@@ -34,11 +33,6 @@ const App = () => (
           } />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
-          <Route path="/dashboard" element={
-            <ProtectedRoute>
-              <Dashboard />
-            </ProtectedRoute>
-          } />
           <Route path="/profile/:username" element={
             <ProtectedRoute>
               <Profile />

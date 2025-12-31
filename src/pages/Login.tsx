@@ -11,7 +11,7 @@ const Login = () => {
   // Redirect authenticated users to dashboard
   useEffect(() => {
     if (ready && isAuthenticated) {
-      navigate("/dashboard");
+      navigate("/profile/me");
     }
   }, [ready, isAuthenticated, navigate]);
 
