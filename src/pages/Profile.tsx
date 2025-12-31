@@ -1,6 +1,8 @@
+import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { Layout } from "@/components/layout";
 import { RepositoryCard, mockRepositories } from "@/components/repository";
+import { WalletProfileSection } from "@/components/wallet/WalletProfileSection";
 import {
   MapPin,
   Link as LinkIcon,
@@ -8,10 +10,18 @@ import {
   Mail,
   GitFork,
   ExternalLink,
+  Wallet,
+  ChevronDown,
+  ChevronUp,
 } from "lucide-react";
+import { useAuth } from "@/hooks/useAuth";
+import { useWallet } from "@/hooks/useWallet";
 
 const Profile = () => {
   const { username } = useParams();
+  const { isAuthenticated } = useAuth();
+  const { address, balance, isLoadingBalance } = useWallet();
+  const [showWallet, setShowWallet] = useState(false);
 
   // Mock user data
   const user = {
@@ -34,6 +44,8 @@ const Profile = () => {
   const userRepos = mockRepositories.filter(
     (r) => r.author.username === username || r.author.username === "alexchen"
   );
+
+  const truncateAddress = (addr: string) => `${addr.slice(0, 6)}...${addr.slice(-4)}`;
 
   return (
     <Layout>
@@ -79,6 +91,29 @@ const Profile = () => {
                       <Mail className="w-4 h-4" />
                     </button>
                   </div>
+
+                  {/* Wallet Button - Only for authenticated user */}
+                  {isAuthenticated && (!username || username === "me" || username === "alexchen") && address && (
+                    <button
+                      onClick={() => setShowWallet(!showWallet)}
+                      className="w-full flex items-center justify-between p-3 mb-6 bg-neutral-800/50 border border-neutral-700 hover:border-neutral-600 transition-colors rounded-sm"
+                    >
+                      <div className="flex items-center gap-3">
+                        <Wallet className="w-4 h-4 text-white" />
+                        <div className="text-left">
+                          <p className="text-xs text-neutral-400">Wallet</p>
+                          <p className="text-sm font-mono text-white">
+                            {isLoadingBalance ? "..." : balance ? `${balance.balance} ${balance.symbol}` : truncateAddress(address)}
+                          </p>
+                        </div>
+                      </div>
+                      {showWallet ? (
+                        <ChevronUp className="w-4 h-4 text-neutral-400" />
+                      ) : (
+                        <ChevronDown className="w-4 h-4 text-neutral-400" />
+                      )}
+                    </button>
+                  )}
 
                   {/* Info */}
                   <div className="space-y-3 text-sm">
@@ -138,7 +173,12 @@ const Profile = () => {
             </div>
 
             {/* Main Content */}
-            <div className="lg:col-span-3">
+            <div className="lg:col-span-3 space-y-8">
+              {/* Wallet Section - Expandable */}
+              {showWallet && isAuthenticated && (!username || username === "me" || username === "alexchen") && (
+                <WalletProfileSection />
+              )}
+
               {/* Tabs */}
               <div className="flex items-center gap-4 mb-6 border-b border-neutral-800 pb-4">
                 <button className="px-4 py-2 text-white font-medium border-b-2 border-white -mb-[17px] transition-colors">
