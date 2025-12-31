@@ -1,6 +1,8 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
-import { Search, Menu, X } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
+import { Search, Menu, X, Plus, User, LogOut } from "lucide-react";
+import { useAuth } from "@/hooks/useAuth";
+import { WalletButton } from "@/components/wallet";
 
 /**
  * HomepageNavbar - A minimal, GitHub-inspired navigation bar for the homepage
@@ -9,12 +11,20 @@ import { Search, Menu, X } from "lucide-react";
  * - Dark background with thin bottom border
  * - layR logo image
  * - Search input with dark styling
- * - Sign in text button and Register outlined button
+ * - Sign in text button and Register outlined button (when not authenticated)
+ * - Profile, Wallet, Logout (when authenticated)
  * - Sharp edges, minimal border-radius
  * - Mobile-responsive with collapsible menu
  */
 export function HomepageNavbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { isAuthenticated, logout } = useAuth();
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    await logout();
+    navigate("/");
+  };
 
   return (
     <header className="w-full bg-black border-b border-neutral-800">
@@ -35,26 +45,55 @@ export function HomepageNavbar() {
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-neutral-500" />
               <input
                 type="text"
-                placeholder="Search repositories"
+                placeholder="Search projects"
                 className="w-full pl-10 pr-4 py-2 bg-neutral-900 border border-neutral-800 text-white placeholder:text-neutral-500 text-sm focus:outline-none focus:border-neutral-600 rounded-sm"
               />
             </div>
           </div>
 
           {/* Desktop Auth Buttons */}
-          <div className="hidden md:flex items-center gap-4">
-            <Link
-              to="/login"
-              className="text-neutral-300 hover:text-white text-sm font-medium transition-colors"
-            >
-              Sign in
-            </Link>
-            <Link
-              to="/signup"
-              className="px-4 py-2 border border-white text-white text-sm font-medium hover:bg-white hover:text-black transition-colors rounded-sm"
-            >
-              Register
-            </Link>
+          <div className="hidden md:flex items-center gap-3">
+            {isAuthenticated ? (
+              <>
+                <Link to="/repositories/new">
+                  <button className="px-4 py-2 bg-white text-black text-sm font-medium hover:bg-neutral-200 transition-colors rounded-sm flex items-center gap-2">
+                    <Plus className="w-4 h-4" />
+                    Add Project
+                  </button>
+                </Link>
+
+                <Link to="/profile/me">
+                  <button className="p-2 text-neutral-300 hover:text-white transition-colors">
+                    <User className="w-5 h-5" />
+                  </button>
+                </Link>
+
+                <WalletButton />
+
+                <button 
+                  onClick={handleLogout}
+                  className="px-4 py-2 border border-neutral-800 text-neutral-300 hover:text-white hover:border-neutral-600 transition-colors rounded-sm text-sm flex items-center gap-2"
+                >
+                  <LogOut className="w-4 h-4" />
+                  <span>Logout</span>
+                </button>
+              </>
+            ) : (
+              <>
+                <Link
+                  to="/login"
+                  className="text-neutral-300 hover:text-white text-sm font-medium transition-colors"
+                >
+                  Sign in
+                </Link>
+                <Link
+                  to="/signup"
+                  className="px-4 py-2 border border-white text-white text-sm font-medium hover:bg-white hover:text-black transition-colors rounded-sm"
+                >
+                  Register
+                </Link>
+              </>
+            )}
           </div>
 
           {/* Mobile Menu Button */}
@@ -79,28 +118,55 @@ export function HomepageNavbar() {
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-neutral-500" />
               <input
                 type="text"
-                placeholder="Search repositories"
+                placeholder="Search projects"
                 className="w-full pl-10 pr-4 py-2.5 bg-neutral-900 border border-neutral-800 text-white placeholder:text-neutral-500 text-sm focus:outline-none focus:border-neutral-600 rounded-sm"
               />
             </div>
 
             {/* Mobile Auth Links */}
-            <div className="flex flex-col gap-3">
-              <Link
-                to="/login"
-                onClick={() => setIsMobileMenuOpen(false)}
-                className="text-neutral-300 hover:text-white text-sm font-medium transition-colors py-2"
-              >
-                Sign in
-              </Link>
-              <Link
-                to="/signup"
-                onClick={() => setIsMobileMenuOpen(false)}
-                className="px-4 py-2.5 border border-white text-white text-sm font-medium hover:bg-white hover:text-black transition-colors rounded-sm text-center"
-              >
-                Register
-              </Link>
-            </div>
+            {isAuthenticated ? (
+              <div className="flex flex-col gap-3">
+                <Link to="/repositories/new" onClick={() => setIsMobileMenuOpen(false)}>
+                  <button className="w-full px-4 py-2.5 bg-white text-black text-sm font-medium hover:bg-neutral-200 transition-colors rounded-sm flex items-center justify-center gap-2">
+                    <Plus className="w-4 h-4" />
+                    Add Project
+                  </button>
+                </Link>
+                <Link to="/profile/me" onClick={() => setIsMobileMenuOpen(false)}>
+                  <button className="w-full px-4 py-2.5 border border-neutral-800 text-neutral-300 hover:text-white hover:border-neutral-600 transition-colors rounded-sm text-sm flex items-center justify-center gap-2">
+                    <User className="w-4 h-4" />
+                    Profile & Wallet
+                  </button>
+                </Link>
+                <button 
+                  onClick={() => {
+                    setIsMobileMenuOpen(false);
+                    handleLogout();
+                  }}
+                  className="w-full px-4 py-2.5 border border-neutral-800 text-neutral-300 hover:text-white hover:border-neutral-600 transition-colors rounded-sm text-sm flex items-center justify-center gap-2"
+                >
+                  <LogOut className="w-4 h-4" />
+                  Logout
+                </button>
+              </div>
+            ) : (
+              <div className="flex flex-col gap-3">
+                <Link
+                  to="/login"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="text-neutral-300 hover:text-white text-sm font-medium transition-colors py-2"
+                >
+                  Sign in
+                </Link>
+                <Link
+                  to="/signup"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="px-4 py-2.5 border border-white text-white text-sm font-medium hover:bg-white hover:text-black transition-colors rounded-sm text-center"
+                >
+                  Register
+                </Link>
+              </div>
+            )}
           </div>
         )}
       </div>
