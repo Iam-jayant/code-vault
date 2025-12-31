@@ -1,10 +1,11 @@
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { 
   HomepageNavbar, 
   WhySection, 
   RepositoryCardMinimal, 
   MinimalFooter 
 } from "@/components/homepage";
+import { useAuth } from "@/hooks/useAuth";
 
 // Featured repository data for the homepage
 interface FeaturedRepo {
@@ -61,6 +62,22 @@ const featuredRepos: FeaturedRepo[] = [
 ];
 
 const Index = () => {
+  const { isAuthenticated, ready } = useAuth();
+
+  // Wait for auth to be ready before redirecting
+  if (!ready) {
+    return (
+      <div className="min-h-screen bg-black flex items-center justify-center">
+        <div className="w-8 h-8 border-2 border-white border-t-transparent rounded-full animate-spin" />
+      </div>
+    );
+  }
+
+  // Redirect authenticated users to Explore page
+  if (isAuthenticated) {
+    return <Navigate to="/repositories" replace />;
+  }
+
   return (
     <div className="min-h-screen bg-black">
       {/* Navbar */}
