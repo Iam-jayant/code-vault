@@ -47,6 +47,7 @@ app.get('/health', (req, res) => {
     timestamp: new Date().toISOString(),
   });
 });
+
 app.use(paywallMiddleware);
 // API Routes
 app.use('/api/users', usersRouter);

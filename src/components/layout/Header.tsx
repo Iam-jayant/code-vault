@@ -17,6 +17,8 @@ export function Header() {
 
   const navLinks = [
     { href: "/repositories", label: "Explore" },
+    { href: "/bounties", label: "Bounty" },
+    { href: "/leaderboard", label: "Leaderboard" },
   ];
 
   return (

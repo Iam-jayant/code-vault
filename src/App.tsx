@@ -13,6 +13,8 @@ import Profile from "./pages/Profile";
 import AddRepository from "./pages/AddRepository";
 import Admin from "./pages/Admin";
 import NotFound from "./pages/NotFound";
+import BountiesPage from "./pages/bounty";
+import LeaderboardPage from "./pages/leaderboard";
 
 const queryClient = new QueryClient();
 
@@ -26,6 +28,8 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/repositories" element={<Repositories />} />
           <Route path="/repository/:slug" element={<RepositoryDetail />} />
+          <Route path="/bounties" element={<BountiesPage />} />
+          <Route path="/leaderboard" element={<LeaderboardPage />} />
           <Route path="/repositories/new" element={
             <ProtectedRoute>
               <AddRepository />
