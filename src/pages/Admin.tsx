@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { mockRepositories } from "@/components/repository";
+import { useProjects } from "@/hooks/useProjects";
 import {
   Search,
   Check,
@@ -21,19 +21,29 @@ import {
 const Admin = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [filter, setFilter] = useState<"all" | "pending" | "approved" | "rejected">("all");
+  
+  // Fetch all projects
+  const { projects, isLoading } = useProjects({ limit: 100 });
 
   const stats = [
-    { label: "Total Repos", value: "2,547", icon: GitFork },
-    { label: "Pending Review", value: "23", icon: Shield },
-    { label: "Total Users", value: "15,234", icon: Users },
-    { label: "This Month", value: "+342", icon: TrendingUp },
+    { label: "Total Repos", value: projects.length.toString(), icon: GitFork },
+    { label: "Pending Review", value: projects.filter(p => !p.isPublished).length.toString(), icon: Shield },
+    { label: "Total Users", value: "0", icon: Users },
+    { label: "Featured", value: projects.filter(p => p.isFeatured).length.toString(), icon: TrendingUp },
   ];
 
-  // Simulated pending repos
-  const pendingRepos = mockRepositories.map((repo, index) => ({
-    ...repo,
-    status: index % 3 === 0 ? "pending" : index % 3 === 1 ? "approved" : "rejected",
-    submittedAt: "2 days ago",
+  // Map projects to admin format
+  const pendingRepos = projects.map((project) => ({
+    id: project._id,
+    name: project.title,
+    slug: project.slug,
+    previewImage: project.previewImage || 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&h=600&fit=crop',
+    status: project.isPublished ? "approved" : "pending",
+    featured: project.isFeatured,
+    author: {
+      name: project.ownerName,
+    },
+    submittedAt: new Date(project.createdAt).toLocaleDateString(),
   }));
 
   const filteredRepos = pendingRepos.filter((repo) => {
@@ -107,8 +117,17 @@ const Admin = () => {
           <div className="p-4 border-b border-border">
             <h2 className="font-semibold text-foreground">Repository Queue</h2>
           </div>
-          <div className="divide-y divide-border">
-            {filteredRepos.map((repo) => (
+          {isLoading ? (
+            <div className="p-12 flex items-center justify-center">
+              <div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin" />
+            </div>
+          ) : filteredRepos.length === 0 ? (
+            <div className="p-12 text-center text-muted-foreground">
+              No repositories found
+            </div>
+          ) : (
+            <div className="divide-y divide-border">
+              {filteredRepos.map((repo) => (
               <div key={repo.id} className="p-4 flex items-center gap-4 hover:bg-muted/30 transition-colors">
                 <img
                   src={repo.previewImage}
@@ -164,6 +183,7 @@ const Admin = () => {
               </div>
             ))}
           </div>
+          )}
         </Card>
       </div>
     </Layout>
