@@ -16,10 +16,13 @@ import {
   ArrowLeft,
   Check,
 } from "lucide-react";
+import { useState } from "react";
 
 const RepositoryDetail = () => {
   const { slug } = useParams();
   const { project, isLoading, error } = useProjectBySlug(slug);
+  const [hoverOnFork,sethoverOnFork]= useState(false);
+  const [hoverOnCall,sethoverOnCall]= useState(false);
 
   if (isLoading) {
     return (
@@ -210,14 +213,20 @@ const RepositoryDetail = () => {
                   </a>
                 )}
 
-                <button className="w-full px-4 py-3 bg-neutral-800 text-white font-medium rounded-sm hover:bg-neutral-700 transition-colors flex items-center justify-center gap-2">
+                <button className="w-full px-4 py-3 bg-neutral-800 text-white font-medium rounded-sm hover:bg-neutral-700 transition-colors flex items-center justify-center gap-2"
+                onMouseEnter={()=>sethoverOnFork(true)}
+                onMouseLeave={()=>sethoverOnFork(false)}
+                >
                   <GitFork className="w-4 h-4" />
-                  Fork Project
+                  {hoverOnFork?`$ ${project.priceDownload}`: "Fork Project"}
                 </button>
 
-                <button className="w-full px-4 py-3 border border-neutral-700 text-neutral-300 font-medium rounded-sm hover:border-neutral-600 hover:text-white transition-colors flex items-center justify-center gap-2">
+                <button className="w-full px-4 py-3 border border-neutral-700 text-neutral-300 font-medium rounded-sm hover:border-neutral-600 hover:text-white transition-colors flex items-center justify-center gap-2"
+                onMouseEnter={()=>sethoverOnCall(true)}
+                onMouseLeave={()=>sethoverOnCall(false)}
+                >
                   <Phone className="w-4 h-4" />
-                  Book a Call
+                  {hoverOnCall?`$ ${project.priceView}`: "Book a Call"}
                 </button>
 
                 <button className="w-full px-4 py-3 border border-neutral-700 text-neutral-300 font-medium rounded-sm hover:border-neutral-600 hover:text-white transition-colors flex items-center justify-center gap-2">

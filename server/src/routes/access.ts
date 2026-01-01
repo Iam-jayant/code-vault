@@ -172,4 +172,12 @@ router.get('/user/:walletAddress', async (req: Request, res: Response) => {
   }
 });
 
+router.get("/private-resource", async (req, res) => {
+  res.json({
+    success: true,
+    message: "You paid — welcome 🎉"
+  });
+});
+
+
 export default router;

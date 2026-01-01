@@ -3,15 +3,40 @@ import express from 'express';
 import cors from 'cors';
 import { connectDB, isDBConnected } from './db/connection';
 import { usersRouter, projectsRouter, accessRouter, transactionsRouter } from './routes';
+import { paywallMiddleware } from './middleware/paywall';
+
 
 const app = express();
 const PORT = process.env.PORT || 3001;
 
 // Middleware
-app.use(cors({
-  origin: process.env.FRONTEND_URL || 'http://localhost:5173',
-  credentials: true,
-}));
+
+const allowedOrigins = [
+  process.env.FRONTEND_URL,
+  "http://localhost:5173",
+  "http://localhost:8080",
+];
+
+app.use(
+  cors({
+    origin: function (origin, callback) {
+      if (!origin) return callback(null, true);
+      if (allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        console.warn(`❌ Blocked by CORS: ${origin}`);
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+    credentials: true,
+  })
+);
+
+// ✅ Use regex instead of "*" to fix "path-to-regexp" error
+app.options(/.*/, cors());
+
 app.use(express.json());
 
 // Health check
@@ -22,7 +47,7 @@ app.get('/health', (req, res) => {
     timestamp: new Date().toISOString(),
   });
 });
-
+app.use(paywallMiddleware);
 // API Routes
 app.use('/api/users', usersRouter);
 app.use('/api/projects', projectsRouter);
