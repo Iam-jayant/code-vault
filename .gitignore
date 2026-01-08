@@ -63,3 +63,5 @@ coverage
 *.tmp
 *.temp
 .cache
+
+/server.env
