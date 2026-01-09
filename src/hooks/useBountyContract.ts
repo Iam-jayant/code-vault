@@ -1,15 +1,18 @@
-import { AptosClient, AptosAccount, Types } from 'aptos';
+import { Aptos, AptosConfig, Network, InputViewFunctionData } from '@aptos-labs/ts-sdk';
 import { useState, useCallback } from 'react';
 
 // Movement Network Configuration
-const MOVEMENT_TESTNET = 'https://testnet.movementnetwork.xyz/v1';
-const MOVEMENT_MAINNET = 'https://mainnet.movementnetwork.xyz/v1';
+const MOVEMENT_TESTNET_URL = 'https://testnet.movementnetwork.xyz/v1';
 
 // Deployed contract address on Movement Testnet
 const MODULE_ADDRESS = import.meta.env.VITE_BOUNTY_CONTRACT_ADDRESS || '0xa492a23821f2f8575d42bbaa3cd65fd4a0afb922c57dc56d78b360a18211f884';
 
 // Initialize Aptos client for Movement blockchain
-const client = new AptosClient(MOVEMENT_TESTNET);
+const config = new AptosConfig({ 
+    network: Network.CUSTOM,
+    fullnode: MOVEMENT_TESTNET_URL
+});
+const aptos = new Aptos(config);
 
 export interface BountyCampaign {
     id: number;
@@ -32,7 +35,7 @@ export function useBountyContract() {
      */
     const createCampaign = useCallback(
         async (
-            signAndSubmitTx: (payload: any) => Promise<any>, // Direct function from wallet adapter
+            wallet: any, // Movement wallet from your wallet adapter
             title: string,
             description: string,
             rewardAmount: number, // Amount in MOVE tokens
@@ -45,39 +48,31 @@ export function useBountyContract() {
                 // Convert MOVE to smallest units (8 decimals)
                 const rewardInSmallestUnits = Math.floor(rewardAmount * 100000000);
 
-                // Use the new wallet adapter v2 format (matching useMovementWallet.sendTransaction)
-                const payload = {
+                const transaction = await aptos.transaction.build.simple({
+                    sender: wallet.address,
                     data: {
-                        function: `${MODULE_ADDRESS}::bounty_campaign::create_campaign` as const,
-                        typeArguments: [] as const,
+                        function: `${MODULE_ADDRESS}::bounty_campaign::create_campaign`,
                         functionArguments: [
                             title,
                             description,
-                            rewardInSmallestUnits.toString(),
-                            durationSeconds.toString(),
+                            rewardInSmallestUnits,
+                            durationSeconds,
                         ],
                     },
-                };
+                });
 
-                console.log('[BountyContract] Submitting transaction with payload:', payload);
-
-                // Sign and submit transaction - call the function directly
-                const result = await signAndSubmitTx(payload);
-
-                // Handle different response formats (some wallets return object, some return string)
-                const txnHash = typeof result === 'string' ? result : result?.hash || result?.txHash || result;
-
-                console.log('[BountyContract] Transaction submitted:', txnHash);
-
+                // Sign and submit transaction
+                const committedTxn = await wallet.signAndSubmitTransaction(transaction);
+                
                 // Wait for transaction confirmation
-                if (txnHash) {
-                    await client.waitForTransaction(txnHash);
-                }
+                await aptos.waitForTransaction({ 
+                    transactionHash: committedTxn.hash 
+                });
 
-                console.log('[BountyContract] Campaign created successfully:', txnHash);
-                return txnHash;
+                console.log('Campaign created successfully:', committedTxn.hash);
+                return committedTxn.hash;
             } catch (err: any) {
-                console.error('[BountyContract] Error creating campaign:', err);
+                console.error('Error creating campaign:', err);
                 setError(err.message || 'Failed to create campaign');
                 throw err;
             } finally {
@@ -103,21 +98,24 @@ export function useBountyContract() {
 
                 // Convert amounts to smallest units
                 const amountsInSmallestUnits = amounts.map((amt) =>
-                    Math.floor(amt * 100000000).toString()
+                    Math.floor(amt * 100000000)
                 );
 
-                const payload: Types.TransactionPayload = {
-                    type: 'entry_function_payload',
-                    function: `${MODULE_ADDRESS}::bounty_campaign::distribute_rewards`,
-                    arguments: [recipients, amountsInSmallestUnits],
-                    type_arguments: [],
-                };
+                const transaction = await aptos.transaction.build.simple({
+                    sender: wallet.address,
+                    data: {
+                        function: `${MODULE_ADDRESS}::bounty_campaign::distribute_rewards`,
+                        functionArguments: [recipients, amountsInSmallestUnits],
+                    },
+                });
 
-                const txnHash = await wallet.signAndSubmitTransaction(payload);
-                await client.waitForTransaction(txnHash);
+                const committedTxn = await wallet.signAndSubmitTransaction(transaction);
+                await aptos.waitForTransaction({ 
+                    transactionHash: committedTxn.hash 
+                });
 
-                console.log('Rewards distributed successfully:', txnHash);
-                return txnHash;
+                console.log('Rewards distributed successfully:', committedTxn.hash);
+                return committedTxn.hash;
             } catch (err: any) {
                 console.error('Error distributing rewards:', err);
                 setError(err.message || 'Failed to distribute rewards');
@@ -137,18 +135,21 @@ export function useBountyContract() {
             setLoading(true);
             setError(null);
 
-            const payload: Types.TransactionPayload = {
-                type: 'entry_function_payload',
-                function: `${MODULE_ADDRESS}::bounty_campaign::cancel_campaign`,
-                arguments: [],
-                type_arguments: [],
-            };
+            const transaction = await aptos.transaction.build.simple({
+                sender: wallet.address,
+                data: {
+                    function: `${MODULE_ADDRESS}::bounty_campaign::cancel_campaign`,
+                    functionArguments: [],
+                },
+            });
 
-            const txnHash = await wallet.signAndSubmitTransaction(payload);
-            await client.waitForTransaction(txnHash);
+            const committedTxn = await wallet.signAndSubmitTransaction(transaction);
+            await aptos.waitForTransaction({ 
+                transactionHash: committedTxn.hash 
+            });
 
-            console.log('Campaign cancelled successfully:', txnHash);
-            return txnHash;
+            console.log('Campaign cancelled successfully:', committedTxn.hash);
+            return committedTxn.hash;
         } catch (err: any) {
             console.error('Error cancelling campaign:', err);
             setError(err.message || 'Failed to cancel campaign');
@@ -164,11 +165,12 @@ export function useBountyContract() {
     const getCampaignInfo = useCallback(
         async (creatorAddress: string): Promise<BountyCampaign | null> => {
             try {
-                const result = await client.view({
+                const payload: InputViewFunctionData = {
                     function: `${MODULE_ADDRESS}::bounty_campaign::get_campaign_info`,
-                    arguments: [creatorAddress],
-                    type_arguments: [],
-                });
+                    functionArguments: [creatorAddress],
+                };
+
+                const result = await aptos.view({ payload });
 
                 if (!result || result.length === 0) return null;
 
@@ -197,11 +199,12 @@ export function useBountyContract() {
     const getRemainingFunds = useCallback(
         async (creatorAddress: string): Promise<number> => {
             try {
-                const result = await client.view({
+                const payload: InputViewFunctionData = {
                     function: `${MODULE_ADDRESS}::bounty_campaign::get_remaining_funds`,
-                    arguments: [creatorAddress],
-                    type_arguments: [],
-                });
+                    functionArguments: [creatorAddress],
+                };
+
+                const result = await aptos.view({ payload });
 
                 return Number(result[0]) / 100000000; // Convert to MOVE
             } catch (err: any) {
@@ -218,11 +221,12 @@ export function useBountyContract() {
     const hasClaimed = useCallback(
         async (recipientAddress: string, campaignId: number): Promise<boolean> => {
             try {
-                const result = await client.view({
+                const payload: InputViewFunctionData = {
                     function: `${MODULE_ADDRESS}::bounty_campaign::has_claimed`,
-                    arguments: [recipientAddress, campaignId.toString()],
-                    type_arguments: [],
-                });
+                    functionArguments: [recipientAddress, campaignId],
+                };
+
+                const result = await aptos.view({ payload });
 
                 return result[0] as boolean;
             } catch (err: any) {
