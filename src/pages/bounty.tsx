@@ -33,7 +33,7 @@ const initialBounties = [
         id: newId,
         company: "My Company", // Default for demo
         logo: "M",
-        color: "from-indigo-500 to-purple-500",
+        color: "from-emerald-500 to-emerald-600",
         ...newCampaign,
         applicants: 0,
         tags: ["New"],
@@ -76,7 +76,7 @@ const mapped = json.data.map((b) => ({
   prize: b.reward,
   ownership: "N/A",
   ownerWallet: b.walletAddress?.toLowerCase(),
-  color: "from-indigo-500 to-purple-500",
+  color: "from-emerald-500 to-emerald-600",
 }));
 
       
@@ -104,12 +104,12 @@ const mapped = json.data.map((b) => ({
 
 
   return (
-    <div className="min-h-screen bg-[#0a0a0f] text-gray-100 font-sans selection:bg-indigo-500/30">
+    <div className="min-h-screen bg-gradient-to-br from-[#0A0F0D] via-[#050A08] to-black text-gray-100 font-sans selection:bg-emerald-500/30">
         <Header />
       {/* Background Gradients */}
       <div className="fixed top-0 left-0 w-full h-full overflow-hidden pointer-events-none z-0">
-        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-indigo-900/20 blur-[120px]" />
-        <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full bg-purple-900/20 blur-[120px]" />
+        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-emerald-900/20 blur-[120px]" />
+        <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full bg-emerald-800/15 blur-[120px]" />
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-6 py-16">
@@ -130,7 +130,7 @@ const mapped = json.data.map((b) => ({
             <div className="flex gap-4">
                 <button 
                     onClick={() => setShowLaunch(true)}
-                    className="px-6 py-3 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold shadow-lg shadow-indigo-500/20 transition-all flex items-center gap-2"
+                    className="px-6 py-3 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-white font-semibold shadow-lg shadow-emerald-500/20 transition-all flex items-center gap-2"
                 >
                     <Plus className="w-5 h-5" /> Launch Campaign
                 </button>
@@ -141,29 +141,29 @@ const mapped = json.data.map((b) => ({
           <div className="mt-10 border-b border-white/10 flex gap-8">
               <button 
                 onClick={() => setViewMode("explore")}
-                className={`pb-4 px-2 font-medium text-sm transition-all border-b-2 ${viewMode === "explore" ? "border-indigo-500 text-white" : "border-transparent text-gray-400 hover:text-white"}`}
+                className={`pb-4 px-2 font-medium text-sm transition-all border-b-2 ${viewMode === "explore" ? "border-emerald-500 text-white" : "border-transparent text-gray-400 hover:text-white"}`}
               >
                 Explore All
               </button>
               <button 
                 onClick={() => setViewMode("my-campaigns")}
-                className={`pb-4 px-2 font-medium text-sm transition-all border-b-2 ${viewMode === "my-campaigns" ? "border-indigo-500 text-white" : "border-transparent text-gray-400 hover:text-white"}`}
+                className={`pb-4 px-2 font-medium text-sm transition-all border-b-2 ${viewMode === "my-campaigns" ? "border-emerald-500 text-white" : "border-transparent text-gray-400 hover:text-white"}`}
               >
                 My Campaigns
               </button>
           </div>
 
-          {/* Search Bar (Only for Explore mode usually, but useful for both) */}
+          {/* Search Bar */}
           <div className="mt-8 flex gap-4">
             <div className="relative flex-1">
               <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 w-5 h-5" />
               <input 
                 type="text" 
                 placeholder="Search bounties..." 
-                className="w-full bg-white/5 border border-white/10 rounded-xl py-4 pl-12 pr-4 text-white placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 transition-all hover:bg-white/10"
+                className="w-full bg-white/5 border border-white/10 rounded-xl py-4 pl-12 pr-4 text-white placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 transition-all hover:bg-white/10"
               />
             </div>
-            <button className="px-6 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition flex items-center gap-2 font-medium">
+            <button className="px-6 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 hover:border-emerald-500/30 transition flex items-center gap-2 font-medium">
               <Filter className="w-5 h-5" /> Filters
             </button>
           </div>
@@ -185,7 +185,7 @@ const mapped = json.data.map((b) => ({
              <div className="col-span-2 text-center py-20 bg-white/5 rounded-2xl border border-dashed border-white/10">
                 <p className="text-gray-400 text-lg">No Campaigns found.</p>
                 {viewMode === "my-campaigns" && (
-                    <button onClick={() => setShowLaunch(true)} className="mt-4 text-indigo-400 font-medium hover:underline">
+                    <button onClick={() => setShowLaunch(true)} className="mt-4 text-emerald-400 font-medium hover:underline">
                         Launch your first campaign &rarr;
                     </button>
                 )}

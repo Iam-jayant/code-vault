@@ -5,7 +5,7 @@ export default function SubmissionDetailsModal({ submission, onClose }) {
   if (!submission) return null;
 
   return (
-    <div className="fixed inset-0 z-1000 flex items-center justify-center p-4">
+    <div className="fixed inset-0 z-[1000] flex items-center justify-center p-4">
       {/* Backdrop */}
       <div
         className="absolute inset-0 bg-black/70 backdrop-blur-sm"
@@ -13,12 +13,12 @@ export default function SubmissionDetailsModal({ submission, onClose }) {
       />
 
       {/* Modal */}
-      <div className="relative bg-[#13131a] border border-white/10 
+      <div className="relative bg-gradient-to-br from-[#0A0F0D] to-[#050A08] border border-white/10 
                       rounded-2xl w-full max-w-4xl max-h-[90vh] 
                       flex flex-col overflow-hidden shadow-2xl">
 
         {/* Header */}
-        <div className="p-6 border-b border-white/10 flex justify-between items-start bg-[#181820]">
+        <div className="p-6 border-b border-white/10 flex justify-between items-start bg-white/5">
           <div>
             <h2 className="text-xl font-bold text-white">
               {submission.TeamName}
@@ -28,7 +28,7 @@ export default function SubmissionDetailsModal({ submission, onClose }) {
             </p>
           </div>
           <button onClick={onClose}>
-            <X className="w-5 h-5 text-gray-400 hover:text-white" />
+            <X className="w-5 h-5 text-gray-400 hover:text-white transition-colors" />
           </button>
         </div>
 
@@ -86,8 +86,8 @@ export default function SubmissionDetailsModal({ submission, onClose }) {
 function Section({ title, children }) {
   return (
     <div>
-      <h3 className="text-indigo-400 font-semibold mb-2">{title}</h3>
-      <div className="bg-[#0a0a0f] border border-white/5 rounded-xl p-4 space-y-2">
+      <h3 className="text-emerald-400 font-semibold mb-2">{title}</h3>
+      <div className="bg-white/5 border border-white/10 rounded-xl p-4 space-y-2">
         {children}
       </div>
     </div>
@@ -112,7 +112,7 @@ function LinkItem({ label, url }) {
         href={url.startsWith("http") ? url : `https://${url}`}
         target="_blank"
         rel="noopener noreferrer"
-        className="text-indigo-400 hover:underline break-all"
+        className="text-emerald-400 hover:text-emerald-300 hover:underline break-all transition-colors"
       >
         {url}
       </a>

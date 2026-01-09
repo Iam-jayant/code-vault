@@ -157,8 +157,7 @@ router.get('/submissions/:bountyId/:walletAddress', async (req: Request, res: Re
         console.log('Fetching submissions with params:', req.params);
         const { bountyId, walletAddress } = req.params;
         const submissions = await Applicants.find({
-          BountyId: bountyId,
-          walletAddress: walletAddress,
+          BountyId: bountyId
         }).exec();
 
         return res.status(200).json({

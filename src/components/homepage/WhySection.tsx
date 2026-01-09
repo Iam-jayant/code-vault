@@ -1,14 +1,4 @@
-/**
- * WhySection - A section explaining layR's value proposition
- * 
- * Features:
- * - Four cards in a responsive grid
- * - Glass/fluid aesthetic with subtle borders
- * - Dark styling with neutral cards
- * 
- * Requirements: 3.1, 3.4, 3.5, 3.6
- */
-
+// WhySection.tsx
 export interface WhyItem {
   title: string;
   description: string;
@@ -39,11 +29,11 @@ export interface WhySectionProps {
 
 export function WhySection({ items = whyItems }: WhySectionProps) {
   return (
-    <section className="w-full bg-black py-12 sm:py-16 md:py-20">
+    <section className="w-full bg-gradient-to-br from-[#0A0F0D] via-[#050A08] to-black py-12 sm:py-16 md:py-20">
       <div className="container mx-auto px-4">
         {/* Section Heading */}
         <h2 className="font-heading text-2xl sm:text-3xl md:text-4xl font-bold text-white text-center mb-8 sm:mb-12 md:mb-16">
-          Why use layR?
+          Why use CodeVault?
         </h2>
 
         {/* Cards Grid */}
@@ -51,17 +41,17 @@ export function WhySection({ items = whyItems }: WhySectionProps) {
           {items.map((item, index) => (
             <div
               key={index}
-              className="group relative bg-neutral-900/50 backdrop-blur-sm border border-neutral-800 rounded-sm p-6 hover:border-neutral-700 transition-all duration-300 hover:bg-neutral-900/70"
+              className="group relative bg-white/5 backdrop-blur-sm border border-white/10 rounded-lg p-6 hover:border-emerald-500/30 transition-all duration-300 hover:bg-white/10"
             >
               {/* Glass effect overlay */}
-              <div className="absolute inset-0 bg-gradient-to-br from-white/[0.03] to-transparent rounded-sm pointer-events-none" />
+              <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/5 to-transparent rounded-lg pointer-events-none" />
               
               {/* Content */}
               <div className="relative">
                 <h3 className="font-heading text-lg sm:text-xl font-bold text-white mb-3">
                   {item.title}
                 </h3>
-                <p className="text-neutral-400 text-sm leading-relaxed">
+                <p className="text-gray-400 text-sm leading-relaxed">
                   {item.description}
                 </p>
               </div>

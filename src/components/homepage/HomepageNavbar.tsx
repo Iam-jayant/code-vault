@@ -5,15 +5,15 @@ import { useAuth } from "@/hooks/useAuth";
 import { MovementWalletButton } from "@/components/wallet";
 
 /**
- * HomepageNavbar - A minimal, GitHub-inspired navigation bar for the homepage
+ * HomepageNavbar - AkshayaVault themed navigation bar
  * 
  * Features:
- * - Dark background with thin bottom border
+ * - Dark green to black gradient background
+ * - Emerald green accents
  * - layR logo image
- * - Search input with dark styling
- * - Sign in text button and Register outlined button (when not authenticated)
+ * - Search input with emerald focus states
+ * - Sign in/Register buttons with emerald styling
  * - Profile, Wallet, Logout (when authenticated)
- * - Sharp edges, minimal border-radius
  * - Mobile-responsive with collapsible menu
  */
 export function HomepageNavbar() {
@@ -27,14 +27,14 @@ export function HomepageNavbar() {
   };
 
   return (
-    <header className="w-full bg-black border-b border-neutral-800">
+    <header className="w-full bg-gradient-to-r from-[#0A0F0D] to-black border-b border-white/10">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-14 md:h-16">
           {/* Logo */}
           <Link to="/" className="flex items-center">
             <img 
-              src="/layR logo.png" 
-              alt="layR" 
+              src="CodeVault.png" 
+              alt="CodeVault" 
               className="h-6 md:h-7 w-auto"
             />
           </Link>
@@ -42,11 +42,11 @@ export function HomepageNavbar() {
           {/* Search Bar - Center-right area (hidden on mobile) */}
           <div className="hidden md:flex flex-1 max-w-md mx-8 justify-end">
             <div className="relative w-full max-w-xs">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-neutral-500" />
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
               <input
                 type="text"
                 placeholder="Search projects"
-                className="w-full pl-10 pr-4 py-2 bg-neutral-900 border border-neutral-800 text-white placeholder:text-neutral-500 text-sm focus:outline-none focus:border-neutral-600 rounded-sm"
+                className="w-full pl-10 pr-4 py-2 bg-white/5 border border-white/10 text-white placeholder:text-gray-500 text-sm focus:outline-none focus:border-emerald-500/50 focus:ring-2 focus:ring-emerald-500/20 rounded-lg transition-all"
               />
             </div>
           </div>
@@ -56,14 +56,14 @@ export function HomepageNavbar() {
             {isAuthenticated ? (
               <>
                 <Link to="/repositories/new">
-                  <button className="px-4 py-2 bg-white text-black text-sm font-medium hover:bg-neutral-200 transition-colors rounded-sm flex items-center gap-2">
+                  <button className="px-4 py-2 bg-emerald-500 text-white text-sm font-medium hover:bg-emerald-600 transition-colors rounded-lg flex items-center gap-2 shadow-lg shadow-emerald-500/20">
                     <Plus className="w-4 h-4" />
                     Add Project
                   </button>
                 </Link>
 
                 <Link to="/profile/me">
-                  <button className="p-2 text-neutral-300 hover:text-white transition-colors">
+                  <button className="p-2 text-gray-300 hover:text-emerald-400 transition-colors">
                     <User className="w-5 h-5" />
                   </button>
                 </Link>
@@ -72,7 +72,7 @@ export function HomepageNavbar() {
 
                 <button 
                   onClick={handleLogout}
-                  className="px-4 py-2 border border-neutral-800 text-neutral-300 hover:text-white hover:border-neutral-600 transition-colors rounded-sm text-sm flex items-center gap-2"
+                  className="px-4 py-2 border border-white/10 bg-white/5 text-gray-300 hover:text-white hover:bg-white/10 hover:border-emerald-500/30 transition-colors rounded-lg text-sm flex items-center gap-2"
                 >
                   <LogOut className="w-4 h-4" />
                   <span>Logout</span>
@@ -82,13 +82,13 @@ export function HomepageNavbar() {
               <>
                 <Link
                   to="/login"
-                  className="text-neutral-300 hover:text-white text-sm font-medium transition-colors"
+                  className="text-gray-300 hover:text-emerald-400 text-sm font-medium transition-colors"
                 >
                   Sign in
                 </Link>
                 <Link
                   to="/signup"
-                  className="px-4 py-2 border border-white text-white text-sm font-medium hover:bg-white hover:text-black transition-colors rounded-sm"
+                  className="px-4 py-2 border border-emerald-500/30 text-emerald-400 text-sm font-medium hover:bg-emerald-500/10 hover:border-emerald-500/50 transition-colors rounded-lg"
                 >
                   Register
                 </Link>
@@ -99,7 +99,7 @@ export function HomepageNavbar() {
           {/* Mobile Menu Button */}
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="md:hidden p-2 text-neutral-300 hover:text-white transition-colors"
+            className="md:hidden p-2 text-gray-300 hover:text-emerald-400 transition-colors"
             aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
           >
             {isMobileMenuOpen ? (
@@ -112,14 +112,14 @@ export function HomepageNavbar() {
 
         {/* Mobile Menu */}
         {isMobileMenuOpen && (
-          <div className="md:hidden border-t border-neutral-800 py-4 space-y-4">
+          <div className="md:hidden border-t border-white/10 py-4 space-y-4">
             {/* Mobile Search */}
             <div className="relative">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-neutral-500" />
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
               <input
                 type="text"
                 placeholder="Search projects"
-                className="w-full pl-10 pr-4 py-2.5 bg-neutral-900 border border-neutral-800 text-white placeholder:text-neutral-500 text-sm focus:outline-none focus:border-neutral-600 rounded-sm"
+                className="w-full pl-10 pr-4 py-2.5 bg-white/5 border border-white/10 text-white placeholder:text-gray-500 text-sm focus:outline-none focus:border-emerald-500/50 focus:ring-2 focus:ring-emerald-500/20 rounded-lg transition-all"
               />
             </div>
 
@@ -127,13 +127,13 @@ export function HomepageNavbar() {
             {isAuthenticated ? (
               <div className="flex flex-col gap-3">
                 <Link to="/repositories/new" onClick={() => setIsMobileMenuOpen(false)}>
-                  <button className="w-full px-4 py-2.5 bg-white text-black text-sm font-medium hover:bg-neutral-200 transition-colors rounded-sm flex items-center justify-center gap-2">
+                  <button className="w-full px-4 py-2.5 bg-emerald-500 text-white text-sm font-medium hover:bg-emerald-600 transition-colors rounded-lg flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/20">
                     <Plus className="w-4 h-4" />
                     Add Project
                   </button>
                 </Link>
                 <Link to="/profile/me" onClick={() => setIsMobileMenuOpen(false)}>
-                  <button className="w-full px-4 py-2.5 border border-neutral-800 text-neutral-300 hover:text-white hover:border-neutral-600 transition-colors rounded-sm text-sm flex items-center justify-center gap-2">
+                  <button className="w-full px-4 py-2.5 border border-white/10 bg-white/5 text-gray-300 hover:text-white hover:bg-white/10 transition-colors rounded-lg text-sm flex items-center justify-center gap-2">
                     <User className="w-4 h-4" />
                     Profile
                   </button>
@@ -146,7 +146,7 @@ export function HomepageNavbar() {
                     setIsMobileMenuOpen(false);
                     handleLogout();
                   }}
-                  className="w-full px-4 py-2.5 border border-neutral-800 text-neutral-300 hover:text-white hover:border-neutral-600 transition-colors rounded-sm text-sm flex items-center justify-center gap-2"
+                  className="w-full px-4 py-2.5 border border-white/10 bg-white/5 text-gray-300 hover:text-white hover:bg-white/10 transition-colors rounded-lg text-sm flex items-center justify-center gap-2"
                 >
                   <LogOut className="w-4 h-4" />
                   Logout
@@ -157,14 +157,14 @@ export function HomepageNavbar() {
                 <Link
                   to="/login"
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className="text-neutral-300 hover:text-white text-sm font-medium transition-colors py-2"
+                  className="text-gray-300 hover:text-emerald-400 text-sm font-medium transition-colors py-2"
                 >
                   Sign in
                 </Link>
                 <Link
                   to="/signup"
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className="px-4 py-2.5 border border-white text-white text-sm font-medium hover:bg-white hover:text-black transition-colors rounded-sm text-center"
+                  className="px-4 py-2.5 border border-emerald-500/30 text-emerald-400 text-sm font-medium hover:bg-emerald-500/10 hover:border-emerald-500/50 transition-colors rounded-lg text-center"
                 >
                   Register
                 </Link>

@@ -63,10 +63,10 @@ export default function SubmitProjectModal({ onClose, bountyId, wallet }) {
 
       <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" onClick={onClose} />
 
-      <div className="relative bg-[#0b0b12] border border-white/10 rounded-2xl w-full max-w-3xl max-h-[95vh] flex flex-col shadow-xl overflow-hidden">
+      <div className="relative bg-gradient-to-br from-[#0A0F0D] to-[#050A08] border border-white/10 rounded-2xl w-full max-w-3xl max-h-[95vh] flex flex-col shadow-xl overflow-hidden">
 
         {/* Header */}
-        <div className="p-6 border-b border-white/10 flex justify-between items-center bg-[#141423]">
+        <div className="p-6 border-b border-white/10 flex justify-between items-center bg-white/5">
           <h2 className="text-xl font-bold text-white">Submit Your Project</h2>
           <button onClick={onClose} className="text-gray-400 hover:text-white">
             <X />
@@ -108,11 +108,11 @@ export default function SubmitProjectModal({ onClose, bountyId, wallet }) {
         </div>
 
         {/* Footer */}
-        <div className="p-6 border-t border-white/10 bg-[#141423]">
+        <div className="p-6 border-t border-white/10 bg-white/5">
           <button
             onClick={() => submit()}
             disabled={loading}
-            className="w-full bg-green-600 hover:bg-green-500 text-white py-3 rounded-xl flex justify-center items-center gap-2 disabled:opacity-60"
+            className="w-full bg-emerald-500 hover:bg-emerald-600 text-white py-3 rounded-xl flex justify-center items-center gap-2 disabled:opacity-60 shadow-lg shadow-emerald-500/20 transition-all"
           >
             {loading ? <Loader2 className="animate-spin" /> : <Send />}
             Submit Project
@@ -141,7 +141,7 @@ function Input({ label, ...props }) {
       <label className="text-gray-300 text-sm">{label}</label>
       <input
         {...props}
-        className="w-full mt-1 px-3 py-2 bg-[#0e0e16] border border-white/10 rounded-xl text-white outline-none focus:border-green-500"
+        className="w-full mt-1 px-3 py-2 bg-white/5 border border-white/10 rounded-xl text-white outline-none focus:border-emerald-500/50 focus:ring-2 focus:ring-emerald-500/20 transition-all"
       />
     </div>
   );
@@ -154,7 +154,7 @@ function Text({ label, ...props }) {
       <textarea
         rows={4}
         {...props}
-        className="w-full mt-1 px-3 py-2 bg-[#0e0e16] border border-white/10 rounded-xl text-white outline-none focus:border-green-500"
+        className="w-full mt-1 px-3 py-2 bg-white/5 border border-white/10 rounded-xl text-white outline-none focus:border-emerald-500/50 focus:ring-2 focus:ring-emerald-500/20 transition-all"
       />
     </div>
   );

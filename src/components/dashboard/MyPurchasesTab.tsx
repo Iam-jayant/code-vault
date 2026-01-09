@@ -89,16 +89,16 @@ export function MyPurchasesTab({ userId }: MyPurchasesTabProps) {
   if (isLoading) {
     return (
       <div className="space-y-4">
-        <div className="h-32 bg-neutral-800/50 rounded-sm animate-pulse" />
-        <div className="h-32 bg-neutral-800/50 rounded-sm animate-pulse" />
-        <div className="h-32 bg-neutral-800/50 rounded-sm animate-pulse" />
+        <div className="h-32 bg-white/5 rounded-lg animate-pulse" />
+        <div className="h-32 bg-white/5 rounded-lg animate-pulse" />
+        <div className="h-32 bg-white/5 rounded-lg animate-pulse" />
       </div>
     );
   }
 
   if (error) {
     return (
-      <div className="text-sm text-red-400 p-4 bg-red-900/20 border border-red-800 rounded-sm">
+      <div className="text-sm text-red-400 p-4 bg-red-500/10 border border-red-500/30 rounded-lg">
         {error}
       </div>
     );
@@ -111,9 +111,9 @@ export function MyPurchasesTab({ userId }: MyPurchasesTabProps) {
     return (
       <div
         key={purchase._id}
-        className="relative bg-neutral-900/50 backdrop-blur-sm border border-neutral-800 rounded-sm overflow-hidden hover:border-neutral-700 transition-colors"
+        className="relative bg-white/5 backdrop-blur-sm border border-white/10 rounded-lg overflow-hidden hover:border-emerald-500/30 transition-colors"
       >
-        <div className="absolute inset-0 bg-gradient-to-br from-white/[0.03] to-transparent rounded-sm pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/5 to-transparent rounded-lg pointer-events-none" />
         
         <div className="relative p-6">
           <div className="flex gap-6">
@@ -125,7 +125,7 @@ export function MyPurchasesTab({ userId }: MyPurchasesTabProps) {
                   'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=200&h=150&fit=crop'
                 }
                 alt={project.title}
-                className="w-32 h-24 object-cover rounded-sm border border-neutral-700"
+                className="w-32 h-24 object-cover rounded-lg border border-white/10"
               />
             </div>
 
@@ -135,11 +135,11 @@ export function MyPurchasesTab({ userId }: MyPurchasesTabProps) {
                 <div className="flex-1 min-w-0">
                   <Link
                     to={`/repository/${project.slug}`}
-                    className="font-heading text-lg font-semibold text-white hover:text-neutral-300 transition-colors line-clamp-1"
+                    className="font-heading text-lg font-semibold text-white hover:text-emerald-400 transition-colors line-clamp-1"
                   >
                     {project.title}
                   </Link>
-                  <p className="text-sm text-neutral-400 line-clamp-2 mt-1">
+                  <p className="text-sm text-gray-400 line-clamp-2 mt-1">
                     {project.description}
                   </p>
                 </div>
@@ -147,12 +147,12 @@ export function MyPurchasesTab({ userId }: MyPurchasesTabProps) {
                 {/* Access Type Badge */}
                 <div>
                   {isDownload ? (
-                    <span className="px-3 py-1 bg-green-900/30 border border-green-700 text-green-400 text-xs font-medium rounded-sm flex items-center gap-1">
+                    <span className="px-3 py-1 bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 text-xs font-medium rounded-lg flex items-center gap-1">
                       <Download className="w-3 h-3" />
                       Full Access
                     </span>
                   ) : (
-                    <span className="px-3 py-1 bg-blue-900/30 border border-blue-700 text-blue-400 text-xs font-medium rounded-sm flex items-center gap-1">
+                    <span className="px-3 py-1 bg-blue-500/20 border border-blue-500/30 text-blue-400 text-xs font-medium rounded-lg flex items-center gap-1">
                       <Eye className="w-3 h-3" />
                       Demo Access
                     </span>
@@ -161,7 +161,7 @@ export function MyPurchasesTab({ userId }: MyPurchasesTabProps) {
               </div>
 
               {/* Purchase Details */}
-              <div className="flex items-center gap-4 mb-4 text-sm text-neutral-400">
+              <div className="flex items-center gap-4 mb-4 text-sm text-gray-400">
                 <span>Purchased: {formatDate(purchase.purchaseDate)}</span>
                 <span>•</span>
                 <span>{purchase.amount} MOVE</span>
@@ -170,7 +170,7 @@ export function MyPurchasesTab({ userId }: MyPurchasesTabProps) {
                   href={`https://explorer.movementlabs.xyz/txn/${purchase.txHash}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-1 hover:text-white transition-colors"
+                  className="flex items-center gap-1 text-emerald-400 hover:text-emerald-300 transition-colors"
                 >
                   Tx: {truncateTxHash(purchase.txHash)}
                   <ExternalLink className="w-3 h-3" />
@@ -181,14 +181,14 @@ export function MyPurchasesTab({ userId }: MyPurchasesTabProps) {
               <div className="flex items-center gap-3">
                 <Link
                   to={`/repository/${project.slug}`}
-                  className="px-4 py-2 border border-neutral-700 text-white hover:bg-neutral-800 transition-colors rounded-sm text-sm"
+                  className="px-4 py-2 border border-white/10 bg-white/5 text-white hover:bg-white/10 transition-colors rounded-lg text-sm"
                 >
                   View Project
                 </Link>
                 {isDownload && project.zipFileUrl && (
                   <button
                     onClick={() => handleDownload(purchase)}
-                    className="px-4 py-2 bg-white text-black font-medium hover:bg-neutral-200 transition-colors rounded-sm text-sm flex items-center gap-2"
+                    className="px-4 py-2 bg-emerald-500 text-white font-medium hover:bg-emerald-600 transition-colors rounded-lg text-sm flex items-center gap-2 shadow-lg shadow-emerald-500/20"
                   >
                     <Download className="w-4 h-4" />
                     Download
@@ -207,28 +207,28 @@ export function MyPurchasesTab({ userId }: MyPurchasesTabProps) {
       {/* Header */}
       <div>
         <h2 className="font-heading text-2xl font-bold text-white">My Purchases</h2>
-        <p className="text-sm text-neutral-400 mt-1">
+        <p className="text-sm text-gray-400 mt-1">
           {purchases.length} {purchases.length === 1 ? 'purchase' : 'purchases'}
         </p>
       </div>
 
       {purchases.length === 0 ? (
-        <div className="relative bg-neutral-900/50 backdrop-blur-sm border border-neutral-800 rounded-sm p-12 text-center">
-          <div className="absolute inset-0 bg-gradient-to-br from-white/[0.03] to-transparent rounded-sm pointer-events-none" />
+        <div className="relative bg-white/5 backdrop-blur-sm border border-white/10 rounded-lg p-12 text-center">
+          <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/5 to-transparent rounded-lg pointer-events-none" />
           
           <div className="relative">
-            <div className="w-16 h-16 rounded-sm bg-white/10 flex items-center justify-center mx-auto mb-4">
-              <ShoppingBag className="w-8 h-8 text-white" />
+            <div className="w-16 h-16 rounded-lg bg-emerald-500/10 flex items-center justify-center mx-auto mb-4">
+              <ShoppingBag className="w-8 h-8 text-emerald-400" />
             </div>
             <h3 className="font-heading text-xl font-semibold text-white mb-2">
               No purchases yet
             </h3>
-            <p className="text-neutral-400 mb-6">
+            <p className="text-gray-400 mb-6">
               Browse the marketplace to find projects you'd like to access
             </p>
             <Link
               to="/repositories"
-              className="inline-flex items-center gap-2 px-6 py-3 bg-white text-black font-medium hover:bg-neutral-200 transition-colors rounded-sm"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-emerald-500 text-white font-medium hover:bg-emerald-600 transition-colors rounded-lg shadow-lg shadow-emerald-500/20"
             >
               Browse Projects
             </Link>
@@ -240,7 +240,7 @@ export function MyPurchasesTab({ userId }: MyPurchasesTabProps) {
           {downloadPurchases.length > 0 && (
             <div className="space-y-4">
               <div className="flex items-center gap-2">
-                <Download className="w-5 h-5 text-green-400" />
+                <Download className="w-5 h-5 text-emerald-400" />
                 <h3 className="font-heading text-lg font-semibold text-white">
                   Full Access ({downloadPurchases.length})
                 </h3>

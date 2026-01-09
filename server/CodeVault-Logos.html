@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CodeVault Logo</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 40px;
+            background: linear-gradient(to bottom right, #0A0F0D, #050A08, #000000);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        }
+        
+        .container {
+            text-align: center;
+            max-width: 1200px;
+        }
+        
+        h1 {
+            color: #fff;
+            margin-bottom: 40px;
+            font-size: 32px;
+            font-weight: 700;
+        }
+        
+        .logo-showcase {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .logo-variant {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 40px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .logo-variant h3 {
+            color: #00D9A3;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+        
+        .logo-variant p {
+            color: #9CA3AF;
+            font-size: 14px;
+        }
+        
+        .download-section {
+            margin-top: 40px;
+            padding: 30px;
+            background: rgba(0, 217, 163, 0.1);
+            border: 1px solid rgba(0, 217, 163, 0.3);
+            border-radius: 16px;
+        }
+        
+        .download-section h2 {
+            color: #00D9A3;
+            margin-bottom: 20px;
+        }
+        
+        .download-section p {
+            color: #D1D5DB;
+            margin-bottom: 20px;
+        }
+        
+        button {
+            background: #00D9A3;
+            color: #000;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            margin: 5px;
+            transition: all 0.3s ease;
+        }
+        
+        button:hover {
+            background: #00B386;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 217, 163, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>CodeVault Logo Designs</h1>
+        
+        <div class="logo-showcase">
+            <!-- Logo Variant 1: Vault with Code Brackets -->
+            <div class="logo-variant">
+                <svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Outer glow -->
+                    <g filter="url(#glow1)">
+                        <!-- Vault door circle -->
+                        <circle cx="100" cy="100" r="70" stroke="url(#gradient1)" stroke-width="3" fill="rgba(0, 217, 163, 0.05)"/>
+                        
+                        <!-- Lock mechanism circles -->
+                        <circle cx="100" cy="100" r="50" stroke="url(#gradient1)" stroke-width="2" fill="none" opacity="0.6"/>
+                        <circle cx="100" cy="100" r="35" stroke="url(#gradient1)" stroke-width="2" fill="none" opacity="0.4"/>
+                        
+                        <!-- Code brackets -->
+                        <path d="M 70 80 L 60 100 L 70 120" stroke="#00D9A3" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M 130 80 L 140 100 L 130 120" stroke="#00D9A3" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                        
+                        <!-- Center keyhole -->
+                        <circle cx="100" cy="95" r="8" fill="#00D9A3"/>
+                        <rect x="96" y="95" width="8" height="15" rx="2" fill="#00D9A3"/>
+                        
+                        <!-- Vault spokes -->
+                        <line x1="100" y1="65" x2="100" y2="55" stroke="#00D9A3" stroke-width="2" stroke-linecap="round"/>
+                        <line x1="100" y1="135" x2="100" y2="145" stroke="#00D9A3" stroke-width="2" stroke-linecap="round"/>
+                        <line x1="65" y1="100" x2="55" y2="100" stroke="#00D9A3" stroke-width="2" stroke-linecap="round"/>
+                        <line x1="135" y1="100" x2="145" y2="100" stroke="#00D9A3" stroke-width="2" stroke-linecap="round"/>
+                    </g>
+                    
+                    <defs>
+                        <linearGradient id="gradient1" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#00D9A3;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#00B386;stop-opacity:1" />
+                        </linearGradient>
+                        <filter id="glow1" x="-50%" y="-50%" width="200%" height="200%">
+                            <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+                            <feMerge>
+                                <feMergeNode in="coloredBlur"/>
+                                <feMergeNode in="SourceGraphic"/>
+                            </feMerge>
+                        </filter>
+                    </defs>
+                </svg>
+                
+                <h3>Vault + Code</h3>
+                <p>Classic vault with code brackets</p>
+            </div>
+            
+            <!-- Logo Variant 2: Geometric Vault -->
+            <div class="logo-variant">
+                <svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <g filter="url(#glow2)">
+                        <!-- Hexagonal vault -->
+                        <path d="M 100 40 L 150 70 L 150 130 L 100 160 L 50 130 L 50 70 Z" 
+                              stroke="url(#gradient2)" stroke-width="3" fill="rgba(0, 217, 163, 0.05)"/>
+                        
+                        <!-- Inner hexagon -->
+                        <path d="M 100 60 L 130 77.5 L 130 122.5 L 100 140 L 70 122.5 L 70 77.5 Z" 
+                              stroke="#00D9A3" stroke-width="2" fill="none" opacity="0.6"/>
+                        
+                        <!-- Code symbol -->
+                        <text x="100" y="110" font-family="monospace" font-size="40" font-weight="bold" 
+                              fill="url(#gradient2)" text-anchor="middle" dominant-baseline="middle">
+                            &lt;/&gt;
+                        </text>
+                        
+                        <!-- Corner accents -->
+                        <circle cx="100" cy="40" r="4" fill="#00D9A3"/>
+                        <circle cx="150" cy="70" r="4" fill="#00D9A3"/>
+                        <circle cx="150" cy="130" r="4" fill="#00D9A3"/>
+                        <circle cx="100" cy="160" r="4" fill="#00D9A3"/>
+                        <circle cx="50" cy="130" r="4" fill="#00D9A3"/>
+                        <circle cx="50" cy="70" r="4" fill="#00D9A3"/>
+                    </g>
+                    
+                    <defs>
+                        <linearGradient id="gradient2" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#00D9A3;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#00B386;stop-opacity:1" />
+                        </linearGradient>
+                        <filter id="glow2" x="-50%" y="-50%" width="200%" height="200%">
+                            <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+                            <feMerge>
+                                <feMergeNode in="coloredBlur"/>
+                                <feMergeNode in="SourceGraphic"/>
+                            </feMerge>
+                        </filter>
+                    </defs>
+                </svg>
+                
+                <h3>Geometric Vault</h3>
+                <p>Modern hexagonal design</p>
+            </div>
+            
+            <!-- Logo Variant 3: Minimal with Text -->
+            <div class="logo-variant">
+                <svg width="200" height="80" viewBox="0 0 400 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <g filter="url(#glow3)">
+                        <!-- Vault icon -->
+                        <circle cx="40" cy="40" r="30" stroke="url(#gradient3)" stroke-width="2.5" fill="rgba(0, 217, 163, 0.05)"/>
+                        <circle cx="40" cy="40" r="20" stroke="#00D9A3" stroke-width="2" fill="none" opacity="0.5"/>
+                        <circle cx="40" cy="38" r="5" fill="#00D9A3"/>
+                        <rect x="37" y="38" width="6" height="10" rx="1" fill="#00D9A3"/>
+                        
+                        <!-- Text -->
+                        <text x="85" y="50" font-family="Arial, sans-serif" font-size="36" font-weight="700" 
+                              fill="url(#gradient3)" letter-spacing="2">
+                            CodeVault
+                        </text>
+                    </g>
+                    
+                    <defs>
+                        <linearGradient id="gradient3" x1="0%" y1="0%" x2="100%" y2="0%">
+                            <stop offset="0%" style="stop-color:#00D9A3;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#00B386;stop-opacity:1" />
+                        </linearGradient>
+                        <filter id="glow3" x="-50%" y="-50%" width="200%" height="200%">
+                            <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+                            <feMerge>
+                                <feMergeNode in="coloredBlur"/>
+                                <feMergeNode in="SourceGraphic"/>
+                            </feMerge>
+                        </filter>
+                    </defs>
+                </svg>
+                
+                <h3>Logo + Text</h3>
+                <p>Perfect for navbar/header</p>
+            </div>
+            
+            <!-- Logo Variant 4: Lettermark CV -->
+            <div class="logo-variant">
+                <svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <g filter="url(#glow4)">
+                        <!-- Outer square with rounded corners -->
+                        <rect x="40" y="40" width="120" height="120" rx="20" 
+                              stroke="url(#gradient4)" stroke-width="3" fill="rgba(0, 217, 163, 0.05)"/>
+                        
+                        <!-- Inner decoration -->
+                        <rect x="50" y="50" width="100" height="100" rx="15" 
+                              stroke="#00D9A3" stroke-width="1.5" fill="none" opacity="0.3"/>
+                        
+                        <!-- CV Monogram -->
+                        <text x="100" y="120" font-family="monospace" font-size="70" font-weight="900" 
+                              fill="url(#gradient4)" text-anchor="middle" dominant-baseline="middle" letter-spacing="-5">
+                            CV
+                        </text>
+                        
+                        <!-- Corner dots -->
+                        <circle cx="50" cy="50" r="3" fill="#00D9A3"/>
+                        <circle cx="150" cy="50" r="3" fill="#00D9A3"/>
+                        <circle cx="150" cy="150" r="3" fill="#00D9A3"/>
+                        <circle cx="50" cy="150" r="3" fill="#00D9A3"/>
+                    </g>
+                    
+                    <defs>
+                        <linearGradient id="gradient4" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#00D9A3;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#00B386;stop-opacity:1" />
+                        </linearGradient>
+                        <filter id="glow4" x="-50%" y="-50%" width="200%" height="200%">
+                            <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+                            <feMerge>
+                                <feMergeNode in="coloredBlur"/>
+                                <feMergeNode in="SourceGraphic"/>
+                            </feMerge>
+                        </filter>
+                    </defs>
+                </svg>
+                
+                <h3>CV Monogram</h3>
+                <p>Clean lettermark design</p>
+            </div>
+        </div>
+        
+        <div class="download-section">
+            <h2>📥 Download Instructions</h2>
+            <p>Right-click on any logo above and select "Save image as..." to download as SVG.</p>
+            <p>You can also copy the SVG code directly from the page source.</p>
+            <button onclick="downloadAllLogos()">Download All Logos</button>
+        </div>
+    </div>
+    
+    <script>
+        function downloadAllLogos() {
+            alert('Right-click on each logo and select "Save image as..." to download individual SVG files. You can also view the page source to copy SVG code directly.');
+        }
+    </script>
+</body>
+</html>

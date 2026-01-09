@@ -31,7 +31,7 @@ createRoot(document.getElementById("root")!).render(
       appearance: {
         theme: 'dark',
         accentColor: '#ffffff',
-        logo: '/layR logo.png',
+        logo: 'CodeVault.png',
       },
       loginMethods: ['email', 'google'],
     }}

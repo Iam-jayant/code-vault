@@ -189,7 +189,7 @@ const AddRepository = () => {
       technologies: techStack,
       category: formData.category || 'Other',
       demoUrl: formData.demoUrl || undefined,
-      previewImage: thumbnailBase64, // Add thumbnail as base64
+      previewImage: thumbnailBase64,
       demoPrice: demoPriceNum,
       downloadPrice: downloadPriceNum,
       isPublished: true,
@@ -243,13 +243,13 @@ const AddRepository = () => {
 
   return (
     <Layout>
-      <div className="min-h-screen bg-black">
+      <div className="min-h-screen bg-gradient-to-br from-[#0A0F0D] via-[#050A08] to-black">
         <div className="container max-w-3xl mx-auto px-4 py-8 sm:py-12">
           <div className="mb-8 sm:mb-10">
             <h1 className="font-heading text-3xl sm:text-4xl font-bold text-white mb-2">
               Add New Project
             </h1>
-            <p className="text-neutral-400 text-sm sm:text-base">
+            <p className="text-gray-400 text-sm sm:text-base">
               Share your project with the community and get discovered
             </p>
           </div>
@@ -257,22 +257,21 @@ const AddRepository = () => {
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* Error Message */}
             {error && (
-              <div className="bg-red-500/10 border border-red-500/20 rounded-sm p-4">
+              <div className="bg-red-500/10 border border-red-500/30 rounded-lg p-4">
                 <p className="text-red-400 text-sm">{error}</p>
               </div>
             )}
 
             {/* Authentication Warning */}
             {!userId && (
-              <div className="bg-yellow-500/10 border border-yellow-500/20 rounded-sm p-4">
-                <p className="text-yellow-400 text-sm">Please log in to add a project.</p>
+              <div className="bg-emerald-500/10 border border-emerald-500/30 rounded-lg p-4">
+                <p className="text-emerald-400 text-sm">Please log in to add a project.</p>
               </div>
             )}
 
             {/* Basic Info */}
-            <div className="relative bg-neutral-900/50 backdrop-blur-sm border border-neutral-800 rounded-sm p-6">
-              {/* Glass effect overlay */}
-              <div className="absolute inset-0 bg-gradient-to-br from-white/[0.03] to-transparent rounded-sm pointer-events-none" />
+            <div className="relative bg-white/5 backdrop-blur-sm border border-white/10 rounded-lg p-6">
+              <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/5 to-transparent rounded-lg pointer-events-none" />
 
               <div className="relative">
                 <h2 className="font-heading text-xl font-semibold text-white mb-6">
@@ -290,7 +289,7 @@ const AddRepository = () => {
                       onChange={(e) =>
                         setFormData({ ...formData, name: e.target.value })
                       }
-                      className="w-full px-4 py-2.5 bg-neutral-900 border border-neutral-800 text-white placeholder:text-neutral-500 text-sm focus:outline-none focus:border-neutral-600 rounded-sm"
+                      className="w-full px-4 py-2.5 bg-white/5 border border-white/10 text-white placeholder:text-gray-500 text-sm focus:outline-none focus:border-emerald-500/50 focus:ring-2 focus:ring-emerald-500/20 rounded-lg transition-all"
                       required
                     />
                   </div>
@@ -307,10 +306,10 @@ const AddRepository = () => {
                         setFormData({ ...formData, shortDescription: e.target.value })
                       }
                       maxLength={150}
-                      className="w-full px-4 py-2.5 bg-neutral-900 border border-neutral-800 text-white placeholder:text-neutral-500 text-sm focus:outline-none focus:border-neutral-600 rounded-sm"
+                      className="w-full px-4 py-2.5 bg-white/5 border border-white/10 text-white placeholder:text-gray-500 text-sm focus:outline-none focus:border-emerald-500/50 focus:ring-2 focus:ring-emerald-500/20 rounded-lg transition-all"
                       required
                     />
-                    <p className="text-xs text-neutral-500 mt-1">
+                    <p className="text-xs text-gray-500 mt-1">
                       {formData.shortDescription.length}/150 characters
                     </p>
                   </div>
@@ -326,7 +325,7 @@ const AddRepository = () => {
                         setFormData({ ...formData, longDescription: e.target.value })
                       }
                       rows={5}
-                      className="w-full px-4 py-2.5 bg-neutral-900 border border-neutral-800 text-white placeholder:text-neutral-500 text-sm focus:outline-none focus:border-neutral-600 rounded-sm resize-none"
+                      className="w-full px-4 py-2.5 bg-white/5 border border-white/10 text-white placeholder:text-gray-500 text-sm focus:outline-none focus:border-emerald-500/50 focus:ring-2 focus:ring-emerald-500/20 rounded-lg resize-none transition-all"
                     />
                   </div>
 
@@ -336,16 +335,16 @@ const AddRepository = () => {
                         Category *
                       </label>
                       <select
-                        className="w-full px-4 py-2.5 bg-neutral-900 border border-neutral-800 text-white focus:outline-none focus:border-neutral-600 rounded-sm"
+                        className="w-full px-4 py-2.5 bg-white/5 border border-white/10 text-white focus:outline-none focus:border-emerald-500/50 focus:ring-2 focus:ring-emerald-500/20 rounded-lg transition-all"
                         value={formData.category}
                         onChange={(e) =>
                           setFormData({ ...formData, category: e.target.value })
                         }
                         required
                       >
-                        <option value="">Select category</option>
+                        <option value="" className="bg-[#0A0F0D]">Select category</option>
                         {categories.map((cat) => (
-                          <option key={cat} value={cat}>
+                          <option key={cat} value={cat} className="bg-[#0A0F0D]">
                             {cat}
                           </option>
                         ))}
@@ -357,15 +356,15 @@ const AddRepository = () => {
                         License
                       </label>
                       <select
-                        className="w-full px-4 py-2.5 bg-neutral-900 border border-neutral-800 text-white focus:outline-none focus:border-neutral-600 rounded-sm"
+                        className="w-full px-4 py-2.5 bg-white/5 border border-white/10 text-white focus:outline-none focus:border-emerald-500/50 focus:ring-2 focus:ring-emerald-500/20 rounded-lg transition-all"
                         value={formData.license}
                         onChange={(e) =>
                           setFormData({ ...formData, license: e.target.value })
                         }
                       >
-                        <option value="">Select license</option>
+                        <option value="" className="bg-[#0A0F0D]">Select license</option>
                         {licenses.map((license) => (
-                          <option key={license} value={license}>
+                          <option key={license} value={license} className="bg-[#0A0F0D]">
                             {license}
                           </option>
                         ))}
@@ -377,8 +376,8 @@ const AddRepository = () => {
             </div>
 
             {/* Technologies Used */}
-            <div className="relative bg-neutral-900/50 backdrop-blur-sm border border-neutral-800 rounded-sm p-6">
-              <div className="absolute inset-0 bg-gradient-to-br from-white/[0.03] to-transparent rounded-sm pointer-events-none" />
+            <div className="relative bg-white/5 backdrop-blur-sm border border-white/10 rounded-lg p-6">
+              <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/5 to-transparent rounded-lg pointer-events-none" />
 
               <div className="relative">
                 <h2 className="font-heading text-xl font-semibold text-white mb-6">
@@ -392,12 +391,12 @@ const AddRepository = () => {
                       value={newTech}
                       onChange={(e) => setNewTech(e.target.value)}
                       onKeyDown={(e) => e.key === "Enter" && (e.preventDefault(), handleAddTech())}
-                      className="flex-1 px-4 py-2.5 bg-neutral-900 border border-neutral-800 text-white placeholder:text-neutral-500 text-sm focus:outline-none focus:border-neutral-600 rounded-sm"
+                      className="flex-1 px-4 py-2.5 bg-white/5 border border-white/10 text-white placeholder:text-gray-500 text-sm focus:outline-none focus:border-emerald-500/50 focus:ring-2 focus:ring-emerald-500/20 rounded-lg transition-all"
                     />
                     <button
                       type="button"
                       onClick={handleAddTech}
-                      className="px-4 py-2.5 border border-neutral-800 text-neutral-300 hover:text-white hover:border-neutral-600 transition-colors rounded-sm flex items-center gap-2"
+                      className="px-4 py-2.5 border border-white/10 bg-emerald-500/10 text-emerald-400 hover:bg-emerald-500/20 hover:border-emerald-500/30 transition-colors rounded-lg flex items-center gap-2 font-medium"
                     >
                       <Plus className="w-4 h-4" />
                       Add
@@ -407,7 +406,7 @@ const AddRepository = () => {
                   {techStack.length > 0 && (
                     <div className="flex flex-wrap gap-2">
                       {techStack.map((tech) => (
-                        <span key={tech} className="px-3 py-1.5 bg-neutral-800 text-white text-sm rounded-sm flex items-center gap-2">
+                        <span key={tech} className="px-3 py-1.5 bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 text-sm rounded-lg flex items-center gap-2">
                           {tech}
                           <button
                             type="button"
@@ -425,15 +424,15 @@ const AddRepository = () => {
             </div>
 
             {/* Project Thumbnail */}
-            <div className="relative bg-neutral-900/50 backdrop-blur-sm border border-neutral-800 rounded-sm p-6">
-              <div className="absolute inset-0 bg-gradient-to-br from-white/[0.03] to-transparent rounded-sm pointer-events-none" />
+            <div className="relative bg-white/5 backdrop-blur-sm border border-white/10 rounded-lg p-6">
+              <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/5 to-transparent rounded-lg pointer-events-none" />
 
               <div className="relative">
                 <h2 className="font-heading text-xl font-semibold text-white mb-6">
                   Project Thumbnail
                 </h2>
                 <div className="space-y-4">
-                  <div className="border-2 border-dashed border-neutral-700 rounded-sm p-8 text-center hover:border-neutral-600 transition-colors">
+                  <div className="border-2 border-dashed border-white/20 rounded-lg p-8 text-center hover:border-emerald-500/50 hover:bg-emerald-500/5 transition-all">
                     <input
                       type="file"
                       accept="image/*"
@@ -442,13 +441,13 @@ const AddRepository = () => {
                       id="thumbnail-upload"
                     />
                     <label htmlFor="thumbnail-upload" className="cursor-pointer">
-                      <div className="w-12 h-12 rounded-sm bg-white/10 flex items-center justify-center mx-auto mb-4">
-                        <Image className="w-6 h-6 text-white" />
+                      <div className="w-12 h-12 rounded-lg bg-emerald-500/10 flex items-center justify-center mx-auto mb-4">
+                        <Image className="w-6 h-6 text-emerald-400" />
                       </div>
                       <p className="text-white font-medium mb-1">
                         Upload project thumbnail
                       </p>
-                      <p className="text-sm text-neutral-400">
+                      <p className="text-sm text-gray-400">
                         PNG or JPG (max 5MB, recommended: 1200x630px)
                       </p>
                     </label>
@@ -456,7 +455,7 @@ const AddRepository = () => {
 
                   {thumbnailPreview && (
                     <div className="relative">
-                      <div className="aspect-video bg-neutral-800 rounded-sm overflow-hidden border border-neutral-700 max-w-md mx-auto">
+                      <div className="aspect-video bg-white/5 rounded-lg overflow-hidden border border-white/10 max-w-md mx-auto">
                         <img
                           src={thumbnailPreview}
                           alt="Thumbnail preview"
@@ -469,11 +468,11 @@ const AddRepository = () => {
                           setThumbnail(null);
                           setThumbnailPreview('');
                         }}
-                        className="absolute -top-2 -right-2 w-8 h-8 bg-red-500 hover:bg-red-600 text-white rounded-full flex items-center justify-center transition-colors"
+                        className="absolute -top-2 -right-2 w-8 h-8 bg-red-500 hover:bg-red-600 text-white rounded-full flex items-center justify-center transition-colors shadow-lg"
                       >
                         <X className="w-5 h-5" />
                       </button>
-                      <p className="text-xs text-neutral-400 mt-2 text-center">
+                      <p className="text-xs text-gray-400 mt-2 text-center">
                         {thumbnail?.name}
                       </p>
                     </div>
@@ -483,15 +482,15 @@ const AddRepository = () => {
             </div>
 
             {/* Preview Images */}
-            <div className="relative bg-neutral-900/50 backdrop-blur-sm border border-neutral-800 rounded-sm p-6">
-              <div className="absolute inset-0 bg-gradient-to-br from-white/[0.03] to-transparent rounded-sm pointer-events-none" />
+            <div className="relative bg-white/5 backdrop-blur-sm border border-white/10 rounded-lg p-6">
+              <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/5 to-transparent rounded-lg pointer-events-none" />
 
               <div className="relative">
                 <h2 className="font-heading text-xl font-semibold text-white mb-6">
                   Preview Images
                 </h2>
                 <div className="space-y-4">
-                  <div className="border-2 border-dashed border-neutral-700 rounded-sm p-8 text-center hover:border-neutral-600 transition-colors">
+                  <div className="border-2 border-dashed border-white/20 rounded-lg p-8 text-center hover:border-emerald-500/50 hover:bg-emerald-500/5 transition-all">
                     <input
                       type="file"
                       accept="image/*"
@@ -501,16 +500,16 @@ const AddRepository = () => {
                       id="image-upload"
                     />
                     <label htmlFor="image-upload" className="cursor-pointer">
-                      <div className="w-12 h-12 rounded-sm bg-white/10 flex items-center justify-center mx-auto mb-4">
-                        <Image className="w-6 h-6 text-white" />
+                      <div className="w-12 h-12 rounded-lg bg-emerald-500/10 flex items-center justify-center mx-auto mb-4">
+                        <Image className="w-6 h-6 text-emerald-400" />
                       </div>
                       <p className="text-white font-medium mb-1">
                         Click to upload or drag and drop
                       </p>
-                      <p className="text-sm text-neutral-400">
+                      <p className="text-sm text-gray-400">
                         PNG, JPG or GIF (max 1MB each, up to 5 images)
                       </p>
-                      <p className="text-xs text-neutral-500 mt-2">
+                      <p className="text-xs text-gray-500 mt-2">
                         {previewImages.length}/5 images uploaded
                       </p>
                     </label>
@@ -520,7 +519,7 @@ const AddRepository = () => {
                     <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
                       {previewImages.map((file, index) => (
                         <div key={index} className="relative group">
-                          <div className="aspect-video bg-neutral-800 rounded-sm overflow-hidden border border-neutral-700">
+                          <div className="aspect-video bg-white/5 rounded-lg overflow-hidden border border-white/10">
                             <img
                               src={URL.createObjectURL(file)}
                               alt={`Preview ${index + 1}`}
@@ -530,11 +529,11 @@ const AddRepository = () => {
                           <button
                             type="button"
                             onClick={() => handleRemoveImage(index)}
-                            className="absolute -top-2 -right-2 w-6 h-6 bg-red-500 hover:bg-red-600 text-white rounded-full flex items-center justify-center transition-colors"
+                            className="absolute -top-2 -right-2 w-6 h-6 bg-red-500 hover:bg-red-600 text-white rounded-full flex items-center justify-center transition-colors shadow-lg"
                           >
                             <X className="w-4 h-4" />
                           </button>
-                          <p className="text-xs text-neutral-400 mt-1 truncate">
+                          <p className="text-xs text-gray-400 mt-1 truncate">
                             {file.name}
                           </p>
                         </div>
@@ -546,8 +545,8 @@ const AddRepository = () => {
             </div>
 
             {/* Links */}
-            <div className="relative bg-neutral-900/50 backdrop-blur-sm border border-neutral-800 rounded-sm p-6">
-              <div className="absolute inset-0 bg-gradient-to-br from-white/[0.03] to-transparent rounded-sm pointer-events-none" />
+            <div className="relative bg-white/5 backdrop-blur-sm border border-white/10 rounded-lg p-6">
+              <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/5 to-transparent rounded-lg pointer-events-none" />
 
               <div className="relative">
                 <h2 className="font-heading text-xl font-semibold text-white mb-6">
@@ -559,7 +558,7 @@ const AddRepository = () => {
                       Demo URL
                     </label>
                     <div className="relative">
-                      <LinkIcon className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-neutral-500" />
+                      <LinkIcon className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
                       <input
                         type="url"
                         placeholder="https://demo.example.com"
@@ -567,7 +566,7 @@ const AddRepository = () => {
                         onChange={(e) =>
                           setFormData({ ...formData, demoUrl: e.target.value })
                         }
-                        className="w-full pl-11 pr-4 py-2.5 bg-neutral-900 border border-neutral-800 text-white placeholder:text-neutral-500 text-sm focus:outline-none focus:border-neutral-600 rounded-sm"
+                        className="w-full pl-11 pr-4 py-2.5 bg-white/5 border border-white/10 text-white placeholder:text-gray-500 text-sm focus:outline-none focus:border-emerald-500/50 focus:ring-2 focus:ring-emerald-500/20 rounded-lg transition-all"
                       />
                     </div>
                   </div>
@@ -576,14 +575,14 @@ const AddRepository = () => {
             </div>
 
             {/* Upload Code ZIP */}
-            <div className="relative bg-neutral-900/50 backdrop-blur-sm border border-neutral-800 rounded-sm p-6">
-              <div className="absolute inset-0 bg-gradient-to-br from-white/[0.03] to-transparent rounded-sm pointer-events-none" />
+            <div className="relative bg-white/5 backdrop-blur-sm border border-white/10 rounded-lg p-6">
+              <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/5 to-transparent rounded-lg pointer-events-none" />
 
               <div className="relative">
                 <h2 className="font-heading text-xl font-semibold text-white mb-6">
                   Upload Project Code
                 </h2>
-                <div className="border-2 border-dashed border-neutral-700 rounded-sm p-8 text-center hover:border-neutral-600 transition-colors">
+                <div className="border-2 border-dashed border-white/20 rounded-lg p-8 text-center hover:border-emerald-500/50 hover:bg-emerald-500/5 transition-all">
                   <input
                     type="file"
                     accept=".zip"
@@ -592,13 +591,13 @@ const AddRepository = () => {
                     id="zip-upload"
                   />
                   <label htmlFor="zip-upload" className="cursor-pointer">
-                    <div className="w-12 h-12 rounded-sm bg-white/10 flex items-center justify-center mx-auto mb-4">
-                      <FileArchive className="w-6 h-6 text-white" />
+                    <div className="w-12 h-12 rounded-lg bg-emerald-500/10 flex items-center justify-center mx-auto mb-4">
+                      <FileArchive className="w-6 h-6 text-emerald-400" />
                     </div>
                     <p className="text-white font-medium mb-1">
                       {zipFile ? zipFile.name : "Click to upload ZIP file"}
                     </p>
-                    <p className="text-sm text-neutral-400">
+                    <p className="text-sm text-gray-400">
                       Upload your project code as a .zip file (max 20MB)
                     </p>
                   </label>
@@ -606,7 +605,7 @@ const AddRepository = () => {
                     <button
                       type="button"
                       onClick={() => setZipFile(null)}
-                      className="mt-4 px-4 py-2 border border-neutral-800 text-neutral-300 hover:text-white hover:border-neutral-600 transition-colors rounded-sm text-sm inline-flex items-center gap-2"
+                      className="mt-4 px-4 py-2 border border-white/10 bg-white/5 text-gray-300 hover:text-white hover:bg-white/10 transition-colors rounded-lg text-sm inline-flex items-center gap-2"
                     >
                       <X className="w-4 h-4" />
                       Remove file
@@ -617,8 +616,8 @@ const AddRepository = () => {
             </div>
 
             {/* Pricing */}
-            <div className="relative bg-neutral-900/50 backdrop-blur-sm border border-neutral-800 rounded-sm p-6">
-              <div className="absolute inset-0 bg-gradient-to-br from-white/[0.03] to-transparent rounded-sm pointer-events-none" />
+            <div className="relative bg-white/5 backdrop-blur-sm border border-white/10 rounded-lg p-6">
+              <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/5 to-transparent rounded-lg pointer-events-none" />
 
               <div className="relative">
                 <h2 className="font-heading text-xl font-semibold text-white mb-6">
@@ -639,11 +638,11 @@ const AddRepository = () => {
                         }
                         min="0"
                         step="0.01"
-                        className="w-full px-4 py-2.5 bg-neutral-900 border border-neutral-800 text-white placeholder:text-neutral-500 text-sm focus:outline-none focus:border-neutral-600 rounded-sm"
+                        className="w-full px-4 py-2.5 bg-white/5 border border-white/10 text-white placeholder:text-gray-500 text-sm focus:outline-none focus:border-emerald-500/50 focus:ring-2 focus:ring-emerald-500/20 rounded-lg transition-all"
                         required
                       />
                     </div>
-                    <p className="text-xs text-neutral-500 mt-1">
+                    <p className="text-xs text-gray-500 mt-1">
                       Price for users to view demo/preview of your project
                     </p>
                   </div>
@@ -662,11 +661,11 @@ const AddRepository = () => {
                         }
                         min="0"
                         step="0.01"
-                        className="w-full px-4 py-2.5 bg-neutral-900 border border-neutral-800 text-white placeholder:text-neutral-500 text-sm focus:outline-none focus:border-neutral-600 rounded-sm"
+                        className="w-full px-4 py-2.5 bg-white/5 border border-white/10 text-white placeholder:text-gray-500 text-sm focus:outline-none focus:border-emerald-500/50 focus:ring-2 focus:ring-emerald-500/20 rounded-lg transition-all"
                         required
                       />
                     </div>
-                    <p className="text-xs text-neutral-500 mt-1">
+                    <p className="text-xs text-gray-500 mt-1">
                       Price for users to download your full project (must be ≥ demo price)
                     </p>
                   </div>
@@ -684,14 +683,14 @@ const AddRepository = () => {
               <button
                 type="button"
                 onClick={() => navigate(-1)}
-                className="px-6 py-3 border border-neutral-800 text-neutral-300 hover:text-white hover:border-neutral-600 transition-colors rounded-sm text-sm font-medium"
+                className="px-6 py-3 border border-white/10 bg-white/5 text-gray-300 hover:text-white hover:bg-white/10 transition-colors rounded-lg text-sm font-medium"
               >
                 Cancel
               </button>
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="px-8 py-3 bg-white text-black font-medium hover:bg-neutral-200 transition-colors rounded-sm text-sm disabled:opacity-50 disabled:cursor-not-allowed"
+                className="px-8 py-3 bg-emerald-500 text-white font-medium hover:bg-emerald-600 transition-colors rounded-lg text-sm disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-emerald-500/20"
               >
                 {isSubmitting ? "Submitting..." : "Submit Project"}
               </button>

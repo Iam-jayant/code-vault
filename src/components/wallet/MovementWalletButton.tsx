@@ -1,3 +1,4 @@
+// MovementWalletButton.tsx
 import { useMovementWallet } from '@/hooks/useMovementWallet';
 import { Button } from '@/components/ui/button';
 import {
@@ -36,21 +37,21 @@ export function MovementWalletButton() {
     return (
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button variant="outline" className="gap-2 border-neutral-700 text-white hover:bg-neutral-800">
+          <Button variant="outline" className="gap-2 border-white/10 bg-white/5 text-white hover:bg-white/10">
             <Wallet className="w-4 h-4" />
             {formatAddress(address)}
           </Button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent className="bg-neutral-900 border-neutral-800 text-white">
-          <DropdownMenuLabel className="text-neutral-400">Movement Wallet</DropdownMenuLabel>
-          <DropdownMenuSeparator className="bg-neutral-800" />
+        <DropdownMenuContent className="bg-white/5 backdrop-blur-sm border-white/10 text-white">
+          <DropdownMenuLabel className="text-gray-400">Movement Wallet</DropdownMenuLabel>
+          <DropdownMenuSeparator className="bg-white/10" />
           <DropdownMenuItem 
             onClick={copyAddress}
-            className="hover:bg-neutral-800 cursor-pointer"
+            className="hover:bg-white/10 cursor-pointer"
           >
             {copied ? (
               <>
-                <Check className="w-4 h-4 mr-2 text-green-400" />
+                <Check className="w-4 h-4 mr-2 text-emerald-400" />
                 Copied!
               </>
             ) : (
@@ -60,10 +61,10 @@ export function MovementWalletButton() {
               </>
             )}
           </DropdownMenuItem>
-          <DropdownMenuSeparator className="bg-neutral-800" />
+          <DropdownMenuSeparator className="bg-white/10" />
           <DropdownMenuItem 
             onClick={() => disconnect()}
-            className="hover:bg-neutral-800 cursor-pointer text-red-400"
+            className="hover:bg-white/10 cursor-pointer text-red-400"
           >
             <LogOut className="w-4 h-4 mr-2" />
             Disconnect
@@ -76,20 +77,20 @@ export function MovementWalletButton() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button className="gap-2 bg-white text-black hover:bg-neutral-200">
+        <Button className="gap-2 bg-emerald-500 text-white hover:bg-emerald-600 shadow-lg shadow-emerald-500/20">
           <Wallet className="w-4 h-4" />
           Connect Wallet
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="bg-neutral-900 border-neutral-800 text-white">
-        <DropdownMenuLabel className="text-neutral-400">Select Wallet</DropdownMenuLabel>
-        <DropdownMenuSeparator className="bg-neutral-800" />
+      <DropdownMenuContent className="bg-white/5 backdrop-blur-sm border-white/10 text-white">
+        <DropdownMenuLabel className="text-gray-400">Select Wallet</DropdownMenuLabel>
+        <DropdownMenuSeparator className="bg-white/10" />
         {wallets.length > 0 ? (
           wallets.map((wallet) => (
             <DropdownMenuItem
               key={wallet.name}
               onClick={() => connect(wallet.name)}
-              className="hover:bg-neutral-800 cursor-pointer"
+              className="hover:bg-white/10 cursor-pointer"
             >
               <div className="flex items-center gap-2">
                 {wallet.icon && (
@@ -104,7 +105,7 @@ export function MovementWalletButton() {
             </DropdownMenuItem>
           ))
         ) : (
-          <DropdownMenuItem disabled className="text-neutral-500">
+          <DropdownMenuItem disabled className="text-gray-500">
             No wallets detected. Please install Petra or Razor wallet.
           </DropdownMenuItem>
         )}

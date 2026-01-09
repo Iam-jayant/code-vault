@@ -77,13 +77,13 @@ export default function LeaderboardPage() {
   );
 
   return (
-    <div className="min-h-screen bg-[#05050A] text-gray-100">
+    <div className="min-h-screen bg-gradient-to-br from-[#0A0F0D] via-[#050A08] to-black text-gray-100">
       <Header />
 
       <div className="max-w-7xl mx-auto px-6 py-16">
         {/* HEADER */}
         <header className="mb-14">
-          <div className="flex items-center gap-3 text-indigo-400 font-medium mb-3">
+          <div className="flex items-center gap-3 text-emerald-400 font-medium mb-3">
             <Trophy className="w-5 h-5" />
             <span>Builder Leaderboard</span>
           </div>
@@ -97,43 +97,45 @@ export default function LeaderboardPage() {
           </p>
 
           <div className="mt-8 relative max-w-md">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-600" />
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500" />
             <input
               value={search}
               onChange={e => setSearch(e.target.value)}
               placeholder="Search builder..."
-              className="w-full bg-[#0B0B14] border border-white/10 rounded-xl py-3 pl-12 pr-4 outline-none"
+              className="w-full bg-white/5 border border-white/10 rounded-xl py-3 pl-12 pr-4 text-white placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 transition-all"
             />
           </div>
         </header>
 
         {/* CONTENT */}
         {loading ? (
-          <p className="text-gray-400">Loading leaderboard...</p>
+          <div className="flex items-center justify-center py-12">
+            <div className="w-8 h-8 border-2 border-emerald-400 border-t-transparent rounded-full animate-spin" />
+          </div>
         ) : (
           <div className="space-y-4">
             {filtered.map((b, index) => (
               <div
                 key={b._id}
-                className="bg-[#0B0B14] border border-white/10 rounded-2xl p-6 hover:border-indigo-500/40 transition"
+                className="bg-white/5 border border-white/10 rounded-2xl p-6 hover:border-emerald-500/40 hover:bg-white/10 transition-all backdrop-blur-sm"
               >
                 <div className="flex items-center gap-6">
                   {/* RANK */}
-                  <div className="w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center font-bold text-xl">
+                  <div className="w-12 h-12 rounded-2xl bg-emerald-500/10 flex items-center justify-center font-bold text-xl text-emerald-400">
                     {index + 1}
                   </div>
 
                   {/* AVATAR */}
                   <img
                     src={b.ownerAvatar || "https://placehold.co/80x80"}
-                    className="w-14 h-14 rounded-2xl object-cover"
+                    className="w-14 h-14 rounded-2xl object-cover border border-white/10"
                   />
 
                   {/* NAME */}
                   <div className="flex-1">
                     <div className="flex items-center gap-3">
-                      <h3 className="text-xl font-semibold">{b.ownerName}</h3>
-                      {index === 0 && <Crown className="text-yellow-400" />}
+                      <h3 className="text-xl font-semibold text-white">{b.ownerName}</h3>
+                      {index === 0 && <Crown className="text-emerald-400 fill-emerald-400" />}
                     </div>
 
                     <p className="text-gray-400 text-sm">
@@ -172,10 +174,10 @@ export default function LeaderboardPage() {
 function Metric({ icon, label, value }) {
   return (
     <div>
-      <div className="flex justify-center mb-1 text-gray-400">
+      <div className="flex justify-center mb-1 text-emerald-400">
         {icon}
       </div>
-      <div className="font-bold">{value}</div>
+      <div className="font-bold text-white">{value}</div>
       <div className="text-xs text-gray-500 mt-1">{label}</div>
     </div>
   );

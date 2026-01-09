@@ -19,6 +19,7 @@ import {
   Lock,
   Eye,
   User,
+  Sparkles,
 } from "lucide-react";
 import { PurchaseModal } from "@/components/payment/PurchaseModal";
 
@@ -37,7 +38,6 @@ const RepositoryDetail = () => {
   const hasDownloadAccess = hasDownload || isOwner;
 
   const handlePaymentSuccess = () => {
-    // Refetch access status after successful payment
     refetchAccess();
     refetch();
   };
@@ -51,7 +51,7 @@ const RepositoryDetail = () => {
     return (
       <Layout>
         <div className="container mx-auto px-4 py-20 flex items-center justify-center">
-          <div className="w-8 h-8 border-2 border-white border-t-transparent rounded-full animate-spin" />
+          <div className="w-8 h-8 border-2 border-emerald-400 border-t-transparent rounded-full animate-spin" />
         </div>
       </Layout>
     );
@@ -65,7 +65,7 @@ const RepositoryDetail = () => {
             Project not found
           </h1>
           <Link to="/repositories">
-            <Button variant="outline">
+            <Button variant="outline" className="border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/10">
               <ArrowLeft className="w-4 h-4" />
               Back to Projects
             </Button>
@@ -99,8 +99,8 @@ const RepositoryDetail = () => {
     <Layout>
       <div className="container mx-auto px-4 py-8">
         {/* Breadcrumb */}
-        <div className="flex items-center gap-2 text-sm text-neutral-400 mb-6">
-          <Link to="/repositories" className="hover:text-white transition-colors">
+        <div className="flex items-center gap-2 text-sm text-gray-400 mb-6">
+          <Link to="/repositories" className="hover:text-emerald-400 transition-colors">
             Projects
           </Link>
           <span>/</span>
@@ -111,8 +111,8 @@ const RepositoryDetail = () => {
           {/* Main Content */}
           <div className="lg:col-span-2 space-y-6">
             {/* Preview Image */}
-            <div className="relative bg-neutral-900/50 backdrop-blur-sm border border-neutral-800 rounded-sm overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-br from-white/[0.03] to-transparent rounded-sm pointer-events-none" />
+            <div className="relative bg-neutral-950/80 backdrop-blur-xl border border-emerald-500/20 rounded-2xl overflow-hidden shadow-[0_0_30px_rgba(16,185,129,0.1)]">
+              <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/5 to-transparent pointer-events-none" />
               <img
                 src={project.previewImage || "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&h=450&fit=crop"}
                 alt={project.title}
@@ -132,85 +132,85 @@ const RepositoryDetail = () => {
                       <img
                         src={project.ownerAvatar || `https://api.dicebear.com/7.x/initials/svg?seed=${project.ownerName}`}
                         alt={project.ownerName}
-                        className="w-6 h-6 rounded-full"
+                        className="w-6 h-6 rounded-full border border-emerald-500/30"
                       />
-                      <span className="text-sm text-neutral-400">
+                      <span className="text-sm text-gray-400">
                         {project.ownerName}
                       </span>
                     </div>
-                    <Badge variant="secondary" className="bg-neutral-800 text-neutral-300">
+                    <Badge variant="secondary" className="bg-emerald-500/10 text-emerald-400 border border-emerald-500/30">
                       {project.category}
                     </Badge>
                   </div>
                 </div>
               </div>
 
-              <p className="text-neutral-400 leading-relaxed mb-6">
+              <p className="text-gray-400 leading-relaxed mb-6">
                 {project.shortDescription}
               </p>
 
               {/* Tech Stack */}
               <div className="flex flex-wrap gap-2 mb-6">
                 {project.technologies.map((tech) => (
-                  <Badge key={tech} variant="secondary" className="bg-neutral-800 text-neutral-300">
+                  <Badge key={tech} variant="secondary" className="bg-neutral-900 text-gray-300 border border-emerald-500/20">
                     {tech}
                   </Badge>
                 ))}
               </div>
 
               {/* Stats */}
-              <div className="flex flex-wrap gap-6 p-4 rounded-sm bg-neutral-900/50 border border-neutral-800">
+              <div className="flex flex-wrap gap-6 p-4 rounded-xl bg-neutral-950/80 border border-emerald-500/20 backdrop-blur-xl">
                 <div className="flex items-center gap-2">
-                  <Star className="w-5 h-5 text-white" />
+                  <Star className="w-5 h-5 text-emerald-400" />
                   <span className="font-semibold text-white">
                     {project.stats?.likes?.toLocaleString() || 0}
                   </span>
-                  <span className="text-sm text-neutral-400">stars</span>
+                  <span className="text-sm text-gray-400">stars</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <GitFork className="w-5 h-5 text-white" />
+                  <GitFork className="w-5 h-5 text-emerald-400" />
                   <span className="font-semibold text-white">
                     {project.stats?.forks?.toLocaleString() || 0}
                   </span>
-                  <span className="text-sm text-neutral-400">forks</span>
+                  <span className="text-sm text-gray-400">forks</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <Download className="w-5 h-5 text-white" />
+                  <Download className="w-5 h-5 text-emerald-400" />
                   <span className="font-semibold text-white">
                     {project.stats?.downloads?.toLocaleString() || 0}
                   </span>
-                  <span className="text-sm text-neutral-400">downloads</span>
+                  <span className="text-sm text-gray-400">downloads</span>
                 </div>
               </div>
             </div>
 
             {/* Description */}
             {hasViewAccess ? (
-              <div className="relative bg-neutral-900/50 backdrop-blur-sm border border-neutral-800 rounded-sm p-6">
-                <div className="absolute inset-0 bg-gradient-to-br from-white/[0.03] to-transparent rounded-sm pointer-events-none" />
+              <div className="relative bg-neutral-950/80 backdrop-blur-xl border border-emerald-500/20 rounded-2xl p-6 shadow-[0_0_30px_rgba(16,185,129,0.1)]">
+                <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/5 to-transparent rounded-2xl pointer-events-none" />
                 <div className="relative">
                   <h2 className="font-heading text-xl font-semibold text-white mb-4">
                     About this Project
                   </h2>
-                  <div className="prose prose-invert max-w-none text-neutral-400">
+                  <div className="prose prose-invert max-w-none text-gray-400">
                     <p>{project.description}</p>
                   </div>
                 </div>
               </div>
             ) : (
-              <div className="relative bg-neutral-900/50 backdrop-blur-sm border border-neutral-800 rounded-sm p-6">
-                <div className="absolute inset-0 bg-gradient-to-br from-white/[0.03] to-transparent rounded-sm pointer-events-none" />
+              <div className="relative bg-neutral-950/80 backdrop-blur-xl border border-emerald-500/20 rounded-2xl p-6 shadow-[0_0_30px_rgba(16,185,129,0.1)]">
+                <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/5 to-transparent rounded-2xl pointer-events-none" />
                 <div className="relative text-center py-8">
-                  <Lock className="w-12 h-12 text-neutral-600 mx-auto mb-4" />
+                  <Lock className="w-12 h-12 text-emerald-500/30 mx-auto mb-4" />
                   <h2 className="font-heading text-xl font-semibold text-white mb-2">
                     Demo Access Required
                   </h2>
-                  <p className="text-neutral-400 mb-4">
+                  <p className="text-gray-400 mb-4">
                     Purchase demo access to view full project details
                   </p>
                   <Button
                     onClick={() => handlePurchaseClick('demo')}
-                    className="bg-white text-black hover:bg-neutral-200"
+                    className="bg-gradient-to-r from-emerald-500 to-emerald-400 text-black hover:shadow-[0_0_25px_rgba(16,185,129,0.4)] rounded-full font-semibold"
                   >
                     <Eye className="w-4 h-4" />
                     View Demo - {formatPrice(project.demoPrice)}
@@ -221,8 +221,8 @@ const RepositoryDetail = () => {
 
             {/* What's Included */}
             {hasViewAccess && (
-              <div className="relative bg-neutral-900/50 backdrop-blur-sm border border-neutral-800 rounded-sm p-6">
-                <div className="absolute inset-0 bg-gradient-to-br from-white/[0.03] to-transparent rounded-sm pointer-events-none" />
+              <div className="relative bg-neutral-950/80 backdrop-blur-xl border border-emerald-500/20 rounded-2xl p-6 shadow-[0_0_30px_rgba(16,185,129,0.1)]">
+                <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/5 to-transparent rounded-2xl pointer-events-none" />
                 <div className="relative">
                   <h2 className="font-heading text-xl font-semibold text-white mb-4">
                     What's Included
@@ -230,10 +230,10 @@ const RepositoryDetail = () => {
                   <ul className="space-y-3">
                     {features.map((feature) => (
                       <li key={feature} className="flex items-center gap-3">
-                        <div className="w-5 h-5 rounded-full bg-white/10 flex items-center justify-center">
-                          <Check className="w-3 h-3 text-white" />
+                        <div className="w-5 h-5 rounded-full bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center shadow-[0_0_10px_rgba(16,185,129,0.2)]">
+                          <Check className="w-3 h-3 text-emerald-400" />
                         </div>
-                        <span className="text-neutral-400">{feature}</span>
+                        <span className="text-gray-400">{feature}</span>
                       </li>
                     ))}
                   </ul>
@@ -245,41 +245,42 @@ const RepositoryDetail = () => {
           {/* Sidebar */}
           <div className="space-y-6">
             {/* Pricing & Action Card */}
-            <div className="relative bg-neutral-900/50 backdrop-blur-sm border border-neutral-800 rounded-sm p-6 sticky top-24">
-              <div className="absolute inset-0 bg-gradient-to-br from-white/[0.03] to-transparent rounded-sm pointer-events-none" />
+            <div className="relative bg-neutral-950/80 backdrop-blur-xl border border-emerald-500/20 rounded-2xl p-6 sticky top-24 shadow-[0_0_30px_rgba(16,185,129,0.1)]">
+              <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/5 to-transparent rounded-2xl pointer-events-none" />
               <div className="relative space-y-4">
-                <h3 className="font-heading text-lg font-semibold text-white mb-4">
+                <h3 className="font-heading text-lg font-semibold text-white mb-4 flex items-center gap-2">
+                  <Sparkles className="w-5 h-5 text-emerald-400" />
                   Access Options
                 </h3>
 
                 {/* Demo Access */}
-                <div className="p-4 bg-neutral-800/50 rounded-sm border border-neutral-700 space-y-3">
+                <div className="p-4 bg-neutral-900/50 rounded-xl border border-emerald-500/20 space-y-3">
                   <div className="flex items-start justify-between">
                     <div>
                       <div className="flex items-center gap-2 mb-1">
-                        <Eye className="w-4 h-4 text-white" />
+                        <Eye className="w-4 h-4 text-emerald-400" />
                         <h4 className="font-medium text-white">Demo Access</h4>
                       </div>
-                      <p className="text-xs text-neutral-400">
+                      <p className="text-xs text-gray-400">
                         View project details and preview
                       </p>
                     </div>
                     <div className="text-right">
-                      <p className="text-lg font-bold text-white">
+                      <p className="text-lg font-bold text-emerald-400">
                         {formatPrice(project.demoPrice)}
                       </p>
                     </div>
                   </div>
                   
                   {hasViewAccess ? (
-                    <div className="flex items-center gap-2 text-sm text-green-400">
+                    <div className="flex items-center gap-2 text-sm text-emerald-400">
                       <Check className="w-4 h-4" />
                       <span>You have access</span>
                     </div>
                   ) : (
                     <Button
                       onClick={() => handlePurchaseClick('demo')}
-                      className="w-full bg-white text-black hover:bg-neutral-200"
+                      className="w-full bg-gradient-to-r from-emerald-500 to-emerald-400 text-black hover:shadow-[0_0_20px_rgba(16,185,129,0.4)] rounded-full font-semibold"
                     >
                       <Eye className="w-4 h-4" />
                       View Demo
@@ -288,19 +289,19 @@ const RepositoryDetail = () => {
                 </div>
 
                 {/* Download Access */}
-                <div className="p-4 bg-neutral-800/50 rounded-sm border border-neutral-700 space-y-3">
+                <div className="p-4 bg-neutral-900/50 rounded-xl border border-emerald-500/20 space-y-3">
                   <div className="flex items-start justify-between">
                     <div>
                       <div className="flex items-center gap-2 mb-1">
-                        <Download className="w-4 h-4 text-white" />
+                        <Download className="w-4 h-4 text-emerald-400" />
                         <h4 className="font-medium text-white">Full Download</h4>
                       </div>
-                      <p className="text-xs text-neutral-400">
+                      <p className="text-xs text-gray-400">
                         Complete source code and files
                       </p>
                     </div>
                     <div className="text-right">
-                      <p className="text-lg font-bold text-white">
+                      <p className="text-lg font-bold text-emerald-400">
                         {formatPrice(project.downloadPrice)}
                       </p>
                     </div>
@@ -308,16 +309,15 @@ const RepositoryDetail = () => {
                   
                   {hasDownloadAccess ? (
                     <>
-                      <div className="flex items-center gap-2 text-sm text-green-400 mb-2">
+                      <div className="flex items-center gap-2 text-sm text-emerald-400 mb-2">
                         <Check className="w-4 h-4" />
                         <span>You have access</span>
                       </div>
                       <Button
                         onClick={() => {
-                          // TODO: Implement download functionality
                           console.log('Download project');
                         }}
-                        className="w-full bg-neutral-700 text-white hover:bg-neutral-600"
+                        className="w-full bg-neutral-800 text-white hover:bg-neutral-700 border border-emerald-500/20 rounded-full"
                       >
                         <Download className="w-4 h-4" />
                         Download Project
@@ -326,7 +326,7 @@ const RepositoryDetail = () => {
                   ) : (
                     <Button
                       onClick={() => handlePurchaseClick('download')}
-                      className="w-full bg-white text-black hover:bg-neutral-200"
+                      className="w-full bg-gradient-to-r from-emerald-500 to-emerald-400 text-black hover:shadow-[0_0_20px_rgba(16,185,129,0.4)] rounded-full font-semibold"
                     >
                       <Download className="w-4 h-4" />
                       Purchase Download
@@ -334,21 +334,21 @@ const RepositoryDetail = () => {
                   )}
                 </div>
 
-                <button className="w-full px-4 py-3 border border-neutral-700 text-neutral-300 font-medium rounded-sm hover:border-neutral-600 hover:text-white transition-colors flex items-center justify-center gap-2">
+                <button className="w-full px-4 py-3 border border-emerald-500/30 text-gray-300 font-medium rounded-full hover:border-emerald-500/50 hover:text-emerald-400 hover:bg-emerald-500/5 transition-all flex items-center justify-center gap-2">
                   <Share2 className="w-4 h-4" />
                   Share
                 </button>
 
-                <div className="mt-6 pt-6 border-t border-neutral-800 space-y-3">
+                <div className="mt-6 pt-6 border-t border-emerald-500/20 space-y-3">
                   <div className="flex items-center justify-between text-sm">
-                    <span className="text-neutral-400 flex items-center gap-2">
+                    <span className="text-gray-400 flex items-center gap-2">
                       <Calendar className="w-4 h-4" />
                       Updated
                     </span>
                     <span className="text-white">{formatDate(project.updatedAt)}</span>
                   </div>
                   <div className="flex items-center justify-between text-sm">
-                    <span className="text-neutral-400 flex items-center gap-2">
+                    <span className="text-gray-400 flex items-center gap-2">
                       <Scale className="w-4 h-4" />
                       License
                     </span>
@@ -359,25 +359,25 @@ const RepositoryDetail = () => {
             </div>
 
             {/* Author Card */}
-            <div className="relative bg-neutral-900/50 backdrop-blur-sm border border-neutral-800 rounded-sm p-6">
-              <div className="absolute inset-0 bg-gradient-to-br from-white/[0.03] to-transparent rounded-sm pointer-events-none" />
+            <div className="relative bg-neutral-950/80 backdrop-blur-xl border border-emerald-500/20 rounded-2xl p-6 shadow-[0_0_30px_rgba(16,185,129,0.1)]">
+              <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/5 to-transparent rounded-2xl pointer-events-none" />
               <div className="relative">
                 <h3 className="font-semibold text-white mb-4 flex items-center gap-2">
-                  <User className="w-4 h-4" />
+                  <User className="w-4 h-4 text-emerald-400" />
                   Project Owner
                 </h3>
                 <div className="flex items-center gap-3">
                   <img
                     src={project.ownerAvatar || `https://api.dicebear.com/7.x/initials/svg?seed=${project.ownerName}`}
                     alt={project.ownerName}
-                    className="w-12 h-12 rounded-full border-2 border-neutral-700"
+                    className="w-12 h-12 rounded-full border-2 border-emerald-500/30"
                   />
                   <div>
                     <p className="font-medium text-white">
                       {project.ownerName}
                     </p>
                     {project.ownerWalletAddress && (
-                      <p className="text-sm text-neutral-400">
+                      <p className="text-sm text-gray-400">
                         {project.ownerWalletAddress.slice(0, 6)}...{project.ownerWalletAddress.slice(-4)}
                       </p>
                     )}

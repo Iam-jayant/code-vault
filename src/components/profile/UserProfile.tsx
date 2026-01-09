@@ -36,61 +36,61 @@ export function UserProfile({ profile }: UserProfileProps) {
   };
 
   return (
-    <Card className="bg-neutral-900/50 border-neutral-800">
+    <Card className="bg-white/5 border-white/10 backdrop-blur-sm">
       <CardHeader>
         <CardTitle className="text-white">Profile Information</CardTitle>
       </CardHeader>
       <CardContent className="space-y-6">
         {/* Avatar and Name */}
         <div className="flex items-center gap-4">
-          <Avatar className="w-20 h-20 border-2 border-neutral-700">
+          <Avatar className="w-20 h-20 border-2 border-emerald-500/30">
             <AvatarImage src={profile.avatar} alt={profile.name} />
-            <AvatarFallback className="bg-neutral-800 text-white text-lg">
+            <AvatarFallback className="bg-emerald-500/20 text-emerald-400 text-lg">
               {getInitials(profile.name)}
             </AvatarFallback>
           </Avatar>
           <div>
             <h2 className="text-2xl font-bold text-white">{profile.name}</h2>
-            <p className="text-sm text-neutral-400">User ID: {profile._id.slice(0, 8)}...</p>
+            <p className="text-sm text-gray-400">User ID: {profile._id.slice(0, 8)}...</p>
           </div>
         </div>
 
         {/* Profile Details */}
         <div className="space-y-4">
           {/* Email */}
-          <div className="flex items-center gap-3 text-neutral-300">
-            <Mail className="w-5 h-5 text-neutral-400" />
+          <div className="flex items-center gap-3 text-gray-300">
+            <Mail className="w-5 h-5 text-emerald-400" />
             <div>
-              <p className="text-xs text-neutral-400">Email</p>
+              <p className="text-xs text-gray-400">Email</p>
               <p className="text-sm">{profile.email}</p>
             </div>
           </div>
 
           {/* Join Date */}
-          <div className="flex items-center gap-3 text-neutral-300">
-            <Calendar className="w-5 h-5 text-neutral-400" />
+          <div className="flex items-center gap-3 text-gray-300">
+            <Calendar className="w-5 h-5 text-emerald-400" />
             <div>
-              <p className="text-xs text-neutral-400">Member Since</p>
+              <p className="text-xs text-gray-400">Member Since</p>
               <p className="text-sm">{formatDate(profile.createdAt)}</p>
             </div>
           </div>
 
           {/* Wallet Connection Status - Shown Separately */}
-          <div className="flex items-center gap-3 text-neutral-300">
-            <Wallet className="w-5 h-5 text-neutral-400" />
+          <div className="flex items-center gap-3 text-gray-300">
+            <Wallet className="w-5 h-5 text-emerald-400" />
             <div className="flex-1">
-              <p className="text-xs text-neutral-400">Wallet Status</p>
+              <p className="text-xs text-gray-400">Wallet Status</p>
               {profile.walletAddress ? (
                 <div className="flex items-center gap-2 mt-1">
-                  <Badge variant="outline" className="bg-green-500/10 text-green-400 border-green-500/20">
+                  <Badge variant="outline" className="bg-emerald-500/20 text-emerald-400 border-emerald-500/30">
                     Connected
                   </Badge>
-                  <p className="text-xs font-mono text-neutral-400">
+                  <p className="text-xs font-mono text-gray-400">
                     {profile.walletAddress.slice(0, 6)}...{profile.walletAddress.slice(-4)}
                   </p>
                 </div>
               ) : (
-                <Badge variant="outline" className="bg-neutral-800 text-neutral-400 border-neutral-700 mt-1">
+                <Badge variant="outline" className="bg-white/5 text-gray-400 border-white/10 mt-1">
                   Not Connected
                 </Badge>
               )}
@@ -99,8 +99,8 @@ export function UserProfile({ profile }: UserProfileProps) {
         </div>
 
         {/* Info Note */}
-        <div className="pt-4 border-t border-neutral-800">
-          <p className="text-xs text-neutral-400">
+        <div className="pt-4 border-t border-white/10">
+          <p className="text-xs text-gray-400">
             Your wallet is used for payments only and does not affect your profile identity.
           </p>
         </div>

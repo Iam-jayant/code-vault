@@ -17,6 +17,7 @@ import {
   Star,
   MessageSquare,
   TrendingUp,
+  Sparkles,
 } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { useMovementWallet } from "@/hooks/useMovementWallet";
@@ -28,16 +29,13 @@ const Profile = () => {
   const { address, connected } = useMovementWallet();
   const [showWallet, setShowWallet] = useState(false);
 
-  // Get wallet address (already a string or null from useMovementWallet)
   const walletAddress = address;
 
-  // Fetch user's projects (using wallet address as owner filter when available)
   const { projects: userProjects, isLoading: isLoadingProjects } = useProjects({
     owner: walletAddress || undefined,
     autoFetch: !!walletAddress,
   });
 
-  // User data from wallet/auth
   const user = {
     name: walletAddress 
       ? `${walletAddress.slice(0, 6)}...${walletAddress.slice(-4)}` 
@@ -46,7 +44,7 @@ const Profile = () => {
     avatar: walletAddress 
       ? `https://api.dicebear.com/7.x/identicon/svg?seed=${walletAddress}` 
       : "https://api.dicebear.com/7.x/initials/svg?seed=User",
-    bio: "Developer on layR marketplace",
+    bio: "Developer on CodeVault marketplace",
     location: "",
     website: "",
     email: "",
@@ -65,10 +63,8 @@ const Profile = () => {
     return `${addrStr.slice(0, 6)}...${addrStr.slice(-4)}`;
   };
 
-  // Check if viewing own profile
   const isOwnProfile = isAuthenticated && (!username || username === "me");
 
-  // Stats for dashboard-style cards (only shown on own profile)
   const dashboardStats = [
     { label: "Total Views", value: userProjects.reduce((acc, p) => acc + p.downloads, 0).toLocaleString(), change: "+12%", icon: Eye },
     { label: "Total Stars", value: user.stats.stars.toLocaleString(), change: "+8%", icon: Star },
@@ -83,9 +79,8 @@ const Profile = () => {
           <div className="grid lg:grid-cols-4 gap-8">
             {/* Sidebar */}
             <div className="lg:col-span-1">
-              <div className="relative bg-neutral-900/50 backdrop-blur-sm border border-neutral-800 rounded-sm p-6 sticky top-24">
-                {/* Glass effect overlay */}
-                <div className="absolute inset-0 bg-gradient-to-br from-white/[0.03] to-transparent rounded-sm pointer-events-none" />
+              <div className="relative bg-neutral-950/80 backdrop-blur-xl border border-emerald-500/20 rounded-2xl p-6 sticky top-24 shadow-[0_0_30px_rgba(16,185,129,0.1)]">
+                <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/5 to-transparent rounded-2xl pointer-events-none" />
                 
                 <div className="relative">
                   {/* Avatar */}
@@ -93,11 +88,12 @@ const Profile = () => {
                     <img
                       src={user.avatar}
                       alt={user.name}
-                      className="w-32 h-32 rounded-sm border-2 border-neutral-700 mx-auto object-cover bg-neutral-800"
+                      className="w-32 h-32 rounded-2xl border-2 border-emerald-500/30 mx-auto object-cover bg-neutral-900 shadow-[0_0_20px_rgba(16,185,129,0.2)]"
                     />
                     {isOwnProfile && (
                       <div className="absolute -bottom-2 left-1/2 -translate-x-1/2">
-                        <span className="px-3 py-1 bg-white text-black text-xs font-medium rounded-sm">
+                        <span className="px-3 py-1 bg-gradient-to-r from-emerald-500 to-emerald-400 text-black text-xs font-semibold rounded-full shadow-[0_0_15px_rgba(16,185,129,0.4)] flex items-center gap-1">
+                          <Sparkles className="w-3 h-3" />
                           Pro
                         </span>
                       </div>
@@ -107,43 +103,43 @@ const Profile = () => {
                   {/* Name */}
                   <div className="text-center mb-6">
                     <h1 className="font-heading text-2xl font-bold text-white">{user.name}</h1>
-                    <p className="text-neutral-400">@{user.username}</p>
+                    <p className="text-gray-400">@{user.username}</p>
                   </div>
 
                   {/* Bio */}
-                  <p className="text-sm text-neutral-400 mb-6">{user.bio}</p>
+                  <p className="text-sm text-gray-400 mb-6">{user.bio}</p>
 
                   {/* Actions */}
                   {!isOwnProfile && (
                     <div className="flex gap-2 mb-6">
-                      <button className="flex-1 px-4 py-2 bg-white text-black font-medium hover:bg-neutral-200 transition-colors rounded-sm text-sm">
+                      <button className="flex-1 px-4 py-2 bg-gradient-to-r from-emerald-500 to-emerald-400 text-black font-semibold hover:shadow-[0_0_20px_rgba(16,185,129,0.4)] transition-all rounded-full">
                         Follow
                       </button>
-                      <button className="px-4 py-2 border border-neutral-800 text-neutral-300 hover:text-white hover:border-neutral-600 transition-colors rounded-sm">
+                      <button className="px-4 py-2 border border-emerald-500/30 text-emerald-400 hover:text-emerald-300 hover:border-emerald-500/50 hover:bg-emerald-500/5 transition-all rounded-full">
                         <Mail className="w-4 h-4" />
                       </button>
                     </div>
                   )}
 
-                  {/* Wallet Button - Only for authenticated user */}
+                  {/* Wallet Button */}
                   {isOwnProfile && walletAddress && (
                     <button
                       onClick={() => setShowWallet(!showWallet)}
-                      className="w-full flex items-center justify-between p-3 mb-6 bg-neutral-800/50 border border-neutral-700 hover:border-neutral-600 transition-colors rounded-sm"
+                      className="w-full flex items-center justify-between p-3 mb-6 bg-neutral-900/50 border border-emerald-500/20 hover:border-emerald-500/40 hover:bg-emerald-500/5 transition-all rounded-xl"
                     >
                       <div className="flex items-center gap-3">
-                        <Wallet className="w-4 h-4 text-white" />
+                        <Wallet className="w-4 h-4 text-emerald-400" />
                         <div className="text-left">
-                          <p className="text-xs text-neutral-400">Wallet</p>
+                          <p className="text-xs text-gray-400">Wallet</p>
                           <p className="text-sm font-mono text-white">
                             {truncateAddress(walletAddress)}
                           </p>
                         </div>
                       </div>
                       {showWallet ? (
-                        <ChevronUp className="w-4 h-4 text-neutral-400" />
+                        <ChevronUp className="w-4 h-4 text-gray-400" />
                       ) : (
-                        <ChevronDown className="w-4 h-4 text-neutral-400" />
+                        <ChevronDown className="w-4 h-4 text-gray-400" />
                       )}
                     </button>
                   )}
@@ -151,8 +147,8 @@ const Profile = () => {
                   {/* Info */}
                   <div className="space-y-3 text-sm">
                     {user.location && (
-                      <div className="flex items-center gap-2 text-neutral-400">
-                        <MapPin className="w-4 h-4" />
+                      <div className="flex items-center gap-2 text-gray-400">
+                        <MapPin className="w-4 h-4 text-emerald-400" />
                         <span>{user.location}</span>
                       </div>
                     )}
@@ -161,44 +157,44 @@ const Profile = () => {
                         href={user.website}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center gap-2 text-white hover:text-neutral-300 transition-colors"
+                        className="flex items-center gap-2 text-emerald-400 hover:text-emerald-300 transition-colors"
                       >
                         <LinkIcon className="w-4 h-4" />
                         <span>{user.website.replace("https://", "")}</span>
                         <ExternalLink className="w-3 h-3" />
                       </a>
                     )}
-                    <div className="flex items-center gap-2 text-neutral-400">
-                      <Calendar className="w-4 h-4" />
+                    <div className="flex items-center gap-2 text-gray-400">
+                      <Calendar className="w-4 h-4 text-emerald-400" />
                       <span>Joined {user.joinedDate}</span>
                     </div>
                   </div>
 
                   {/* Stats */}
-                  <div className="grid grid-cols-2 gap-4 mt-6 pt-6 border-t border-neutral-800">
-                    <div className="text-center">
-                      <p className="text-xl font-bold text-white">
+                  <div className="grid grid-cols-2 gap-4 mt-6 pt-6 border-t border-emerald-500/20">
+                    <div className="text-center p-3 rounded-xl bg-emerald-500/5 border border-emerald-500/10">
+                      <p className="text-xl font-bold text-emerald-400">
                         {user.stats.projects}
                       </p>
-                      <p className="text-xs text-neutral-400">Projects</p>
+                      <p className="text-xs text-gray-400">Projects</p>
                     </div>
-                    <div className="text-center">
-                      <p className="text-xl font-bold text-white">
+                    <div className="text-center p-3 rounded-xl bg-emerald-500/5 border border-emerald-500/10">
+                      <p className="text-xl font-bold text-emerald-400">
                         {user.stats.followers.toLocaleString()}
                       </p>
-                      <p className="text-xs text-neutral-400">Followers</p>
+                      <p className="text-xs text-gray-400">Followers</p>
                     </div>
-                    <div className="text-center">
-                      <p className="text-xl font-bold text-white">
+                    <div className="text-center p-3 rounded-xl bg-emerald-500/5 border border-emerald-500/10">
+                      <p className="text-xl font-bold text-emerald-400">
                         {user.stats.stars.toLocaleString()}
                       </p>
-                      <p className="text-xs text-neutral-400">Stars</p>
+                      <p className="text-xs text-gray-400">Stars</p>
                     </div>
-                    <div className="text-center">
-                      <p className="text-xl font-bold text-white">
+                    <div className="text-center p-3 rounded-xl bg-emerald-500/5 border border-emerald-500/10">
+                      <p className="text-xl font-bold text-emerald-400">
                         {user.stats.forks.toLocaleString()}
                       </p>
-                      <p className="text-xs text-neutral-400">Forks</p>
+                      <p className="text-xs text-gray-400">Forks</p>
                     </div>
                   </div>
                 </div>
@@ -207,45 +203,49 @@ const Profile = () => {
 
             {/* Main Content */}
             <div className="lg:col-span-3 space-y-8">
-              {/* Wallet Section - Replaced with navbar button */}
+              {/* Wallet Section */}
               {showWallet && isOwnProfile && connected && (
-                <div className="bg-neutral-900 border border-neutral-800 rounded-sm p-6">
-                  <div className="flex items-center justify-between mb-4">
-                    <h2 className="text-xl font-heading text-white">Movement Wallet</h2>
-                    <Wallet className="w-5 h-5 text-neutral-400" />
-                  </div>
-                  <div className="space-y-3">
-                    <div>
-                      <p className="text-sm text-neutral-400 mb-1">Wallet Address</p>
-                      <p className="text-white font-mono text-sm break-all">{walletAddress}</p>
+                <div className="relative bg-neutral-950/80 backdrop-blur-xl border border-emerald-500/20 rounded-2xl p-6 shadow-[0_0_30px_rgba(16,185,129,0.1)]">
+                  <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/5 to-transparent rounded-2xl pointer-events-none" />
+                  <div className="relative">
+                    <div className="flex items-center justify-between mb-4">
+                      <h2 className="text-xl font-heading text-white flex items-center gap-2">
+                        <Wallet className="w-5 h-5 text-emerald-400" />
+                        Movement Wallet
+                      </h2>
                     </div>
-                    <p className="text-sm text-neutral-400">
-                      Use the "Connect Wallet" button in the navbar to manage your Movement wallet.
-                    </p>
+                    <div className="space-y-3">
+                      <div>
+                        <p className="text-sm text-gray-400 mb-1">Wallet Address</p>
+                        <p className="text-white font-mono text-sm break-all">{walletAddress}</p>
+                      </div>
+                      <p className="text-sm text-gray-400">
+                        Use the "Connect Wallet" button in the navbar to manage your Movement wallet.
+                      </p>
+                    </div>
                   </div>
                 </div>
               )}
 
-              {/* Stats Grid - Only for own profile */}
+              {/* Stats Grid */}
               {isOwnProfile && (
                 <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
                   {dashboardStats.map((stat) => (
-                    <div key={stat.label} className="relative bg-neutral-900/50 backdrop-blur-sm border border-neutral-800 rounded-sm p-4">
-                      {/* Glass effect overlay */}
-                      <div className="absolute inset-0 bg-gradient-to-br from-white/[0.03] to-transparent rounded-sm pointer-events-none" />
+                    <div key={stat.label} className="relative bg-neutral-950/80 backdrop-blur-xl border border-emerald-500/20 rounded-2xl p-4 shadow-[0_0_20px_rgba(16,185,129,0.1)]">
+                      <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/5 to-transparent rounded-2xl pointer-events-none" />
                       
                       <div className="relative">
                         <div className="flex items-center justify-between mb-3">
-                          <div className="w-8 h-8 rounded-sm bg-white/10 flex items-center justify-center">
-                            <stat.icon className="w-4 h-4 text-white" />
+                          <div className="w-8 h-8 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center">
+                            <stat.icon className="w-4 h-4 text-emerald-400" />
                           </div>
-                          <span className="px-2 py-0.5 bg-white/10 text-white text-xs font-medium rounded-sm flex items-center gap-1">
+                          <span className="px-2 py-0.5 bg-emerald-500/10 text-emerald-400 text-xs font-medium rounded-full flex items-center gap-1 border border-emerald-500/20">
                             <TrendingUp className="w-3 h-3" />
                             {stat.change}
                           </span>
                         </div>
                         <p className="text-xl font-bold text-white mb-0.5">{stat.value}</p>
-                        <p className="text-xs text-neutral-400">{stat.label}</p>
+                        <p className="text-xs text-gray-400">{stat.label}</p>
                       </div>
                     </div>
                   ))}
@@ -253,22 +253,22 @@ const Profile = () => {
               )}
 
               {/* Tabs */}
-              <div className="flex items-center gap-4 mb-6 border-b border-neutral-800 pb-4">
-                <button className="px-4 py-2 text-white font-medium border-b-2 border-white -mb-[17px] transition-colors">
+              <div className="flex items-center gap-4 mb-6 border-b border-emerald-500/20 pb-4">
+                <button className="px-4 py-2 text-emerald-400 font-medium border-b-2 border-emerald-400 -mb-[17px] transition-all shadow-[0_2px_10px_rgba(16,185,129,0.3)]">
                   Projects
-                  <span className="ml-2 px-2 py-0.5 bg-neutral-800 text-white text-xs rounded-sm">
+                  <span className="ml-2 px-2 py-0.5 bg-emerald-500/10 text-emerald-400 text-xs rounded-full border border-emerald-500/20">
                     {userProjects.length}
                   </span>
                 </button>
-                <button className="px-4 py-2 text-neutral-400 hover:text-white transition-colors">
+                <button className="px-4 py-2 text-gray-400 hover:text-emerald-400 transition-colors">
                   Stars
-                  <span className="ml-2 px-2 py-0.5 bg-neutral-800 text-neutral-400 text-xs rounded-sm">
+                  <span className="ml-2 px-2 py-0.5 bg-neutral-900 text-gray-400 text-xs rounded-full border border-emerald-500/20">
                     {user.stats.stars}
                   </span>
                 </button>
-                <button className="px-4 py-2 text-neutral-400 hover:text-white transition-colors">
+                <button className="px-4 py-2 text-gray-400 hover:text-emerald-400 transition-colors">
                   Forks
-                  <span className="ml-2 px-2 py-0.5 bg-neutral-800 text-neutral-400 text-xs rounded-sm">
+                  <span className="ml-2 px-2 py-0.5 bg-neutral-900 text-gray-400 text-xs rounded-full border border-emerald-500/20">
                     {user.stats.forks}
                   </span>
                 </button>
@@ -277,7 +277,7 @@ const Profile = () => {
               {/* Projects Grid */}
               {isLoadingProjects ? (
                 <div className="flex items-center justify-center py-12">
-                  <div className="w-8 h-8 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                  <div className="w-8 h-8 border-2 border-emerald-400 border-t-transparent rounded-full animate-spin" />
                 </div>
               ) : userProjects.length > 0 ? (
                 <div className="grid md:grid-cols-2 gap-6">
@@ -286,18 +286,17 @@ const Profile = () => {
                   ))}
                 </div>
               ) : (
-                <div className="relative bg-neutral-900/50 backdrop-blur-sm border border-neutral-800 rounded-sm p-12 text-center">
-                  {/* Glass effect overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-white/[0.03] to-transparent rounded-sm pointer-events-none" />
+                <div className="relative bg-neutral-950/80 backdrop-blur-xl border border-emerald-500/20 rounded-2xl p-12 text-center shadow-[0_0_30px_rgba(16,185,129,0.1)]">
+                  <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/5 to-transparent rounded-2xl pointer-events-none" />
                   
                   <div className="relative">
-                    <div className="w-16 h-16 rounded-sm bg-white/10 flex items-center justify-center mx-auto mb-4">
-                      <GitFork className="w-8 h-8 text-white" />
+                    <div className="w-16 h-16 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center mx-auto mb-4 shadow-[0_0_20px_rgba(16,185,129,0.2)]">
+                      <GitFork className="w-8 h-8 text-emerald-400" />
                     </div>
                     <h3 className="font-heading text-xl font-semibold text-white mb-2">
                       No projects yet
                     </h3>
-                    <p className="text-neutral-400">
+                    <p className="text-gray-400">
                       {isOwnProfile 
                         ? "You haven't uploaded any projects yet. Add your first project!"
                         : "This user hasn't uploaded any projects yet."}

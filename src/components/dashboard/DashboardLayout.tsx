@@ -37,15 +37,15 @@ export function DashboardLayout({ userId }: DashboardLayoutProps) {
               <h2 className="font-heading text-2xl font-bold text-white mb-2">
                 Welcome to your Dashboard
               </h2>
-              <p className="text-neutral-400">
+              <p className="text-gray-400">
                 Manage your projects, track purchases, and view your transaction history
               </p>
             </div>
             
             {/* Quick Stats Overview */}
             <div className="grid md:grid-cols-2 gap-6">
-              <div className="relative bg-neutral-900/50 backdrop-blur-sm border border-neutral-800 rounded-sm p-6">
-                <div className="absolute inset-0 bg-gradient-to-br from-white/[0.03] to-transparent rounded-sm pointer-events-none" />
+              <div className="relative bg-white/5 backdrop-blur-sm border border-white/10 rounded-lg p-6">
+                <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/5 to-transparent rounded-lg pointer-events-none" />
                 <div className="relative">
                   <h3 className="font-heading text-lg font-semibold text-white mb-4">
                     Quick Actions
@@ -53,50 +53,50 @@ export function DashboardLayout({ userId }: DashboardLayoutProps) {
                   <div className="space-y-3">
                     <button
                       onClick={() => setActiveTab('my-projects')}
-                      className="w-full flex items-center gap-3 p-3 bg-neutral-800/50 hover:bg-neutral-800 border border-neutral-700 hover:border-neutral-600 rounded-sm transition-colors text-left"
+                      className="w-full flex items-center gap-3 p-3 bg-white/5 hover:bg-emerald-500/10 border border-white/10 hover:border-emerald-500/30 rounded-lg transition-colors text-left"
                     >
-                      <FolderGit2 className="w-5 h-5 text-white" />
+                      <FolderGit2 className="w-5 h-5 text-emerald-400" />
                       <span className="text-white">View My Projects</span>
                     </button>
                     <button
                       onClick={() => setActiveTab('purchases')}
-                      className="w-full flex items-center gap-3 p-3 bg-neutral-800/50 hover:bg-neutral-800 border border-neutral-700 hover:border-neutral-600 rounded-sm transition-colors text-left"
+                      className="w-full flex items-center gap-3 p-3 bg-white/5 hover:bg-emerald-500/10 border border-white/10 hover:border-emerald-500/30 rounded-lg transition-colors text-left"
                     >
-                      <ShoppingBag className="w-5 h-5 text-white" />
+                      <ShoppingBag className="w-5 h-5 text-emerald-400" />
                       <span className="text-white">View Purchases</span>
                     </button>
                     <button
                       onClick={() => setActiveTab('transactions')}
-                      className="w-full flex items-center gap-3 p-3 bg-neutral-800/50 hover:bg-neutral-800 border border-neutral-700 hover:border-neutral-600 rounded-sm transition-colors text-left"
+                      className="w-full flex items-center gap-3 p-3 bg-white/5 hover:bg-emerald-500/10 border border-white/10 hover:border-emerald-500/30 rounded-lg transition-colors text-left"
                     >
-                      <ArrowLeftRight className="w-5 h-5 text-white" />
+                      <ArrowLeftRight className="w-5 h-5 text-emerald-400" />
                       <span className="text-white">View Transactions</span>
                     </button>
                   </div>
                 </div>
               </div>
 
-              <div className="relative bg-neutral-900/50 backdrop-blur-sm border border-neutral-800 rounded-sm p-6">
-                <div className="absolute inset-0 bg-gradient-to-br from-white/[0.03] to-transparent rounded-sm pointer-events-none" />
+              <div className="relative bg-white/5 backdrop-blur-sm border border-white/10 rounded-lg p-6">
+                <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/5 to-transparent rounded-lg pointer-events-none" />
                 <div className="relative">
                   <h3 className="font-heading text-lg font-semibold text-white mb-4">
                     Getting Started
                   </h3>
-                  <ul className="space-y-2 text-sm text-neutral-400">
+                  <ul className="space-y-2 text-sm text-gray-400">
                     <li className="flex items-start gap-2">
-                      <span className="text-white">•</span>
+                      <span className="text-emerald-400">•</span>
                       <span>Upload your first project to start earning</span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <span className="text-white">•</span>
+                      <span className="text-emerald-400">•</span>
                       <span>Browse the marketplace to discover projects</span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <span className="text-white">•</span>
+                      <span className="text-emerald-400">•</span>
                       <span>Connect your wallet to make purchases</span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <span className="text-white">•</span>
+                      <span className="text-emerald-400">•</span>
                       <span>Track your earnings in the transactions tab</span>
                     </li>
                   </ul>
@@ -118,14 +118,14 @@ export function DashboardLayout({ userId }: DashboardLayoutProps) {
 
   return (
     <Layout>
-      <div className="min-h-screen bg-black">
+      <div className="min-h-screen bg-gradient-to-br from-[#0A0F0D] via-[#050A08] to-black">
         <div className="container mx-auto px-4 py-8">
           <div className="grid lg:grid-cols-4 gap-8">
             {/* Sidebar with Stats */}
             <div className="lg:col-span-1">
-              <div className="relative bg-neutral-900/50 backdrop-blur-sm border border-neutral-800 rounded-sm p-6 sticky top-24">
+              <div className="relative bg-white/5 backdrop-blur-sm border border-white/10 rounded-lg p-6 sticky top-24">
                 {/* Glass effect overlay */}
-                <div className="absolute inset-0 bg-gradient-to-br from-white/[0.03] to-transparent rounded-sm pointer-events-none" />
+                <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/5 to-transparent rounded-lg pointer-events-none" />
                 
                 <div className="relative">
                   <h2 className="font-heading text-xl font-bold text-white mb-6">
@@ -141,7 +141,7 @@ export function DashboardLayout({ userId }: DashboardLayoutProps) {
             {/* Main Content */}
             <div className="lg:col-span-3">
               {/* Tab Navigation */}
-              <div className="flex items-center gap-2 mb-8 border-b border-neutral-800 pb-4 overflow-x-auto">
+              <div className="flex items-center gap-2 mb-8 border-b border-white/10 pb-4 overflow-x-auto">
                 {tabs.map((tab) => {
                   const Icon = tab.icon;
                   const isActive = activeTab === tab.id;
@@ -151,10 +151,10 @@ export function DashboardLayout({ userId }: DashboardLayoutProps) {
                       key={tab.id}
                       onClick={() => setActiveTab(tab.id)}
                       className={`
-                        flex items-center gap-2 px-4 py-2 rounded-sm transition-colors whitespace-nowrap
+                        flex items-center gap-2 px-4 py-2 rounded-lg transition-colors whitespace-nowrap
                         ${isActive 
-                          ? 'bg-white text-black font-medium' 
-                          : 'text-neutral-400 hover:text-white hover:bg-neutral-800/50'
+                          ? 'bg-emerald-500 text-white font-medium shadow-lg shadow-emerald-500/20' 
+                          : 'text-gray-400 hover:text-white hover:bg-white/5'
                         }
                       `}
                     >

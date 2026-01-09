@@ -1,3 +1,4 @@
+// ManageCampaignModal.tsx
 import React, { useEffect, useState } from "react";
 import { X, Eye, Edit3, Trophy, CheckCircle } from "lucide-react";
 import SubmissionDetailsModal from "./SubmissionDetailsModal";
@@ -104,15 +105,15 @@ export default function ManageCampaignModal({ bounty, onClose }) {
   return (
     <>
       <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-        <div className="absolute inset-0 bg-black/70" onClick={onClose} />
+        <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" onClick={onClose} />
 
-        <div className="relative bg-[#13131a] border border-white/10 rounded-2xl w-full max-w-5xl max-h-[90vh] flex flex-col overflow-hidden">
+        <div className="relative bg-gradient-to-br from-[#0A0F0D] to-[#050A08] border border-white/10 rounded-2xl w-full max-w-5xl max-h-[90vh] flex flex-col overflow-hidden">
           {/* HEADER */}
-          <div className="p-6 border-b border-white/10 flex justify-between bg-[#181820]">
+          <div className="p-6 border-b border-white/10 flex justify-between bg-white/5">
             <div>
-              <h2 className="text-xl font-bold">Manage Campaign</h2>
+              <h2 className="text-xl font-bold text-white">Manage Campaign</h2>
               <p className="text-sm text-gray-400">{bounty.title}</p>
-              <p className="text-xs text-indigo-400">
+              <p className="text-xs text-emerald-400">
                 Total Reward: {bounty.reward} MOVE
               </p>
             </div>
@@ -122,15 +123,15 @@ export default function ManageCampaignModal({ bounty, onClose }) {
           </div>
 
           {/* TABS */}
-          <div className="px-6 pt-4 border-b border-white/5 flex gap-6">
+          <div className="px-6 pt-4 border-b border-white/10 flex gap-6">
             {["submissions", "edit"].map((tab) => (
               <button
                 key={tab}
                 onClick={() => setActiveTab(tab)}
                 className={`pb-3 border-b-2 capitalize ${
                   activeTab === tab
-                    ? "text-indigo-400 border-indigo-500"
-                    : "text-gray-400 border-transparent"
+                    ? "text-emerald-400 border-emerald-500"
+                    : "text-gray-400 border-transparent hover:text-white"
                 }`}
               >
                 {tab}
@@ -139,7 +140,7 @@ export default function ManageCampaignModal({ bounty, onClose }) {
           </div>
 
           {/* CONTENT */}
-          <div className="flex-1 overflow-y-auto p-6 bg-[#0a0a0f]">
+          <div className="flex-1 overflow-y-auto p-6 bg-black/20">
             {activeTab === "submissions" && (
               <>
                 {loading ? (
@@ -159,20 +160,20 @@ export default function ManageCampaignModal({ bounty, onClose }) {
                         return (
                           <div
                             key={sub._id}
-                            className={`bg-[#13131a] border rounded-xl p-4 ${
+                            className={`bg-white/5 border rounded-xl p-4 ${
                               isSelected
-                                ? "border-indigo-500"
-                                : "border-white/5"
+                                ? "border-emerald-500"
+                                : "border-white/10"
                             }`}
                           >
                             <div className="flex justify-between gap-4">
                               <div className="flex gap-4">
-                                <div className="w-10 h-10 rounded-full bg-indigo-500/10 flex items-center justify-center font-bold text-indigo-400">
+                                <div className="w-10 h-10 rounded-full bg-emerald-500/10 flex items-center justify-center font-bold text-emerald-400">
                                   {sub.TeamName?.charAt(0)}
                                 </div>
 
                                 <div>
-                                  <h4 className="font-semibold">
+                                  <h4 className="font-semibold text-white">
                                     {sub.TeamName}
                                   </h4>
                                   <p className="text-xs text-gray-500">
@@ -181,7 +182,7 @@ export default function ManageCampaignModal({ bounty, onClose }) {
                                   <a
                                     href={sub.RepositoryLink}
                                     target="_blank"
-                                    className="text-xs text-indigo-400"
+                                    className="text-xs text-emerald-400 hover:text-emerald-300"
                                   >
                                     View Repo
                                   </a>
@@ -189,7 +190,7 @@ export default function ManageCampaignModal({ bounty, onClose }) {
                                   {isSelected && (
                                     <input
                                       type="number"
-                                      className="mt-2 bg-[#0a0a0f] border border-white/10 rounded px-3 py-1 text-sm w-40"
+                                      className="mt-2 bg-white/5 border border-white/10 rounded px-3 py-1 text-sm w-40 text-white focus:outline-none focus:ring-2 focus:ring-emerald-500/50"
                                       placeholder="MOVE amount"
                                       onChange={(e) =>
                                         updateRewardAmount(
@@ -209,7 +210,7 @@ export default function ManageCampaignModal({ bounty, onClose }) {
                                   }
                                   className={`p-2 rounded-lg ${
                                     isSelected
-                                      ? "bg-indigo-500 text-white"
+                                      ? "bg-emerald-500 text-white"
                                       : "hover:bg-white/10 text-gray-400"
                                   }`}
                                 >
@@ -224,7 +225,7 @@ export default function ManageCampaignModal({ bounty, onClose }) {
                                   onClick={() =>
                                     setSelectedSubmission(sub)
                                   }
-                                  className="p-2 hover:bg-white/10 rounded-lg"
+                                  className="p-2 hover:bg-white/10 rounded-lg text-gray-400 hover:text-white"
                                 >
                                   <Eye className="w-4 h-4" />
                                 </button>
@@ -237,14 +238,14 @@ export default function ManageCampaignModal({ bounty, onClose }) {
 
                     {/* DISTRIBUTION FOOTER */}
                     {selectedWinners.length > 0 && (
-                      <div className="sticky bottom-0 mt-6 bg-[#181820] p-6 rounded-xl border border-white/10">
+                      <div className="sticky bottom-0 mt-6 bg-white/5 p-6 rounded-xl border border-white/10">
                         <div className="flex justify-between mb-4">
-                          <p>{selectedWinners.length} winner(s)</p>
+                          <p className="text-white">{selectedWinners.length} winner(s)</p>
                           <p
                             className={`font-bold ${
                               totalRewardSelected > bountyReward
-                                ? "text-red-500"
-                                : "text-green-400"
+                                ? "text-red-400"
+                                : "text-emerald-400"
                             }`}
                           >
                             {totalRewardSelected} / {bounty.reward} MOVE
@@ -258,7 +259,7 @@ export default function ManageCampaignModal({ bounty, onClose }) {
                             totalRewardSelected > bountyReward
                           }
                           onClick={handleDistributeRewards}
-                          className="w-full bg-indigo-600 py-3 rounded-xl text-white"
+                          className="w-full bg-emerald-500 hover:bg-emerald-600 py-3 rounded-xl text-white font-semibold shadow-lg shadow-emerald-500/20 disabled:opacity-60 transition-all"
                         >
                           {distributing
                             ? "Distributing..."
@@ -296,3 +297,4 @@ export default function ManageCampaignModal({ bounty, onClose }) {
     </>
   );
 }
+

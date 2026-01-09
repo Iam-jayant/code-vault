@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { HomepageNavbar } from "@/components/homepage";
 import { Layout } from "@/components/layout";
 import { RepositoryCard, categories, techStackFilters } from "@/components/repository";
-import { Search, Filter, Grid, List, SlidersHorizontal } from "lucide-react";
+import { Search, Filter, Grid, List, SlidersHorizontal, Sparkles } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { useProjects } from "@/hooks/useProjects";
 
@@ -48,7 +48,7 @@ const Repositories = () => {
         <h1 className="font-heading text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-3">
           Explore Projects
         </h1>
-        <p className="text-neutral-400 text-base sm:text-lg">
+        <p className="text-gray-400 text-base sm:text-lg">
           Discover {pagination?.total || 0} curated projects from top developers
         </p>
       </div>
@@ -57,36 +57,36 @@ const Repositories = () => {
       <div className="space-y-4 mb-8">
         {/* Search Bar */}
         <div className="flex gap-3 sm:gap-4">
-          <div className="relative flex-1">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-neutral-500" />
+          <div className="relative flex-1 group">
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500 group-focus-within:text-emerald-400 transition-colors" />
             <input
               type="text"
               placeholder="Search projects..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-12 pr-4 py-3 sm:py-3.5 bg-neutral-900 border border-neutral-800 text-white placeholder:text-neutral-500 text-sm sm:text-base focus:outline-none focus:border-neutral-600 rounded-sm"
+              className="w-full pl-12 pr-4 py-3 sm:py-3.5 bg-neutral-950/80 border border-emerald-500/20 text-white placeholder:text-gray-500 text-sm sm:text-base focus:outline-none focus:border-emerald-500/50 focus:shadow-[0_0_20px_rgba(16,185,129,0.15)] rounded-xl transition-all backdrop-blur-sm"
             />
           </div>
-          <button className="shrink-0 p-3 sm:p-3.5 bg-neutral-900 border border-neutral-800 text-neutral-300 hover:text-white hover:border-neutral-600 transition-colors rounded-sm">
+          <button className="shrink-0 p-3 sm:p-3.5 bg-neutral-950/80 border border-emerald-500/20 text-gray-300 hover:text-emerald-400 hover:border-emerald-500/40 hover:bg-emerald-500/5 transition-all rounded-xl backdrop-blur-sm">
             <SlidersHorizontal className="w-5 h-5" />
           </button>
-          <div className="hidden sm:flex border border-neutral-800 rounded-sm overflow-hidden">
+          <div className="hidden sm:flex border border-emerald-500/20 rounded-xl overflow-hidden backdrop-blur-sm">
             <button
               onClick={() => setViewMode("grid")}
-              className={`p-3.5 transition-colors ${
+              className={`p-3.5 transition-all ${
                 viewMode === "grid" 
-                  ? "bg-neutral-800 text-white" 
-                  : "bg-neutral-900 text-neutral-400 hover:text-white"
+                  ? "bg-emerald-500/10 text-emerald-400 shadow-[0_0_15px_rgba(16,185,129,0.2)]" 
+                  : "bg-neutral-950/80 text-gray-400 hover:text-emerald-400 hover:bg-emerald-500/5"
               }`}
             >
               <Grid className="w-5 h-5" />
             </button>
             <button
               onClick={() => setViewMode("list")}
-              className={`p-3.5 transition-colors ${
+              className={`p-3.5 transition-all ${
                 viewMode === "list" 
-                  ? "bg-neutral-800 text-white" 
-                  : "bg-neutral-900 text-neutral-400 hover:text-white"
+                  ? "bg-emerald-500/10 text-emerald-400 shadow-[0_0_15px_rgba(16,185,129,0.2)]" 
+                  : "bg-neutral-950/80 text-gray-400 hover:text-emerald-400 hover:bg-emerald-500/5"
               }`}
             >
               <List className="w-5 h-5" />
@@ -100,10 +100,10 @@ const Repositories = () => {
             <button
               key={category}
               onClick={() => setSelectedCategory(category)}
-              className={`px-4 py-2 text-sm font-medium rounded-sm transition-colors ${
+              className={`px-4 py-2 text-sm font-medium rounded-full transition-all ${
                 selectedCategory === category
-                  ? "bg-white text-black"
-                  : "bg-neutral-900 text-neutral-300 border border-neutral-800 hover:border-neutral-600 hover:text-white"
+                  ? "bg-gradient-to-r from-emerald-500 to-emerald-400 text-black shadow-[0_0_20px_rgba(16,185,129,0.3)]"
+                  : "bg-neutral-950/80 text-gray-300 border border-emerald-500/20 hover:border-emerald-500/40 hover:text-emerald-400 hover:bg-emerald-500/5 backdrop-blur-sm"
               }`}
             >
               {category}
@@ -113,7 +113,7 @@ const Repositories = () => {
 
         {/* Tech Stack Filters */}
         <div className="flex flex-wrap gap-2 items-center">
-          <span className="flex items-center text-sm text-neutral-500 mr-2">
+          <span className="flex items-center text-sm text-gray-500 mr-2">
             <Filter className="w-4 h-4 mr-1" />
             Tech:
           </span>
@@ -121,10 +121,10 @@ const Repositories = () => {
             <button
               key={tech}
               onClick={() => toggleTech(tech)}
-              className={`px-3 py-1.5 text-xs font-medium rounded-sm transition-colors ${
+              className={`px-3 py-1.5 text-xs font-medium rounded-full transition-all ${
                 selectedTech.includes(tech)
-                  ? "bg-neutral-700 text-white border border-neutral-600"
-                  : "bg-neutral-900 text-neutral-400 border border-neutral-800 hover:border-neutral-600 hover:text-white"
+                  ? "bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 shadow-[0_0_10px_rgba(16,185,129,0.2)]"
+                  : "bg-neutral-950/80 text-gray-400 border border-emerald-500/20 hover:border-emerald-500/40 hover:text-emerald-400 hover:bg-emerald-500/5 backdrop-blur-sm"
               }`}
             >
               {tech}
@@ -135,10 +135,10 @@ const Repositories = () => {
 
       {/* Results Count and Sort */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
-        <p className="text-sm text-neutral-400">
+        <p className="text-sm text-gray-400">
           Showing {filteredProjects.length} projects
         </p>
-        <select className="bg-neutral-900 border border-neutral-800 rounded-sm px-4 py-2 text-sm text-white focus:outline-none focus:border-neutral-600">
+        <select className="bg-neutral-950/80 border border-emerald-500/20 rounded-xl px-4 py-2 text-sm text-white focus:outline-none focus:border-emerald-500/50 focus:shadow-[0_0_15px_rgba(16,185,129,0.15)] backdrop-blur-sm transition-all">
           <option>Most Popular</option>
           <option>Recently Added</option>
           <option>Most Stars</option>
@@ -149,7 +149,7 @@ const Repositories = () => {
       {/* Loading State */}
       {isLoading ? (
         <div className="flex items-center justify-center py-20">
-          <div className="w-8 h-8 border-2 border-white border-t-transparent rounded-full animate-spin" />
+          <div className="w-8 h-8 border-2 border-emerald-400 border-t-transparent rounded-full animate-spin" />
         </div>
       ) : filteredProjects.length > 0 ? (
         <div className={`grid gap-6 ${
@@ -163,13 +163,13 @@ const Repositories = () => {
         </div>
       ) : (
         <div className="text-center py-20">
-          <div className="w-16 h-16 rounded-full bg-neutral-900 border border-neutral-800 flex items-center justify-center mx-auto mb-4">
-            <Search className="w-8 h-8 text-neutral-500" />
+          <div className="w-16 h-16 rounded-full bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center mx-auto mb-4 shadow-[0_0_20px_rgba(16,185,129,0.2)]">
+            <Search className="w-8 h-8 text-emerald-400" />
           </div>
           <h3 className="font-heading text-xl font-semibold text-white mb-2">
             No projects found
           </h3>
-          <p className="text-neutral-400 mb-6">
+          <p className="text-gray-400 mb-6">
             {projects.length === 0 
               ? "No projects have been added yet. Be the first to add one!"
               : "Try adjusting your search or filter criteria"}
@@ -180,8 +180,9 @@ const Repositories = () => {
               setSelectedCategory("All");
               setSelectedTech([]);
             }}
-            className="px-6 py-2.5 border border-white text-white font-medium rounded-sm hover:bg-white hover:text-black transition-colors"
+            className="px-6 py-2.5 border border-emerald-500/30 text-emerald-400 font-medium rounded-full hover:bg-emerald-500/10 hover:border-emerald-500/50 transition-all flex items-center gap-2 mx-auto"
           >
+            <Sparkles className="w-4 h-4" />
             Clear Filters
           </button>
         </div>

@@ -5,13 +5,9 @@ import { useAuth } from '@/hooks/useAuth';
 import { useUser } from '@/contexts/UserContext';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Edit, User, Wallet } from 'lucide-react';
+import { Edit, User, Wallet, Sparkles } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
-/**
- * ProfileManagement page demonstrates the new profile management components.
- * This page shows how to use UserProfile, ProfileEditor, and WalletConnection components.
- */
 export default function ProfileManagement() {
   const { isAuthenticated, userProfile, userId } = useAuth();
   const { registerUser } = useUser();
@@ -30,7 +26,6 @@ export default function ProfileManagement() {
     }
 
     try {
-      // Call API to update user profile
       const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:3001';
       const response = await fetch(`${API_BASE}/api/users/${userId}`, {
         method: 'PUT',
@@ -47,13 +42,9 @@ export default function ProfileManagement() {
       const result = await response.json();
 
       if (result.success) {
-        // Update local storage with new profile data
         const updatedProfile = { ...userProfile, ...updates };
         localStorage.setItem('layR_userProfile', JSON.stringify(updatedProfile));
-        
-        // Refresh user data
         await registerUser();
-        
         setIsEditing(false);
       } else {
         throw new Error(result.error || 'Failed to update profile');
@@ -64,17 +55,13 @@ export default function ProfileManagement() {
     }
   };
 
-  // Handle wallet connection
   const handleWalletConnected = async (address: string) => {
     console.log('Wallet connected:', address);
-    // Refresh user profile to show updated wallet status
     await registerUser();
   };
 
-  // Handle wallet disconnection
   const handleWalletDisconnected = async () => {
     console.log('Wallet disconnected');
-    // Refresh user profile to show updated wallet status
     await registerUser();
   };
 
@@ -83,8 +70,11 @@ export default function ProfileManagement() {
       <Layout>
         <div className="min-h-screen bg-black flex items-center justify-center">
           <div className="text-center">
+            <div className="w-16 h-16 rounded-full bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center mx-auto mb-4 shadow-[0_0_20px_rgba(16,185,129,0.2)]">
+              <User className="w-8 h-8 text-emerald-400" />
+            </div>
             <h1 className="text-2xl font-bold text-white mb-4">Authentication Required</h1>
-            <p className="text-neutral-400">Please log in to view your profile.</p>
+            <p className="text-gray-400">Please log in to view your profile.</p>
           </div>
         </div>
       </Layout>
@@ -96,8 +86,9 @@ export default function ProfileManagement() {
       <Layout>
         <div className="min-h-screen bg-black flex items-center justify-center">
           <div className="text-center">
+            <div className="w-8 h-8 border-2 border-emerald-400 border-t-transparent rounded-full animate-spin mx-auto mb-4" />
             <h1 className="text-2xl font-bold text-white mb-4">Loading Profile...</h1>
-            <p className="text-neutral-400">Please wait while we load your profile.</p>
+            <p className="text-gray-400">Please wait while we load your profile.</p>
           </div>
         </div>
       </Layout>
@@ -110,24 +101,36 @@ export default function ProfileManagement() {
         <div className="container mx-auto px-4 py-8">
           {/* Header */}
           <div className="mb-8">
-            <h1 className="text-3xl font-bold text-white mb-2">Profile Management</h1>
-            <p className="text-neutral-400">
+            <h1 className="text-3xl font-bold text-white mb-2 flex items-center gap-3">
+              <Sparkles className="w-8 h-8 text-emerald-400" />
+              Profile Management
+            </h1>
+            <p className="text-gray-400">
               Manage your profile information and wallet connection
             </p>
           </div>
 
           {/* Tabs */}
           <Tabs defaultValue="view" className="space-y-6">
-            <TabsList className="bg-neutral-900 border border-neutral-800">
-              <TabsTrigger value="view" className="data-[state=active]:bg-neutral-800">
+            <TabsList className="bg-neutral-950/80 border border-emerald-500/20 backdrop-blur-sm p-1 rounded-xl">
+              <TabsTrigger 
+                value="view" 
+                className="data-[state=active]:bg-emerald-500/10 data-[state=active]:text-emerald-400 data-[state=active]:shadow-[0_0_15px_rgba(16,185,129,0.2)] rounded-lg transition-all"
+              >
                 <User className="w-4 h-4 mr-2" />
                 View Profile
               </TabsTrigger>
-              <TabsTrigger value="edit" className="data-[state=active]:bg-neutral-800">
+              <TabsTrigger 
+                value="edit" 
+                className="data-[state=active]:bg-emerald-500/10 data-[state=active]:text-emerald-400 data-[state=active]:shadow-[0_0_15px_rgba(16,185,129,0.2)] rounded-lg transition-all"
+              >
                 <Edit className="w-4 h-4 mr-2" />
                 Edit Profile
               </TabsTrigger>
-              <TabsTrigger value="wallet" className="data-[state=active]:bg-neutral-800">
+              <TabsTrigger 
+                value="wallet" 
+                className="data-[state=active]:bg-emerald-500/10 data-[state=active]:text-emerald-400 data-[state=active]:shadow-[0_0_15px_rgba(16,185,129,0.2)] rounded-lg transition-all"
+              >
                 <Wallet className="w-4 h-4 mr-2" />
                 Wallet
               </TabsTrigger>
@@ -140,7 +143,7 @@ export default function ProfileManagement() {
               <div className="flex justify-end">
                 <Button
                   onClick={() => setIsEditing(true)}
-                  className="bg-white text-black hover:bg-neutral-200"
+                  className="bg-gradient-to-r from-emerald-500 to-emerald-400 text-black hover:shadow-[0_0_25px_rgba(16,185,129,0.4)] rounded-full font-semibold"
                 >
                   <Edit className="w-4 h-4 mr-2" />
                   Edit Profile
@@ -167,21 +170,31 @@ export default function ProfileManagement() {
           </Tabs>
 
           {/* Info Section */}
-          <div className="mt-8 p-6 bg-neutral-900/50 border border-neutral-800 rounded-lg">
-            <h3 className="text-lg font-semibold text-white mb-2">About Profile Management</h3>
-            <div className="space-y-2 text-sm text-neutral-400">
-              <p>
-                • Your profile is based on your authentication (Google/Email), not your wallet
-              </p>
-              <p>
-                • Your wallet is used for payments only and can be connected/disconnected independently
-              </p>
-              <p>
-                • Connecting or disconnecting your wallet does not change your profile name or email
-              </p>
-              <p>
-                • You can edit your name and avatar, but your email cannot be changed
-              </p>
+          <div className="mt-8 p-6 bg-neutral-950/80 border border-emerald-500/20 rounded-2xl backdrop-blur-xl shadow-[0_0_30px_rgba(16,185,129,0.1)] relative">
+            <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/5 to-transparent rounded-2xl pointer-events-none" />
+            <div className="relative">
+              <h3 className="text-lg font-semibold text-white mb-2 flex items-center gap-2">
+                <Sparkles className="w-5 h-5 text-emerald-400" />
+                About Profile Management
+              </h3>
+              <div className="space-y-2 text-sm text-gray-400">
+                <p className="flex items-start gap-2">
+                  <span className="text-emerald-400 mt-1">•</span>
+                  <span>Your profile is based on your authentication (Google/Email), not your wallet</span>
+                </p>
+                <p className="flex items-start gap-2">
+                  <span className="text-emerald-400 mt-1">•</span>
+                  <span>Your wallet is used for payments only and can be connected/disconnected independently</span>
+                </p>
+                <p className="flex items-start gap-2">
+                  <span className="text-emerald-400 mt-1">•</span>
+                  <span>Connecting or disconnecting your wallet does not change your profile name or email</span>
+                </p>
+                <p className="flex items-start gap-2">
+                  <span className="text-emerald-400 mt-1">•</span>
+                  <span>You can edit your name and avatar, but your email cannot be changed</span>
+                </p>
+              </div>
             </div>
           </div>
         </div>

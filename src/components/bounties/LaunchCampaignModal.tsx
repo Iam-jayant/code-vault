@@ -1,3 +1,4 @@
+// LaunchCampaignModal.tsx
 import React, { useEffect, useState } from "react";
 import { X } from "lucide-react";
 import Input from "./Input";
@@ -117,9 +118,9 @@ export default function LaunchCampaignModal({ onClose, onCreate }) {
         onClick={onClose}
       />
 
-      <div className="relative bg-[#13131a] border border-white/10 rounded-2xl w-full max-w-3xl max-h-[90vh] flex flex-col overflow-hidden">
+      <div className="relative bg-gradient-to-br from-[#0A0F0D] to-[#050A08] border border-white/10 rounded-2xl w-full max-w-3xl max-h-[90vh] flex flex-col overflow-hidden">
         {/* HEADER */}
-        <div className="p-6 border-b border-white/10 flex justify-between bg-[#181820]">
+        <div className="p-6 border-b border-white/10 flex justify-between bg-white/5">
           <h2 className="text-xl font-bold text-white">
             Launch New Campaign
           </h2>
@@ -142,7 +143,7 @@ export default function LaunchCampaignModal({ onClose, onCreate }) {
           <div className="grid grid-cols-2 gap-4">
             <Input label="Category" value={form.category} onChange={(v) => update("category", v)} placeholder={undefined} />
             <select
-              className="bg-[#0a0a0f] border border-white/10 rounded-xl px-4 py-3 text-white"
+              className="bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-emerald-500/50 transition-all"
               value={form.difficulty}
               onChange={(e) => update("difficulty", e.target.value)}
             >
@@ -165,17 +166,17 @@ export default function LaunchCampaignModal({ onClose, onCreate }) {
               {form[section].map((item, i) => (
                 <div key={i} className="flex gap-2 mb-2">
                   <input
-                    className="flex-1 bg-[#0a0a0f] border border-white/10 rounded-xl px-3 py-2 text-white"
+                    className="flex-1 bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-emerald-500/50 transition-all"
                     value={item}
                     onChange={(e) => updateArrayItem(section, i, e.target.value)}
                   />
-                  <button onClick={() => removeArrayItem(section, i)}>-</button>
+                  <button onClick={() => removeArrayItem(section, i)} className="text-red-400 hover:text-red-300">-</button>
                 </div>
               ))}
 
               <button
                 onClick={() => addArrayItem(section)}
-                className="text-indigo-400 text-sm"
+                className="text-emerald-400 text-sm hover:text-emerald-300"
               >
                 + Add {section.slice(0, -1)}
               </button>
@@ -186,9 +187,9 @@ export default function LaunchCampaignModal({ onClose, onCreate }) {
         </div>
 
         {/* FOOTER */}
-        <div className="p-6 border-t border-white/10 bg-[#181820] flex justify-end gap-3">
-          <button onClick={onClose}>Cancel</button>
-          <button onClick={handleSubmit} disabled={loading}>
+        <div className="p-6 border-t border-white/10 bg-white/5 flex justify-end gap-3">
+          <button onClick={onClose} className="px-6 py-2.5 border border-white/10 bg-white/5 text-gray-300 hover:text-white hover:bg-white/10 transition-colors rounded-xl">Cancel</button>
+          <button onClick={handleSubmit} disabled={loading} className="px-6 py-2.5 bg-emerald-500 hover:bg-emerald-600 text-white rounded-xl shadow-lg shadow-emerald-500/20 transition-all disabled:opacity-60">
             {loading ? "Launching..." : "Launch Campaign"}
           </button>
         </div>
@@ -196,3 +197,4 @@ export default function LaunchCampaignModal({ onClose, onCreate }) {
     </div>
   );
 }
+
