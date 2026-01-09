@@ -19,11 +19,8 @@ export default defineConfig(({ mode }) => ({
   },
   build: {
     rollupOptions: {
-      // Externalize optional dependencies that aren't needed for production build
-      external: [
-        '@telegram-apps/bridge',
-        '@telegram-apps/sdk',
-      ],
+      // Externalize optional Solana dependencies that Privy doesn't need for Ethereum-only usage
+      external: [],
     },
   },
 }));
