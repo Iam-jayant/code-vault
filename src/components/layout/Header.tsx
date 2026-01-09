@@ -1,5 +1,5 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { Search, Menu, X, Plus, LogOut, User, Sparkles } from "lucide-react";
+import { Search, Menu, X, Plus, LogOut, User, Sparkles, LayoutDashboard } from "lucide-react";
 import { useState } from "react";
 import { useAuth } from "@/hooks/useAuth";
 import { MovementWalletButton } from "../wallet";
@@ -19,6 +19,7 @@ export function Header() {
     { href: "/repositories", label: "Explore" },
     { href: "/bounties", label: "Bounty" },
     { href: "/leaderboard", label: "Leaderboard" },
+    ...(isAuthenticated ? [{ href: "/dashboard", label: "Dashboard" }] : []),
   ];
 
   return (
@@ -28,9 +29,9 @@ export function Header() {
           {/* Left Section: Logo */}
           <div className="flex items-center">
             <Link to="/" className="flex items-center group">
-              <img 
-                src="/CodeVault.png" 
-                alt="layR" 
+              <img
+                src="/CodeVault.png"
+                alt="layR"
                 className="h-6 md:h-7 w-auto transition-all group-hover:brightness-125 group-hover:drop-shadow-[0_0_8px_rgba(16,185,129,0.5)]"
               />
             </Link>
@@ -55,11 +56,10 @@ export function Header() {
               {navLinks.map((link) => (
                 <Link key={link.href} to={link.href}>
                   <button
-                    className={`px-4 py-2 text-sm font-medium rounded-lg transition-all ${
-                      location.pathname === link.href
+                    className={`px-4 py-2 text-sm font-medium rounded-lg transition-all ${location.pathname === link.href
                         ? "bg-emerald-500/10 text-emerald-400 shadow-[0_0_15px_rgba(16,185,129,0.2)]"
                         : "text-gray-400 hover:text-emerald-400 hover:bg-emerald-500/5"
-                    }`}
+                      }`}
                   >
                     {link.label}
                   </button>
@@ -88,7 +88,7 @@ export function Header() {
 
                 <MovementWalletButton />
 
-                <button 
+                <button
                   onClick={handleLogout}
                   className="p-2.5 text-gray-400 hover:text-red-400 transition-all rounded-lg hover:bg-red-500/10"
                   title="Logout"
@@ -145,11 +145,10 @@ export function Header() {
                 <Link key={link.href} to={link.href}>
                   <button
                     onClick={() => setIsMobileMenuOpen(false)}
-                    className={`w-full px-4 py-2.5 text-sm font-medium rounded-lg transition-all text-left ${
-                      location.pathname === link.href
+                    className={`w-full px-4 py-2.5 text-sm font-medium rounded-lg transition-all text-left ${location.pathname === link.href
                         ? "bg-emerald-500/10 text-emerald-400 shadow-[0_0_15px_rgba(16,185,129,0.2)]"
                         : "text-gray-400 hover:text-emerald-400 hover:bg-emerald-500/5"
-                    }`}
+                      }`}
                   >
                     {link.label}
                   </button>
@@ -164,7 +163,7 @@ export function Header() {
             {isAuthenticated ? (
               <div className="space-y-2">
                 <Link to="/repositories/new" className="block">
-                  <button 
+                  <button
                     onClick={() => setIsMobileMenuOpen(false)}
                     className="w-full px-4 py-3 bg-gradient-to-r from-emerald-500 to-emerald-400 text-black text-sm font-semibold hover:shadow-[0_0_25px_rgba(16,185,129,0.4)] transition-all rounded-full flex items-center justify-center gap-2"
                   >
@@ -174,7 +173,7 @@ export function Header() {
                 </Link>
 
                 <Link to="/profile/me" className="block">
-                  <button 
+                  <button
                     onClick={() => setIsMobileMenuOpen(false)}
                     className="w-full px-4 py-2.5 border border-emerald-500/30 text-gray-300 hover:text-emerald-400 hover:border-emerald-500/50 hover:bg-emerald-500/5 transition-all rounded-lg text-sm flex items-center justify-center gap-2"
                   >
@@ -183,7 +182,7 @@ export function Header() {
                   </button>
                 </Link>
 
-                <button 
+                <button
                   onClick={() => {
                     setIsMobileMenuOpen(false);
                     handleLogout();

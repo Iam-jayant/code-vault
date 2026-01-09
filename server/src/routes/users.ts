@@ -106,7 +106,7 @@ router.post('/sync', async (req: Request, res: Response) => {
         if (email) user.email = email;
         await user.save();
       }
-      
+
       return res.json({
         success: true,
         data: user,
@@ -142,43 +142,43 @@ router.post('/sync', async (req: Request, res: Response) => {
 router.get('/:walletAddress', async (req: Request, res: Response) => {
   try {
     const { walletAddress } = req.params;
-    
+
     // Check if this is a userId (ObjectId) or wallet address
     let user;
-    
+
     if (Types.ObjectId.isValid(walletAddress)) {
       // It's a userId
       const userId = walletAddress;
       user = await User.findById(userId);
-      
+
       if (!user) {
         return res.status(404).json({
           success: false,
           error: 'User not found',
         });
       }
-      
+
       // Calculate stats from database
       // Requirements: 3.1, 6.1-6.5
       const [projects, incomingTransactions] = await Promise.all([
         // Total projects created (6.1)
         Project.countDocuments({ ownerId: user._id }),
-        
+
         // Incoming transactions (earnings) (6.2)
-        Transaction.find({ 
-          toUserId: user._id, 
-          status: 'confirmed' 
+        Transaction.find({
+          toUserId: user._id,
+          status: 'confirmed'
         }),
       ]);
-      
+
       // Calculate total earnings in MOVE (6.2)
       const totalEarnings = incomingTransactions.reduce((sum, tx) => sum + tx.amount, 0);
-      
+
       // Get project stats (6.3, 6.4)
       const userProjects = await Project.find({ ownerId: user._id });
       const totalForks = userProjects.reduce((sum, p) => sum + (p.stats?.forks || 0), 0);
       const totalLikes = userProjects.reduce((sum, p) => sum + (p.stats?.likes || 0), 0);
-      
+
       return res.json({
         success: true,
         profile: {
@@ -327,18 +327,38 @@ router.post('/:userId/wallet', async (req: Request, res: Response) => {
     // Normalize wallet address
     const normalizedWallet = walletAddress.toLowerCase();
 
-    // Check if wallet is already connected to another user
-    const existingWallet = await User.findOne({ 
-      walletAddress: normalizedWallet,
-      _id: { $ne: userId }
-    });
-    
-    if (existingWallet) {
-      return res.status(409).json({
-        success: false,
-        error: 'Wallet address is already connected to another user',
+    // If wallet is already connected to this user, return success (idempotent)
+    if (user.walletAddress === normalizedWallet) {
+      console.log('[Users] Wallet already connected to this user, returning success');
+      return res.json({
+        success: true,
+        profile: {
+          id: user._id.toString(),
+          privyId: user.privyId,
+          name: user.name,
+          email: user.email,
+          avatar: user.avatar,
+          walletAddress: user.walletAddress,
+          createdAt: user.createdAt,
+          updatedAt: user.updatedAt,
+        },
       });
     }
+
+    // Check if wallet is already connected to another user
+    // NOTE: Disabled for demo - allows wallet reassignment
+    // const existingWallet = await User.findOne({
+    //   walletAddress: normalizedWallet,
+    //   _id: { $ne: userId }
+    // });
+    // 
+    // if (existingWallet) {
+    //   return res.status(409).json({
+    //     success: false,
+    //     error: 'Wallet address is already connected to another user',
+    //   });
+    // }
+    console.log('[Users] Updating wallet for user:', userId, 'to:', normalizedWallet);
 
     // Update only wallet address, do not modify name or email (Requirement 7.3)
     const updatedUser = await User.findByIdAndUpdate(
