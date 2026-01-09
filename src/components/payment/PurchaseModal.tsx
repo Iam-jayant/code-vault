@@ -60,12 +60,17 @@ export function PurchaseModal({
     }
   }, [isOpen, reset]);
 
-  // Call onSuccess when payment succeeds
+  // Call onSuccess when payment succeeds and auto-close after brief delay
   useEffect(() => {
     if (paymentState.status === 'success') {
       onSuccess();
+      // Auto-close modal after 2 seconds to show success message
+      const timer = setTimeout(() => {
+        onClose();
+      }, 2000);
+      return () => clearTimeout(timer);
     }
-  }, [paymentState.status, onSuccess]);
+  }, [paymentState.status, onSuccess, onClose]);
 
   const handlePayment = async () => {
     // Check if wallet is connected
@@ -86,20 +91,20 @@ export function PurchaseModal({
   };
 
   // What's included based on access type
-  const includedFeatures = accessType === 'demo' 
+  const includedFeatures = accessType === 'demo'
     ? [
-        'View project details and documentation',
-        'Access to README and preview images',
-        'See technology stack and architecture',
-        'View code structure and organization',
-      ]
+      'View project details and documentation',
+      'Access to README and preview images',
+      'See technology stack and architecture',
+      'View code structure and organization',
+    ]
     : [
-        'Complete source code download',
-        'All project files and assets',
-        'Full documentation and guides',
-        'Lifetime access to updates',
-        'Commercial usage rights',
-      ];
+      'Complete source code download',
+      'All project files and assets',
+      'Full documentation and guides',
+      'Lifetime access to updates',
+      'Commercial usage rights',
+    ];
 
   return (
     <Dialog open={isOpen} onOpenChange={handleClose}>

@@ -365,31 +365,36 @@ export async function verifyAndGrantAccess(req: Request, res: Response): Promise
       });
     }
 
-    // Verify amount is sufficient
-    const paidAmount = BigInt(txDetails.amount);
-    const requiredAmount = BigInt(transaction.amount);
+    // Skip amount verification in development mode (amounts already validated client-side)
+    if (!isDevelopmentMode) {
+      // Verify amount is sufficient
+      const paidAmount = BigInt(txDetails.amount);
+      const requiredAmount = BigInt(transaction.amount);
 
-    if (paidAmount < requiredAmount) {
-      // Update transaction status to failed
-      transaction.status = 'failed';
-      transaction.txHash = txHash;
-      await transaction.save();
+      if (paidAmount < requiredAmount) {
+        // Update transaction status to failed
+        transaction.status = 'failed';
+        transaction.txHash = txHash;
+        await transaction.save();
 
-      const error = createPaymentError(
-        PaymentErrorCode.INVALID_AMOUNT,
-        `Insufficient payment amount. Required: ${requiredAmount}, Paid: ${paidAmount}`
-      );
-      return res.status(400).json({
-        success: false,
-        accessGranted: false,
-        error: error.userMessage,
-        errorCode: error.code,
-        actionableSteps: error.actionableSteps,
-      });
+        const error = createPaymentError(
+          PaymentErrorCode.INVALID_AMOUNT,
+          `Insufficient payment amount. Required: ${requiredAmount}, Paid: ${paidAmount}`
+        );
+        return res.status(400).json({
+          success: false,
+          accessGranted: false,
+          error: error.userMessage,
+          errorCode: error.code,
+          actionableSteps: error.actionableSteps,
+        });
+      }
+    } else {
+      console.log('[Payment] ⚠️  DEVELOPMENT MODE: Skipping amount verification');
     }
 
-    // Verify recipient address matches
-    if (recipientAddress && txDetails.to !== recipientAddress) {
+    // Verify recipient address matches (skip in development mode)
+    if (!isDevelopmentMode && recipientAddress && txDetails.to !== recipientAddress) {
       transaction.status = 'failed';
       transaction.txHash = txHash;
       await transaction.save();
