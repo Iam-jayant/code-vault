@@ -15,7 +15,7 @@ export default function ManageCampaignModal({ bounty, onClose }) {
   const [rewardAmounts, setRewardAmounts] = useState({});
   const [distributing, setDistributing] = useState(false);
 
-  const { account } = useMovementWallet();
+  const { account, signAndSubmitTransaction } = useMovementWallet();
   const { distributeRewards, loading: contractLoading, error: contractError } =
     useBountyContract();
 
@@ -83,7 +83,7 @@ export default function ManageCampaignModal({ bounty, onClose }) {
 
       const amounts = selectedWinners.map((w) => rewardAmounts[w]);
 
-      const wallet = { signAndSubmitTransaction: account.signAndSubmitTransaction };
+      const wallet = { signAndSubmitTransaction };
 
       const txHash = await distributeRewards(
         wallet,
@@ -128,11 +128,10 @@ export default function ManageCampaignModal({ bounty, onClose }) {
               <button
                 key={tab}
                 onClick={() => setActiveTab(tab)}
-                className={`pb-3 border-b-2 capitalize ${
-                  activeTab === tab
+                className={`pb-3 border-b-2 capitalize ${activeTab === tab
                     ? "text-emerald-400 border-emerald-500"
                     : "text-gray-400 border-transparent hover:text-white"
-                }`}
+                  }`}
               >
                 {tab}
               </button>
@@ -160,11 +159,10 @@ export default function ManageCampaignModal({ bounty, onClose }) {
                         return (
                           <div
                             key={sub._id}
-                            className={`bg-white/5 border rounded-xl p-4 ${
-                              isSelected
+                            className={`bg-white/5 border rounded-xl p-4 ${isSelected
                                 ? "border-emerald-500"
                                 : "border-white/10"
-                            }`}
+                              }`}
                           >
                             <div className="flex justify-between gap-4">
                               <div className="flex gap-4">
@@ -208,11 +206,10 @@ export default function ManageCampaignModal({ bounty, onClose }) {
                                   onClick={() =>
                                     toggleWinner(sub.userWallet)
                                   }
-                                  className={`p-2 rounded-lg ${
-                                    isSelected
+                                  className={`p-2 rounded-lg ${isSelected
                                       ? "bg-emerald-500 text-white"
                                       : "hover:bg-white/10 text-gray-400"
-                                  }`}
+                                    }`}
                                 >
                                   {isSelected ? (
                                     <CheckCircle className="w-5 h-5" />
@@ -242,11 +239,10 @@ export default function ManageCampaignModal({ bounty, onClose }) {
                         <div className="flex justify-between mb-4">
                           <p className="text-white">{selectedWinners.length} winner(s)</p>
                           <p
-                            className={`font-bold ${
-                              totalRewardSelected > bountyReward
+                            className={`font-bold ${totalRewardSelected > bountyReward
                                 ? "text-red-400"
                                 : "text-emerald-400"
-                            }`}
+                              }`}
                           >
                             {totalRewardSelected} / {bounty.reward} MOVE
                           </p>

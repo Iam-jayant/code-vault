@@ -13,7 +13,7 @@ const Login = () => {
   // Redirect authenticated users with userId to dashboard
   useEffect(() => {
     if (ready && isAuthenticated && userId && !isRegistering) {
-      navigate("/profile/me");
+      navigate("/dashboard");
     }
   }, [ready, isAuthenticated, userId, isRegistering, navigate]);
 
@@ -39,20 +39,20 @@ const Login = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#0A0F0D] via-[#050A08] to-black">
       <HomepageNavbar />
-      
+
       <div className="min-h-[calc(100vh-4rem)] flex items-center justify-center px-4 py-12 sm:py-16 md:py-20">
         {/* Login Card - Glass/Fluid Style */}
         <div className="relative w-full max-w-md bg-white/5 backdrop-blur-sm border border-white/10 rounded-lg p-6 sm:p-8">
           {/* Glass effect overlay */}
           <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/5 to-transparent rounded-lg pointer-events-none" />
-          
+
           {/* Content */}
           <div className="relative">
             <div className="text-center mb-8">
               <Link to="/" className="inline-block mb-6">
-                <img 
-                  src="CodeVault.png" 
-                  alt="CodeVault" 
+                <img
+                  src="CodeVault.png"
+                  alt="CodeVault"
                   className="h-8 w-auto mx-auto"
                 />
               </Link>

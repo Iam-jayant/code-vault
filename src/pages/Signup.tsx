@@ -13,7 +13,7 @@ const Signup = () => {
   // Redirect authenticated users with userId to dashboard
   useEffect(() => {
     if (ready && isAuthenticated && userId && !isRegistering) {
-      navigate("/profile/me");
+      navigate("/dashboard");
     }
   }, [ready, isAuthenticated, userId, isRegistering, navigate]);
 
@@ -33,7 +33,7 @@ const Signup = () => {
       <div className="min-h-screen bg-black relative overflow-hidden">
         {/* Background glow effects */}
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[600px] bg-emerald-500/10 rounded-full blur-[120px] pointer-events-none" />
-        
+
         <HomepageNavbar />
         <div className="min-h-[calc(100vh-4rem)] flex items-center justify-center px-4 py-12 relative z-10">
           <div className="flex items-center gap-3 text-gray-400">
@@ -50,10 +50,10 @@ const Signup = () => {
       {/* Background glow effects */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[600px] bg-emerald-500/10 rounded-full blur-[120px] pointer-events-none" />
       <div className="absolute bottom-0 right-1/4 w-[600px] h-[400px] bg-emerald-500/5 rounded-full blur-[100px] pointer-events-none" />
-      
+
       <div className="relative z-10">
         <HomepageNavbar />
-        
+
         <div className="min-h-[calc(100vh-4rem)] flex items-center justify-center px-4 py-12 sm:py-16 md:py-20">
           <div className="w-full max-w-5xl grid md:grid-cols-2 gap-8 md:gap-12 items-center">
             {/* Benefits */}
@@ -81,17 +81,17 @@ const Signup = () => {
             <div className="relative bg-neutral-950/80 backdrop-blur-xl border border-emerald-500/20 rounded-2xl p-6 sm:p-8 shadow-[0_0_50px_rgba(16,185,129,0.1)]">
               {/* Glass effect overlay */}
               <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/5 to-transparent rounded-2xl pointer-events-none" />
-              
+
               {/* Glow effect */}
               <div className="absolute -inset-[1px] bg-gradient-to-r from-emerald-500/20 via-emerald-400/20 to-emerald-500/20 rounded-2xl blur-sm -z-10" />
-              
+
               {/* Content */}
               <div className="relative">
                 <div className="text-center mb-8">
                   <Link to="/" className="inline-block mb-6 group">
-                    <img 
-                      src="CodeVault.png" 
-                      alt="CodeVault" 
+                    <img
+                      src="CodeVault.png"
+                      alt="CodeVault"
                       className="h-8 w-auto mx-auto transition-all group-hover:brightness-125 group-hover:drop-shadow-[0_0_12px_rgba(16,185,129,0.6)]"
                     />
                   </Link>
