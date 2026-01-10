@@ -129,14 +129,22 @@ const LandingPage = () => {
                             and monetize your side projects securely on the blockchain.
                         </p>
 
-                        {/* Handwriting Note Right */}
-                        <div className="hidden lg:block absolute bottom-40 right-10 transform rotate-6">
+                        {/* Handwriting Note Right (Now Escrow is on Left) */}
+                        <div className="hidden lg:block absolute bottom-10 left-10 transform -rotate-6">
                             <div className="font-['Patrick_Hand'] text-pink-400 text-2xl max-w-[200px] leading-tight text-center">
                                 <span className="text-4xl block mb-2">🔒</span>
                                 Escrow protected payments!
                                 <svg className="w-full h-10 text-pink-400/50 mt-1" viewBox="0 0 100 20" fill="none" stroke="currentColor">
                                     <path d="M5,15 Q50,5 95,15" strokeWidth="2" strokeLinecap="round" />
                                 </svg>
+                            </div>
+                        </div>
+
+                        {/* Handwriting Note Left Bottom (Now x402 is on Right) */}
+                        <div className="hidden lg:block absolute bottom-40 right-0 transform rotate-6">
+                            <div className="font-['Patrick_Hand'] text-cyan-400 text-2xl max-w-[220px] leading-tight text-left relative">
+                                <DoodleArrow className="absolute -left-24 -top-2 transform rotate-[10deg] scale-75 text-cyan-400/80" />
+                                <span className="border-b-2 border-cyan-400 font-bold">x402</span> enabled micropayments for ultra-fast transactions!
                             </div>
                         </div>
 
