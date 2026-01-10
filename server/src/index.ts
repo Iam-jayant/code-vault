@@ -44,6 +44,11 @@ app.options(/.*/, cors());
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ limit: '10mb', extended: true }));
 
+// Root route
+app.get('/', (req, res) => {
+  res.send('LayR Server is running');
+});
+
 // Health check
 app.get('/health', (req, res) => {
   res.json({
